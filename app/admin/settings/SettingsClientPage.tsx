@@ -365,4 +365,106 @@ export default function SettingsClientPage() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
-                <div className="flex items-center justify-between">\
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label className="text-base">Email Verification</Label>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Require email verification for new accounts
+                    </p>
+                  </div>
+                  <Switch
+                    checked={securitySettings.requireEmailVerification}
+                    onCheckedChange={() =>
+                      handleToggleChange('requireEmailVerification', 'security')
+                    }
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label className="text-base">Two-Factor Authentication</Label>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Enable two-factor authentication for admin accounts
+                    </p>
+                  </div>
+                  <Switch
+                    checked={securitySettings.twoFactorAuth}
+                    onCheckedChange={() =>
+                      handleToggleChange('twoFactorAuth', 'security')
+                    }
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="password-min-length">Minimum Password Length</Label>
+                  <Input
+                    id="password-min-length"
+                    type="number"
+                    name="passwordMinLength"
+                    value={securitySettings.passwordMinLength}
+                    onChange={handleSecurityChange}
+                    min="8"
+                    max="32"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label className="text-base">Special Characters Required</Label>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Require special characters in passwords
+                    </p>
+                  </div>
+                  <Switch
+                    checked={securitySettings.passwordRequireSpecialChar}
+                    onCheckedChange={() =>
+                      handleToggleChange('passwordRequireSpecialChar', 'security')
+                    }
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label className="text-base">Numbers Required</Label>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Require numbers in passwords
+                    </p>
+                  </div>
+                  <Switch
+                    checked={securitySettings.passwordRequireNumber}
+                    onCheckedChange={() =>
+                      handleToggleChange('passwordRequireNumber', 'security')
+                    }
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="session-timeout">Session Timeout (minutes)</Label>
+                  <Input
+                    id="session-timeout"
+                    type="number"
+                    name="sessionTimeout"
+                    value={securitySettings.sessionTimeout}
+                    onChange={handleSecurityChange}
+                    min="15"
+                    max="1440"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <Button
+                  className="bg-emerald-700 hover:bg-emerald-800 text-white"
+                  onClick={() => saveSettings('security')}
+                >
+                  <Save className="mr-2 h-4 w-4" />
+                  Save Security Settings
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </div>
+  )
+}

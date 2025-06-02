@@ -19,7 +19,7 @@ export default function AdminDashboardPage() {
       description: "+12 this week",
       icon: BookOpen,
       color: "text-emerald-700",
-      trend: "up",
+      trend: "up" as const,
     },
     {
       title: "Total Users",
@@ -27,7 +27,7 @@ export default function AdminDashboardPage() {
       description: "+124 this month",
       icon: Users,
       color: "text-amber-600",
-      trend: "up",
+      trend: "up" as const,
     },
     {
       title: "Active Users",
@@ -35,7 +35,7 @@ export default function AdminDashboardPage() {
       description: "32% of total users",
       icon: UserCheck,
       color: "text-blue-600",
-      trend: "up",
+      trend: "up" as const,
     },
     {
       title: "Recent Activity",
@@ -43,7 +43,7 @@ export default function AdminDashboardPage() {
       description: "Actions in last 24h",
       icon: Clock,
       color: "text-purple-600",
-      trend: "down",
+      trend: "down" as const,
     },
   ]
 
