@@ -1,67 +1,73 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Star, BookOpen, Globe, Calendar, Download } from "lucide-react" // Add Download icon
-import Image from "next/image"
-import Link from "next/link"
-import { useState } from "react" // Add useState
-import axios from "axios"
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Star, BookOpen, Globe, Calendar, Download } from "lucide-react"; // Add Download icon
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react"; // Add useState
+import axios from "axios";
+import { Spinner } from "@/components/ui/spinner"; // Import Spinner for loading state
 
 interface Book {
-  id: number
-  title: string
-  arabicTitle?: string
-  description: string
-  scholar: string
-  topic: string
-  language: string
-  publisher: string
-  edition: string
-  coverimage: string
-  viewpdfurl: string
-  download_url: string
-  created_at: string
-  updated_at: string
-  volumes?: number
-  pages?: number
-  rating? : number
-  publishYear?: number
+  id: number;
+  title: string;
+  arabicTitle?: string;
+  description: string;
+  scholar: string;
+  topic: string;
+  language: string;
+  publisher: string;
+  edition: string;
+  coverimage: string;
+  viewpdfurl: string;
+  download_url: string;
+  created_at: string;
+  updated_at: string;
+  volumes?: number;
+  pages?: number;
+  rating?: number;
+  publishYear?: number;
 }
 
 interface BookCardProps {
-  book: Book
-  onClick?: () => void
+  book: Book;
+  onClick?: () => void;
 }
 
 export default function LibraryBookCard({ book, onClick }: BookCardProps) {
-  const [isDownloading, setIsDownloading] = useState(false)
-  const hasMultipleVolumes = (book.volumes ?? 0) > 1
-  // get the book id 
+  const [isDownloading, setIsDownloading] = useState(false);
+  const hasMultipleVolumes = (book.volumes ?? 0) > 1;
+  // get the book id
   const handleDownload = async () => {
     try {
-      setIsDownloading(true)
-      const response = await axios.get(`http://localhost:8000/api/download/${book.id}`, {
-        responseType: 'blob'
-      })
+      setIsDownloading(true);
+      const response = await axios.get(
+        `http://localhost:8000/api/download/${book.id}`,
+        {
+          responseType: "blob",
+        }
+      );
 
       // Create a blob URL and trigger download
-      const blob = new Blob([response.data], { type: response.headers['content-type'] })
-      const url = window.URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.setAttribute('download', `${book.title}.pdf`) // or use the filename from Content-Disposition header
-      document.body.appendChild(link)
-      link.click()
-      link.remove()
-      window.URL.revokeObjectURL(url)
+      const blob = new Blob([response.data], {
+        type: response.headers["content-type"],
+      });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${book.title}.pdf`); // or use the filename from Content-Disposition header
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('Download failed:', error)
+      console.error("Download failed:", error);
     } finally {
-      setIsDownloading(false)
+      setIsDownloading(false);
     }
-  }
+  };
 
   return (
     <Card
@@ -89,7 +95,10 @@ export default function LibraryBookCard({ book, onClick }: BookCardProps) {
 
         {/* Language Badge */}
         <div className="absolute top-3 right-3">
-          <Badge variant="secondary" className="bg-white/90 text-gray-800 backdrop-blur-sm">
+          <Badge
+            variant="secondary"
+            className="bg-white/90 text-gray-800 backdrop-blur-sm"
+          >
             <Globe className="h-3 w-3 mr-1" />
             {book.language}
           </Badge>
@@ -108,14 +117,20 @@ export default function LibraryBookCard({ book, onClick }: BookCardProps) {
       <CardContent className="p-4 space-y-3">
         {/* Title and Arabic Title */}
         <div className="space-y-1">
-          <h3 className="font-bold text-emerald-900 dark:text-emerald-100 line-clamp-2 leading-tight">{book.title}</h3>
+          <h3 className="font-bold text-emerald-900 dark:text-emerald-100 line-clamp-2 leading-tight">
+            {book.title}
+          </h3>
           {book.arabicTitle && (
-            <p className="text-sm text-amber-700 dark:text-amber-400 font-arabic leading-relaxed">{book.arabicTitle}</p>
+            <p className="text-sm text-amber-700 dark:text-amber-400 font-arabic leading-relaxed">
+              {book.arabicTitle}
+            </p>
           )}
         </div>
 
         {/* Author */}
-        <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">{book.scholar}</p>
+        <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">
+          {book.scholar}
+        </p>
 
         {/* Topic and Rating */}
         <div className="flex items-center justify-between">
@@ -128,7 +143,9 @@ export default function LibraryBookCard({ book, onClick }: BookCardProps) {
 
           <div className="flex items-center gap-1">
             <Star className="h-3 w-3 text-amber-500 fill-amber-500" />
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{book.rating}</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {book.rating}
+            </span>
           </div>
         </div>
 
@@ -152,12 +169,15 @@ export default function LibraryBookCard({ book, onClick }: BookCardProps) {
                 View Volumes
               </Link>
             </Button>
-            <Button asChild className="w-full bg-emerald-700 hover:bg-emerald-800 text-white">
+            <Button
+              asChild
+              className="w-full bg-emerald-700 hover:bg-emerald-800 text-white"
+            >
               <Link href={`/library/books/${book.id}`}>View Details</Link>
             </Button>
           </div>
         ) : (
-         <div className="w-full space-y-2">
+          <div className="w-full space-y-2">
             <Button
               asChild
               size="sm"
@@ -175,12 +195,21 @@ export default function LibraryBookCard({ book, onClick }: BookCardProps) {
               size="sm"
               className="w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/20 text-xs sm:text-sm"
             >
-              <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
-              {isDownloading ? '...' : 'Download'}
+              {isDownloading ? (
+                <>
+                  <Spinner size="sm" className="mr-2" />
+                  Downloading...
+                </>
+              ) : (
+                <>
+                  <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                  Download
+                </>
+              )}
             </Button>
           </div>
         )}
       </CardFooter>
     </Card>
-  )
+  );
 }
