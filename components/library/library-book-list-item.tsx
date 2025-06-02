@@ -7,28 +7,36 @@ import { Star, BookOpen, Globe, Calendar, FileText } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
+
 interface Book {
   id: number
   title: string
   arabicTitle?: string
-  author: string
-  language: string
-  topic: string
-  edition: string
-  coverUrl: string
-  volumes: number
-  pages: number
-  publishYear: number
-  rating: number
   description: string
+  scholar: string
+  topic: string
+  language: string
+  publisher: string
+  edition: string
+  coverimage: string
+  viewpdfurl: string
+  download_url: string
+  created_at: string
+  updated_at: string
+  volumes?: number
+  pages?: number
+  rating?: number
+  publishYear?: number
+  
 }
 
-interface LibraryBookListItemProps {
+
+interface BookListItemProps {
   book: Book
 }
 
-export default function LibraryBookListItem({ book }: LibraryBookListItemProps) {
-  const hasMultipleVolumes = book.volumes > 1
+export default function LibraryBookListItem({ book }: BookListItemProps) {
+  const hasMultipleVolumes = (book.volumes ?? 0) > 1
 
   return (
     <Card className="group overflow-hidden transition-all duration-300 hover:shadow-md bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
@@ -37,7 +45,9 @@ export default function LibraryBookListItem({ book }: LibraryBookListItemProps) 
           {/* Book Cover */}
           <div className="relative w-24 h-32 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700">
             <Image
-              src={book.coverUrl || "/placeholder.svg"}
+              unoptimized
+              priority
+              src={book.coverimage || "/placeholder.svg"}
               alt={book.title}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -66,7 +76,7 @@ export default function LibraryBookListItem({ book }: LibraryBookListItemProps) 
             </div>
 
             {/* Author */}
-            <p className="text-gray-700 dark:text-gray-300 font-medium">by {book.author}</p>
+            <p className="text-gray-700 dark:text-gray-300 font-medium">by {book.scholar}</p>
 
             {/* Description */}
             <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-2">{book.description}</p>

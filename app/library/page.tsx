@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import ResponsiveLibraryContent from "@/components/library/responsive-library-content"
+import UnifiedLibrary from "@/components/library/unified-library"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -11,7 +11,7 @@ export default function LibraryPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-amber-50 dark:from-gray-900 dark:to-gray-800">
       <Suspense fallback={<LibraryLoadingSkeleton />}>
-        <ResponsiveLibraryContent />
+        <UnifiedLibrary />
       </Suspense>
     </div>
   )

@@ -11,31 +11,42 @@ interface Book {
   id: number
   title: string
   arabicTitle?: string
-  author: string
-  language: string
-  topic: string
-  edition: string
-  coverUrl: string
-  volumes: number
-  pages: number
-  publishYear: number
-  rating: number
   description: string
+  scholar: string
+  topic: string
+  language: string
+  publisher: string
+  edition: string
+  coverimage: string
+  viewpdfurl: string
+  download_url: string
+  created_at: string
+  updated_at: string
+  volumes?: number
+  pages?: number
+  rating? : number
+  publishYear?: number
 }
 
-interface LibraryBookCardProps {
+interface BookCardProps {
   book: Book
+  onClick?: () => void
 }
 
-export default function LibraryBookCard({ book }: LibraryBookCardProps) {
-  const hasMultipleVolumes = book.volumes > 1
+export default function LibraryBookCard({ book, onClick }: BookCardProps) {
+  const hasMultipleVolumes = (book.volumes ?? 0) > 1
 
   return (
-    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+    <Card
+      onClick={onClick}
+      className="group overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+    >
       {/* Book Cover */}
       <div className="relative aspect-[2/3] overflow-hidden bg-gray-100 dark:bg-gray-700">
         <Image
-          src={book.coverUrl || "/placeholder.svg"}
+          unoptimized
+          priority
+          src={book.coverimage || "/placeholder.svg"}
           alt={book.title}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -77,7 +88,7 @@ export default function LibraryBookCard({ book }: LibraryBookCardProps) {
         </div>
 
         {/* Author */}
-        <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">{book.author}</p>
+        <p className="text-gray-600 dark:text-gray-300 text-sm font-medium">{book.scholar}</p>
 
         {/* Topic and Rating */}
         <div className="flex items-center justify-between">

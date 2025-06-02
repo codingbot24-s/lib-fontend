@@ -6,70 +6,31 @@ import { Button } from "@/components/ui/button"
 import { Star, BookOpen, Globe, Calendar, Volume2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { Book } from "@/types/book"
 
-interface Book {
-  id: number
-  title: string
-  arabicTitle?: string
-  author: string
-  language: string
-  topic: string
-  edition: string
-  coverUrl: string
-  volumes: number
-  pages: number
-  publishYear: number
-  rating: number
-  description: string
-}
 
 interface ResponsiveBookCardProps {
   book: Book
 }
 
 export default function ResponsiveBookCard({ book }: ResponsiveBookCardProps) {
-  const hasMultipleVolumes = book.volumes > 1
-
   return (
-    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 h-full flex flex-col">
+    <div className="group relative flex flex-col overflow-hidden rounded-lg border bg-white dark:bg-gray-800 hover:shadow-lg transition-shadow">
       {/* Book Cover */}
-      <div className="relative aspect-[2/3] overflow-hidden bg-gray-100 dark:bg-gray-700">
+      <div className="aspect-h-4 aspect-w-3 relative">
         <Image
-          src={book.coverUrl || "/placeholder.svg"}
-          alt={book.title}
+          unoptimized
+          priority
           fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+
+          src={book.coverimage || "/placeholder.svg"}
+          alt={book.title}
+          
+          className="object-cover"
         />
-
-        {/* Overlay with quick info */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="absolute bottom-3 left-3 right-3 text-white">
-            <p className="text-xs sm:text-sm font-medium mb-1">{book.pages} pages</p>
-            <p className="text-xs text-gray-200">{book.edition}</p>
-          </div>
-        </div>
-
-        {/* Language Badge */}
-        <div className="absolute top-2 right-2">
-          <Badge variant="secondary" className="bg-white/90 text-gray-800 backdrop-blur-sm text-xs">
-            <Globe className="h-3 w-3 mr-1" />
-            {book.language}
-          </Badge>
-        </div>
-
-        {/* Volume Badge */}
-        {hasMultipleVolumes && (
-          <div className="absolute top-2 left-2">
-            <Badge variant="secondary" className="bg-emerald-600 text-white text-xs">
-              <Volume2 className="h-3 w-3 mr-1" />
-              {book.volumes} Vol{book.volumes !== 1 ? "s" : ""}
-            </Badge>
-          </div>
-        )}
       </div>
 
-      <CardContent className="p-3 sm:p-4 space-y-2 sm:space-y-3 flex-grow">
+      <div className="flex flex-1 flex-col space-y-2 p-4">
         {/* Title and Arabic Title */}
         <div className="space-y-1">
           <h3 className="font-bold text-emerald-900 dark:text-emerald-100 line-clamp-2 leading-tight text-sm sm:text-base">
@@ -83,7 +44,7 @@ export default function ResponsiveBookCard({ book }: ResponsiveBookCardProps) {
         </div>
 
         {/* Author */}
-        <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm font-medium line-clamp-1">{book.author}</p>
+        <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm font-medium line-clamp-1">{book.scholar}</p>
 
         {/* Topic and Rating */}
         <div className="flex items-center justify-between gap-2">
@@ -105,10 +66,10 @@ export default function ResponsiveBookCard({ book }: ResponsiveBookCardProps) {
           <Calendar className="h-3 w-3" />
           <span>Published {book.publishYear}</span>
         </div>
-      </CardContent>
+      </div>
 
       <CardFooter className="p-3 sm:p-4 pt-0 space-y-2">
-        {hasMultipleVolumes ? (
+        {book.volumes && book.volumes > 1 ? (
           <div className="w-full space-y-2">
             <Button
               asChild
@@ -144,6 +105,6 @@ export default function ResponsiveBookCard({ book }: ResponsiveBookCardProps) {
           </div>
         )}
       </CardFooter>
-    </Card>
+    </div>
   )
 }
