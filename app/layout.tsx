@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Inter, Noto_Serif } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import Header from "@/components/header" // Add this import
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,7 +33,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${notoSerif.variable} bg-islamic-pattern`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
+          <Header /> {/* Add the Header component here */}
+          <main>
+            {children}
+          </main>
         </ThemeProvider>
       </body>
     </html>

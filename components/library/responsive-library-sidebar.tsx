@@ -18,6 +18,7 @@ interface ResponsiveLibrarySidebarProps {
   onTopicsChange: (topics: string[]) => void
   onScholarsChange: (scholars: string[]) => void
   onClearFilters: () => void
+  hideTopicFilter?: boolean
 }
 
 const languages = [
@@ -62,6 +63,7 @@ export default function ResponsiveLibrarySidebar({
   onTopicsChange,
   onScholarsChange,
   onClearFilters,
+  hideTopicFilter = false,
 }: ResponsiveLibrarySidebarProps) {
   const [scholarSearch, setScholarSearch] = useState("")
   const [languageOpen, setLanguageOpen] = useState(true)
@@ -166,47 +168,49 @@ export default function ResponsiveLibrarySidebar({
         </Collapsible>
       </Card>
 
-      {/* Topic Filter */}
-      <Card>
-        <Collapsible open={topicOpen} onOpenChange={setTopicOpen}>
-          <CollapsibleTrigger asChild>
-            <CardHeader className="pb-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-base">Topic</CardTitle>
-                {topicOpen ? (
-                  <ChevronUp className="h-4 w-4 text-gray-500" />
-                ) : (
-                  <ChevronDown className="h-4 w-4 text-gray-500" />
-                )}
-              </div>
-            </CardHeader>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <CardContent className="space-y-3 pt-0">
-              <div className="max-h-64 overflow-y-auto space-y-3">
-                {topics.map((topic) => (
-                  <div key={topic.id} className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id={`topic-${topic.id}`}
-                        checked={selectedTopics.includes(topic.id)}
-                        onCheckedChange={(checked) => handleTopicChange(topic.id, checked as boolean)}
-                      />
-                      <Label
-                        htmlFor={`topic-${topic.id}`}
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                      >
-                        {topic.name}
-                      </Label>
+      {/* Topic Filter - conditionally rendered */}
+      {!hideTopicFilter && (
+        <Card>
+          <Collapsible open={topicOpen} onOpenChange={setTopicOpen}>
+            <CollapsibleTrigger asChild>
+              <CardHeader className="pb-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-base">Topic</CardTitle>
+                  {topicOpen ? (
+                    <ChevronUp className="h-4 w-4 text-gray-500" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-gray-500" />
+                  )}
+                </div>
+              </CardHeader>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <CardContent className="space-y-3 pt-0">
+                <div className="max-h-64 overflow-y-auto space-y-3">
+                  {topics.map((topic) => (
+                    <div key={topic.id} className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id={`topic-${topic.id}`}
+                          checked={selectedTopics.includes(topic.id)}
+                          onCheckedChange={(checked) => handleTopicChange(topic.id, checked as boolean)}
+                        />
+                        <Label
+                          htmlFor={`topic-${topic.id}`}
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                        >
+                          {topic.name}
+                        </Label>
+                      </div>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">{topic.count}</span>
                     </div>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">{topic.count}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </CollapsibleContent>
-        </Collapsible>
-      </Card>
+                  ))}
+                </div>
+              </CardContent>
+            </CollapsibleContent>
+          </Collapsible>
+        </Card>
+      )}
 
       {/* Scholar Filter */}
       <Card>

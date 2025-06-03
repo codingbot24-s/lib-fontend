@@ -1,4 +1,4 @@
-import Header from "@/components/header"
+
 import HeroSection from "@/components/hero-section"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -181,7 +181,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#f8f5f0] dark:bg-gray-950 font-noto-serif">
       {/* Header */}
-      <Header />
+      
 
       {/* Hero Section */}
       <HeroSection />
