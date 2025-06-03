@@ -1,86 +1,94 @@
 "use client"
 
-import { usePathname } from "next/navigation"
 import Link from "next/link"
-import { BarChart3, BookOpen, Home, Settings, Users, BookMarked } from "lucide-react"
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarSeparator,
-} from "@/components/ui/sidebar"
+import { cn } from "@/lib/utils"
+import { BookOpen, Home, Users, Settings, BookMarked, GraduationCap, X, Moon, Sun } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { useTheme } from "next-themes"
 
-export default function AdminSidebar() {
-  const pathname = usePathname()
+interface AdminSidebarProps {
+  open: boolean
+  setOpen: (open: boolean) => void
+}
 
-  const isActive = (path: string) => {
-    return pathname === path || pathname?.startsWith(`${path}/`)
+export function AdminSidebar({ open, setOpen }: AdminSidebarProps) {
+  const { theme, setTheme } = useTheme()
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark")
   }
 
+  const links = [
+    { href: "/admin", label: "Dashboard", icon: Home },
+    { href: "/admin/books", label: "Books", icon: BookOpen },
+    { href: "/admin/topics", label: "Topics", icon: BookMarked },
+    { href: "/admin/scholars", label: "Scholars", icon: GraduationCap },
+    { href: "/admin/users", label: "Users", icon: Users },
+    { href: "/admin/settings", label: "Settings", icon: Settings },
+  ]
+
   return (
-    <Sidebar className="border-r border-[border]">
-      <SidebarHeader className="py-4">
-        <div className="flex items-center px-4">
-          <BookMarked className="h-6 w-6 text-emerald-700" />
-          <span className="ml-2 text-lg font-semibold text-emerald-800">Bayt al-Kutub</span>
-          <span className="ml-2 text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Admin</span>
+    <>
+      {/* Mobile Overlay */}
+      {open && <div className="fixed inset-0 z-40 bg-black/50 lg:hidden" onClick={() => setOpen(false)} />}
+
+      {/* Sidebar */}
+      <aside
+        className={cn(
+          "fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-900 border-r border-emerald-100 dark:border-emerald-900/50 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-auto",
+          open ? "translate-x-0" : "-translate-x-full",
+        )}
+      >
+        {/* Sidebar Header */}
+        <div className="h-16 flex items-center justify-between px-4 border-b border-emerald-100 dark:border-emerald-900/50">
+          <Link href="/admin" className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-600 to-teal-600 flex items-center justify-center">
+              <BookMarked className="h-4 w-4 text-white" />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold text-emerald-900 dark:text-emerald-50">Bayt al-Kutub</span>
+              <span className="text-xs text-emerald-600 dark:text-emerald-400">Admin Portal</span>
+            </div>
+          </Link>
+          <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setOpen(false)}>
+            <X className="h-5 w-5" />
+          </Button>
         </div>
-      </SidebarHeader>
-      <SidebarSeparator />
-      <SidebarContent>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={isActive("/admin")}>
-              <Link href="/admin">
-                <Home className="h-5 w-5" />
-                <span>Dashboard</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={isActive("/admin/books")}>
-              <Link href="/admin/books">
-                <BookOpen className="h-5 w-5" />
-                <span>Books Management</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={isActive("/admin/users")}>
-              <Link href="/admin/users">
-                <Users className="h-5 w-5" />
-                <span>Users Management</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={isActive("/admin/analytics")}>
-              <Link href="/admin/analytics">
-                <BarChart3 className="h-5 w-5" />
-                <span>Analytics</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={isActive("/admin/settings")}>
-              <Link href="/admin/settings">
-                <Settings className="h-5 w-5" />
-                <span>Settings</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarContent>
-      <SidebarSeparator />
-      <SidebarFooter>
-        <div className="px-4 py-2">
-          <div className="text-xs text-muted-foreground">Bayt al-Kutub Admin v1.0</div>
+
+        {/* Sidebar Content */}
+        <div className="py-4 px-2">
+          <nav className="space-y-1">
+            {links.map((link) => {
+              const Icon = link.icon
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                    link.href === "/admin"
+                      ? "bg-emerald-50 text-emerald-900 dark:bg-emerald-900/30 dark:text-emerald-50"
+                      : "text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 dark:text-gray-300 dark:hover:bg-emerald-900/30 dark:hover:text-emerald-50",
+                  )}
+                >
+                  <Icon className="h-5 w-5" />
+                  {link.label}
+                </Link>
+              )
+            })}
+          </nav>
         </div>
-      </SidebarFooter>
-    </Sidebar>
+
+        {/* Sidebar Footer */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-emerald-100 dark:border-emerald-900/50">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-gray-500 dark:text-gray-400">v1.0.0</span>
+            <Button variant="ghost" size="icon" onClick={toggleTheme}>
+              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </Button>
+          </div>
+        </div>
+      </aside>
+    </>
   )
 }
