@@ -148,9 +148,14 @@ const BOOKS_PER_PAGE = 12
 interface FilteredLibraryContentProps {
   topic: string
   topicName: string
+  showTopicFilter?: boolean
 }
 
-export default function FilteredLibraryContent({ topic, topicName }: FilteredLibraryContentProps) {
+export default function FilteredLibraryContent({ 
+  topic, 
+  topicName,
+  showTopicFilter = false 
+}: FilteredLibraryContentProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([])
   const [selectedScholars, setSelectedScholars] = useState<string[]>([])
@@ -158,13 +163,13 @@ export default function FilteredLibraryContent({ topic, topicName }: FilteredLib
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [books, setBooks] = useState<Book[]>([])
 
-  // Filter books by the selected topic and other filters
+  // Modify the filter logic
   const filteredBooks = useMemo(() => {
     return books.filter((book) => {
-      // First filter by the main topic
-      const topicMatch =
-        book.topic.toLowerCase() === topicName.toLowerCase() ||
-        book.topic.toLowerCase().replace(/\s+/g, "-") === topic
+      // Don't filter by topic if we're showing all books
+      const topicMatch = topic === "all-books" ? true : 
+        book.topic.toLowerCase() === topicName.toLowerCase() || 
+        book.topic.toLowerCase().replace(/\s+/g, "-") === topic;
 
       if (!topicMatch) return false
 
@@ -187,6 +192,7 @@ export default function FilteredLibraryContent({ topic, topicName }: FilteredLib
     const fetchBooks = async () => {
       try {
         const response = await axios.get<ApiResponse>("http://localhost:8000/api/books")
+        console.log("Fetched books:", response.data.books)
         setBooks(response.data.books)
       } catch (error) {
         console.error("Error fetching books:", error)
@@ -346,6 +352,7 @@ export default function FilteredLibraryContent({ topic, topicName }: FilteredLib
           {/* Books Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {paginatedBooks.map((book) => (
+              
               <ResponsiveBookCard
                 key={book.id}
                 book={{

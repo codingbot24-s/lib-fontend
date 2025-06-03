@@ -23,8 +23,7 @@ export function AdminQuickUploadModal() {
   const [open, setOpen] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission
+    // send the request for adding a new book on the server on local host 
     setOpen(false)
   }
 

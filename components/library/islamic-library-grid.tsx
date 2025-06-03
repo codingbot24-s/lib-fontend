@@ -13,6 +13,7 @@ import {
   Sparkles,
   Star,
   Crown,
+  Library,
 } from "lucide-react";
 
 
@@ -144,7 +145,21 @@ const topics = [
     hoverGlow: "hover:shadow-indigo-300/50 dark:hover:shadow-indigo-600/30",
     textColor: "text-indigo-800 dark:text-indigo-200",
     iconBg: "bg-indigo-100 dark:bg-indigo-800"
-  },
+  }, 
+  {
+    id: "all-books",
+    name: "All Books",
+    arabicName: "جميع الكتب",
+    description: "Browse our complete collection of Islamic books",
+    icon: Library, // Import Library from lucide-react
+    count: 1039, // Total number of books
+    gradient: "from-gray-600 via-gray-500 to-slate-500",
+    bgPattern: "bg-gray-50 dark:bg-gray-900/20",
+    borderColor: "border-gray-200 dark:border-gray-700",
+    hoverGlow: "hover:shadow-gray-300/50 dark:hover:shadow-gray-600/30",
+    textColor: "text-gray-800 dark:text-gray-200",
+    iconBg: "bg-gray-100 dark:bg-gray-800",
+  }
 ];
 
 // TODO: Fetch all the topics from the API
