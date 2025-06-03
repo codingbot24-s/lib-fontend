@@ -3,7 +3,13 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from "@/components/ui/sheet"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { BookOpen, Menu, Search, ChevronDown, User, BookText, FileText, Globe } from "lucide-react"
@@ -40,9 +46,8 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm" : "bg-transparent"
-      }`}
+      className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm" : "bg-transparent"
+        }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
@@ -79,10 +84,10 @@ export default function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" className="w-56">
-                <DropdownMenuItem>Read Quran</DropdownMenuItem>
-                <DropdownMenuItem>Listen to Recitation</DropdownMenuItem>
-                <DropdownMenuItem>Tafsir</DropdownMenuItem>
-                <DropdownMenuItem>Memorization Tools</DropdownMenuItem>
+                {/* <DropdownMenuItem>Read Quran</DropdownMenuItem> */}
+
+                <DropdownMenuItem>Tafasir</DropdownMenuItem>
+
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -98,27 +103,53 @@ export default function Header() {
               <DropdownMenuContent align="center" className="w-56">
                 <DropdownMenuItem>Sahih Bukhari</DropdownMenuItem>
                 <DropdownMenuItem>Sahih Muslim</DropdownMenuItem>
-                <DropdownMenuItem>Sunan Abu Dawood</DropdownMenuItem>
                 <DropdownMenuItem>Jami at-Tirmidhi</DropdownMenuItem>
+                <DropdownMenuItem>Sunan Abu Dawood</DropdownMenuItem>
                 <DropdownMenuItem>Sunan an-Nasa'i</DropdownMenuItem>
                 <DropdownMenuItem>Sunan Ibn Majah</DropdownMenuItem>
+                {/* // Browse all will point on all hadith  */}
                 <DropdownMenuItem>Browse All Collections</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link
-              href="/categories"
-              className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-emerald-100 hover:text-emerald-700 dark:hover:text-emerald-400 rounded-md"
-            >
-              Categories
-            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-emerald-100 hover:text-emerald-700 dark:hover:text-emerald-400"
+                >
+                  Fiqh <ChevronDown className="ml-1 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="w-56">
+                <DropdownMenuItem>Hanafi</DropdownMenuItem>
+                <DropdownMenuItem>Shafai</DropdownMenuItem>
+                <DropdownMenuItem>Maliki</DropdownMenuItem>
+                <DropdownMenuItem>Hanbali</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+        
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-emerald-100 hover:text-emerald-700 dark:hover:text-emerald-400"
+                >
+                  Dars e Nizami <ChevronDown className="ml-1 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="w-56">
+                <DropdownMenuItem>Arabic Haftum</DropdownMenuItem>
+                <DropdownMenuItem>Arabic Shashum</DropdownMenuItem>
+                <DropdownMenuItem>Arabic Panjum</DropdownMenuItem>
+                <DropdownMenuItem>Arabic Charum</DropdownMenuItem>
+                <DropdownMenuItem>Arabic Soum</DropdownMenuItem>
+                <DropdownMenuItem>Arabic Doum</DropdownMenuItem>
+                <DropdownMenuItem>Arabic Awwal</DropdownMenuItem> 
+               <DropdownMenuItem>Farsi</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-            <Link
-              href="/scholars"
-              className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-emerald-100 hover:text-emerald-700 dark:hover:text-emerald-400 rounded-md"
-            >
-              Scholars
-            </Link>
 
             <Link
               href="/library"
@@ -200,7 +231,7 @@ export default function Header() {
             </DropdownMenu>
 
             <Button className="hidden md:flex bg-emerald-700 hover:bg-emerald-800 text-white">Sign In</Button>
-
+            {/* TODO: make a mobile navbar according the nav in desktop */}
             {/* Mobile Menu */}
             <Sheet>
               <SheetTrigger asChild>
@@ -208,83 +239,176 @@ export default function Header() {
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetContent side="right" className="w-[300px] sm:w-[400px] p-0">
                 <div className="flex flex-col h-full">
-                  <div className="flex items-center mb-6">
-                    <BookOpen className="h-6 w-6 text-emerald-700 dark:text-emerald-500 mr-2" />
-                    <span className="text-lg font-bold text-emerald-900 dark:text-emerald-100 font-display">
-                      Bayt al-Kutub
-                    </span>
-                  </div>
-
-                  <div className="mb-6">
+                  {/* Fixed Header */}
+                  <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+                    <SheetHeader>
+                      <SheetTitle className="flex items-center mb-6">
+                        <BookOpen className="h-6 w-6 text-emerald-700 dark:text-emerald-500 mr-2" />
+                        <span className="text-lg font-bold text-emerald-900 dark:text-emerald-100 font-display">
+                          Bayt al-Kutub
+                        </span>
+                      </SheetTitle>
+                    </SheetHeader>
                     <SearchBar />
                   </div>
 
-                  <div className="space-y-1 mb-6">
-                    <Link
-                      href="/"
-                      className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
-                    >
-                      Home
-                    </Link>
-                    <Link
-                      href="/quran"
-                      className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
-                    >
-                      Quran
-                    </Link>
-                    <Link
-                      href="/hadith"
-                      className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
-                    >
-                      Hadith
-                    </Link>
-                    <Link
-                      href="/categories"
-                      className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
-                    >
-                      Categories
-                    </Link>
-                    <Link
-                      href="/scholars"
-                      className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
-                    >
-                      Scholars
-                    </Link>
-                    <Link
-                      href="/library"
-                      className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
-                    >
-                      Library
-                    </Link>
-                    <Link
-                      href="/articles"
-                      className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
-                    >
-                      Articles
-                    </Link>
-                    <Link
-                      href="/forum"
-                      className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
-                    >
-                      Forum
-                    </Link>
+                  {/* Scrollable Content */}
+                  <div className="flex-1 overflow-y-auto">
+                    <div className="p-6 space-y-4">
+                      {/* Navigation Links */}
+                      <div className="space-y-4">
+                        <Link
+                          href="/"
+                          className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                        >
+                          Home
+                        </Link>
+
+                        {/* Quran Section */}
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between py-2 px-3">
+                            <span className="font-medium">Quran</span>
+                          </div>
+                          <div className="pl-4 space-y-1">
+                            <Link
+                              href="/quran/tafsir"
+                              className="flex items-center py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-md"
+                            >
+                              Tafasir
+                            </Link>
+                          </div>
+                        </div>
+
+                        {/* Hadith Section */}
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between py-2 px-3">
+                            <span className="font-medium">Hadith</span>
+                          </div>
+                          <div className="pl-4 space-y-1">
+                            {[
+                              "Sahih Bukhari",
+                              "Sahih Muslim",
+                              "Jami at-Tirmidhi",
+                              "Sunan Abu Dawood",
+                              "Sunan an-Nasa'i",
+                              "Sunan Ibn Majah",
+                            ].map((collection) => (
+                              <Link
+                                key={collection}
+                                href={`/hadith/${collection.toLowerCase().replace(/\s+/g, '-')}`}
+                                className="flex items-center py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-md"
+                              >
+                                {collection}
+                              </Link>
+                            ))}
+                            <Link
+                              href="/hadith/collections"
+                              className="flex items-center py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-md"
+                            >
+                              Browse All Collections
+                            </Link>
+                          </div>
+                        </div>
+
+                        {/* Fiqh Section */}
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between py-2 px-3">
+                            <span className="font-medium">Fiqh</span>
+                          </div>
+                          <div className="pl-4 space-y-1">
+                            {["Hanafi", "Shafai", "Maliki", "Hanbali"].map((madhab) => (
+                              <Link
+                                key={madhab}
+                                href={`/fiqh/${madhab.toLowerCase()}`}
+                                className="flex items-center py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-md"
+                              >
+                                {madhab}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Dars e Nizami Section */}
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between py-2 px-3">
+                            <span className="font-medium">Dars e Nizami</span>
+                          </div>
+                          <div className="pl-4 space-y-1">
+                            {[
+                              "Arabic Haftum",
+                              "Arabic Shashum",
+                              "Arabic Panjum",
+                              "Arabic Charum",
+                              "Arabic Soum",
+                              "Arabic Doum",
+                              "Arabic Awwal",
+                              "Farsi"
+                            ].map((level) => (
+                              <Link
+                                key={level}
+                                href={`/dars-e-nizami/${level.toLowerCase().replace(/\s+/g, '-')}`}
+                                className="flex items-center py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-md"
+                              >
+                                {level}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Other Links */}
+                        {[
+                          { href: "/categories", label: "Categories" },
+                          { href: "/library", label: "Library" },
+                          { href: "/articles", label: "Articles" },
+                          { href: "/forum", label: "Forum" },
+                        ].map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="space-y-4 mt-auto">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500 dark:text-gray-400">Language</span>
-                      <Button variant="outline" size="sm" className="flex items-center gap-1">
-                        <Globe className="h-4 w-4" /> English
-                      </Button>
-                    </div>
+                  {/* Fixed Footer */}
+                  <div className="p-6 border-t border-gray-200 dark:border-gray-700">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-500 dark:text-gray-400">Theme</span>
+                        <ThemeToggle />
+                      </div>
 
-                    <div className="flex flex-col space-y-2">
-                      <Button className="w-full bg-emerald-700 hover:bg-emerald-800 text-white">Sign In</Button>
-                      <Button variant="outline" className="w-full">
-                        Create Account
-                      </Button>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-500 dark:text-gray-400">Language</span>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="outline" size="sm" className="flex items-center gap-1">
+                              <Globe className="h-4 w-4" /> English
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem>English</DropdownMenuItem>
+                            <DropdownMenuItem>العربية</DropdownMenuItem>
+                            <DropdownMenuItem>اردو</DropdownMenuItem>
+                            <DropdownMenuItem>Bahasa Indonesia</DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+
+                      <div className="flex flex-col space-y-2">
+                        <Button className="w-full bg-emerald-700 hover:bg-emerald-800 text-white">
+                          Sign In
+                        </Button>
+                        <Button variant="outline" className="w-full">
+                          Create Account
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
