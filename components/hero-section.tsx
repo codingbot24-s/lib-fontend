@@ -10,8 +10,8 @@ export default function HeroSection() {
       <HeroPattern className="absolute inset-0 opacity-10" />
       <div className="container relative z-10 mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-arabic text-4xl md:text-6xl font-bold text-white mb-2">بيت الكتب</h1>
-          <h2 className="text-2xl md:text-3xl font-light text-gold-300 mb-6">Bayt al-Kutub</h2>
+          <h1 className="font-arabic text-4xl md:text-6xl font-bold text-gold-300 mb-2">بيت الكتب</h1>
+          <h2 className="text-2xl md:text-3xl font-light text-gold-400 mb-6">Bayt al-Kutub</h2>
 
           <QuranVerse
             arabic="اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ"
