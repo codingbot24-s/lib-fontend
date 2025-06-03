@@ -115,9 +115,14 @@ const config: Config = {
       },
       aspectRatio: {
         book: "3/4",
+        '4/5': '4 / 5',
       },
       backdropBlur: {
         xs: "2px",
+      },
+      scale: {
+        '102': '1.02',
+        '103': '1.03',
       },
     },
   },
