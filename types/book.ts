@@ -17,6 +17,7 @@ export interface Book {
   pages?: number
   rating?: number
   publishYear?: number
+  status? : string
 }
 
 export interface ApiResponse {
@@ -28,3 +29,6 @@ export interface ApiResponse {
     total_pages: number
   }
 }
+
+
+

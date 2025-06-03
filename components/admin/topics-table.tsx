@@ -50,7 +50,7 @@ export function TopicsTable({ topics, onEdit, onDelete }: TopicsTableProps) {
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <div className="flex items-center justify-end gap-2">
                   <Button variant="outline" size="sm" className="hidden sm:inline-flex" asChild>
-                    <Link href={`/admin/books?topic=${topic.id}`}>
+                    <Link href={`/admin/topics/${topic.id}/books`}>
                       <Book className="h-4 w-4 mr-1" />
                       View Books
                     </Link>
@@ -81,7 +81,7 @@ export function TopicsTable({ topics, onEdit, onDelete }: TopicsTableProps) {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem asChild>
-                          <Link href={`/admin/books?topic=${topic.id}`}>
+                          <Link href={`/admin/topics/${topic.id}/books`}>
                             <Book className="h-4 w-4 mr-2" />
                             View Books
                           </Link>
