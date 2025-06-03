@@ -4,6 +4,7 @@ import { Inter, Noto_Serif } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import Header from "@/components/header" // Add this import
+import { Toaster } from 'sonner'
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,6 +38,12 @@ export default function RootLayout({
           <main>
             {children}
           </main>
+          <Toaster 
+            position="top-right"
+            expand={false}
+            richColors
+            closeButton
+          />
         </ThemeProvider>
       </body>
     </html>
