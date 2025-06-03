@@ -1,9 +1,24 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+import axios from "axios"
+import { toast } from "sonner"
 import type { Metadata } from "next"
 import Image from "next/image"
 import { PlusCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,11 +29,21 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { QuickUploadButton } from "@/components/admin/quick-upload-button"
 
-export const metadata: Metadata = {
-  title: "Books Management | Admin Dashboard",
-  description: "Manage books in the Islamic Digital Library",
-}
+
 
 // Mock data for books
 const books = [
@@ -87,7 +112,109 @@ const books = [
   },
 ]
 
+interface Topic {
+  id: number
+  name: string
+  description: string
+}
+
+// Update the form schema to match backend expectations
+const bookFormSchema = z.object({
+  archiveId: z.string().min(1, "Archive ID is required"),
+  title: z.string().min(1, "Title is required"),
+  arabictitle: z.string().min(1, "Arabic Title is required"),
+  description: z.string().min(1, "Description is required"),
+  author: z.string().min(1, "Author is required"),
+  TopicID: z.number().min(1, "Topic is required"), // Changed from topic to TopicID
+  language: z.string().min(1, "Language is required"),
+  publisher: z.string().min(1, "Publisher is required"),
+  edition: z.string().min(1, "Edition is required"),
+})
+
+type BookFormValues = z.infer<typeof bookFormSchema>
+
+// Update the component to be client-side
 export default function BooksManagementPage() {
+  const [open, setOpen] = useState(false)
+  const [topics, setTopics] = useState<Topic[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+
+  const form = useForm<BookFormValues>({
+    resolver: zodResolver(bookFormSchema),
+    defaultValues: {
+      archiveId: "",
+      title: "",
+      arabictitle: "",
+      description: "",
+      author: "",
+      TopicID: 0, // Changed from topic to TopicID
+      language: "",
+      publisher: "",
+      edition: "",
+    },
+  })
+
+  const onSubmit = async (data: BookFormValues) => {
+    try {
+      setIsLoading(true)
+      
+      const formattedData = {
+        archiveId: data.archiveId,
+        title: data.title,
+        arabictitle: data.arabictitle,
+        description: data.description,
+        author: data.author,
+        TopicID: Number(data.TopicID), // Changed from topic to TopicID
+        language: data.language,
+        publisher: data.publisher,
+        edition: data.edition
+      }
+
+      const response = await axios.post('http://localhost:8000/api/books', formattedData)
+      
+      if (response.status === 201) {
+        const newBook = response.data
+        toast.success('Book created successfully')
+        // Add the new book to your books list if needed
+        // setBooks(prev => [...prev, newBook])
+        setOpen(false)
+        form.reset()
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(`Failed to create book: ${error.response?.data?.error || 'Unknown error'}`)
+      } else {
+        toast.error('Failed to create book')
+      }
+      console.error('Error creating book:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // Add this useEffect for fetching topics
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        setIsLoading(true)
+        const response = await axios.get('http://localhost:8000/api/topics')
+        setTopics(response.data.topics)
+      } catch (error) {
+        toast.error('Failed to fetch topics')
+        console.error('Error fetching topics:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchTopics()
+  }, [])
+
+  const handleBookCreated = () => {
+    // Show a generic success message
+    toast.success("Book created successfully")
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -95,10 +222,7 @@ export default function BooksManagementPage() {
           <h1 className="text-3xl font-bold tracking-tight text-emerald-900">Books Management</h1>
           <p className="text-muted-foreground">Manage all books in the Islamic Digital Library</p>
         </div>
-        <Button className="bg-emerald-600 hover:bg-emerald-700">
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Add New Book
-        </Button>
+        <QuickUploadButton onSuccess={handleBookCreated} />
       </div>
 
       <Card>
