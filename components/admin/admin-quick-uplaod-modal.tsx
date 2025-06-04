@@ -94,7 +94,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
         arabictitle: data.arabictitle,
         description: data.description,
         author: data.author,
-        TopicID: Number(data.TopicID),
+        topic: Number(data.TopicID),
         language: data.language,
         publisher: data.publisher,
         Edition: data.Edition

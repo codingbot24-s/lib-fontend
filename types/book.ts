@@ -1,33 +1,52 @@
 export interface Book {
   id: number
   title: string
-  arabicTitle?: string
-  description: string
+  arabictitle: string
   scholar: string
-  topic: string
+  topic_id: number
+  topic: {
+    id: number
+    name: string
+    description: string
+    created_at?: string
+    updated_at?: string
+  }
   language: string
-  publisher: string
+  publisher?: string
   edition: string
   coverimage: string
   viewpdfurl: string
   download_url: string
+  description: string
   created_at: string
   updated_at: string
-  volumes?: number
-  pages?: number
-  rating?: number
-  publishYear?: number
   status? : string
 }
 
 export interface ApiResponse {
-  books: Book[]
-  pagination: {
-    current_page: number
-    per_page: number
-    total: number
-    total_pages: number
-  }
+  books: {
+    id: number;
+    title: string;
+    arabictitle: string;
+    scholar: string;
+    topic_id: number;
+    topic: {
+      id: number;
+      name: string;
+      description: string;
+      created_at: string;
+      updated_at: string;
+    };
+    language: string;
+    publisher: string;
+    edition: string;
+    coverimage: string;
+    viewpdfurl: string;
+    download_url: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
+  }[];
 }
 
 

@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useSearchParams } from "next/navigation"
+import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { Book } from "@/types/book"
@@ -25,8 +25,8 @@ import { Book } from "@/types/book"
 export default function BooksManagementPage() {
   const [books, setBooks] = useState<Book[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const searchParams = useSearchParams()
-  const topicId = searchParams.get('topic')
+  const params = useParams()
+  const topicId = params.id // Get ID from route params instead of search params
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -36,7 +36,6 @@ export default function BooksManagementPage() {
         setIsLoading(true)
         const response = await axios.get(`http://localhost:8000/api/topics/${topicId}/books`)
         setBooks(response.data.books)
-        console.log('Fetched books:', response.data.books)
       } catch (error) {
         console.error('Error fetching books:', error)
       } finally {
@@ -100,7 +99,7 @@ export default function BooksManagementPage() {
                   </TableCell>
                   <TableCell className="font-medium">{book.title}</TableCell>
                   <TableCell>{book.scholar}</TableCell>
-                  <TableCell>{book.topic}</TableCell>
+                  
                   <TableCell>{book.language}</TableCell>
                   <TableCell>
                     <Badge

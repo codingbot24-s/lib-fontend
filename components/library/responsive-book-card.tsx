@@ -13,13 +13,38 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Book } from "@/types/book";
 import { useState } from "react";
 import axios from "axios";
 import { Spinner } from "@/components/ui/spinner";
 
+interface Topic {
+  id: number;
+  name: string;
+  description: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
 interface ResponsiveBookCardProps {
-  book: Book;
+  book: {
+    id: number;
+    title: string;
+    arabictitle: string;
+    scholar: string;
+    topic_id: number;
+    topic: Topic;
+    language: string;
+    edition: string;
+    coverimage: string;
+    viewpdfurl: string;
+    download_url: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
+    rating? : number;
+    publishYear?: string;
+    volumes?: number;
+  };
 }
 
 export default function ResponsiveBookCard({ book }: ResponsiveBookCardProps) {
@@ -108,9 +133,9 @@ export default function ResponsiveBookCard({ book }: ResponsiveBookCardProps) {
           <h3 className="font-bold text-emerald-900 dark:text-emerald-100 line-clamp-2 leading-tight text-sm sm:text-base">
             {book.title}
           </h3>
-          {book.arabicTitle && (
+          {book.arabictitle && (
             <p className="text-xs sm:text-sm text-amber-700 dark:text-amber-400 font-arabic leading-relaxed line-clamp-1">
-              {book.arabicTitle}
+              {book.arabictitle}
             </p>
           )}
         </div>
@@ -126,13 +151,13 @@ export default function ResponsiveBookCard({ book }: ResponsiveBookCardProps) {
             variant="outline"
             className="border-emerald-200 text-emerald-700 dark:border-emerald-800 dark:text-emerald-400 text-xs flex-shrink-0"
           >
-            {book.topic}
+            {book.topic.name || 'Uncategorized'} {/* Display topic name instead of the whole object */}
           </Badge>
 
           <div className="flex items-center gap-1 flex-shrink-0">
             <Star className="h-3 w-3 text-amber-500 fill-amber-500" />
             <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
-              {book.rating}
+              {book?.rating}
             </span>
           </div>
         </div>
@@ -140,7 +165,7 @@ export default function ResponsiveBookCard({ book }: ResponsiveBookCardProps) {
         {/* Publication Year */}
         <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
           <Calendar className="h-3 w-3" />
-          <span>Published {book.publishYear}</span>
+          <span>Published {book?.publishYear}</span>
         </div>
       </div>
 

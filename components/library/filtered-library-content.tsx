@@ -18,130 +18,36 @@ import ResponsiveBookCard from "./responsive-book-card"
 import { Search, Filter, SlidersHorizontal, ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import axios from "axios"
-import { Book } from "@/types/book"
 import { ApiResponse } from "@/types/book"
-// Mock data for books (same as before but with topic filtering)
-const mockBooks = [
-  {
-    id: 1,
-    title: "The Sealed Nectar",
-    arabicTitle: "الرحيق المختوم",
-    author: "Safiur-Rahman Al-Mubarakpuri",
-    language: "English",
-    topic: "Seerah",
-    edition: "2nd Edition",
-    coverUrl: "/placeholder.svg?height=400&width=300",
-    volumes: 1,
-    pages: 624,
-    publishYear: 2002,
-    rating: 4.8,
-    description: "A complete authoritative book on the life of Prophet Muhammad (Peace Be Upon Him).",
-  },
-  {
-    id: 2,
-    title: "Riyadh as-Saliheen",
-    arabicTitle: "رياض الصالحين",
-    author: "Imam An-Nawawi",
-    language: "Arabic",
-    topic: "Hadith",
-    edition: "1st Edition",
-    coverUrl: "/placeholder.svg?height=400&width=300",
-    volumes: 3,
-    pages: 1200,
-    publishYear: 1999,
-    rating: 4.9,
-    description: "A collection of authentic hadith compiled by Imam An-Nawawi.",
-  },
-  {
-    id: 3,
-    title: "Ihya Ulum al-Din",
-    arabicTitle: "إحياء علوم الدين",
-    author: "Imam Al-Ghazali",
-    language: "Arabic",
-    topic: "Tasawwuf",
-    edition: "3rd Edition",
-    coverUrl: "/placeholder.svg?height=400&width=300",
-    volumes: 4,
-    pages: 2400,
-    publishYear: 2001,
-    rating: 4.7,
-    description: "A comprehensive work on Islamic spirituality and religious sciences.",
-  },
-  {
-    id: 4,
-    title: "The Quran: English Translation",
-    arabicTitle: "القرآن الكريم",
-    author: "Abdullah Yusuf Ali",
-    language: "English",
-    topic: "Quran",
-    edition: "Revised Edition",
-    coverUrl: "/placeholder.svg?height=400&width=300",
-    volumes: 1,
-    pages: 1200,
-    publishYear: 2005,
-    rating: 4.9,
-    description: "A widely respected English translation of the Holy Quran.",
-  },
-  {
-    id: 5,
-    title: "Tafsir Ibn Kathir",
-    arabicTitle: "تفسير ابن كثير",
-    author: "Ibn Kathir",
-    language: "Arabic",
-    topic: "Tafsir",
-    edition: "Complete Edition",
-    coverUrl: "/placeholder.svg?height=400&width=300",
-    volumes: 10,
-    pages: 4800,
-    publishYear: 1998,
-    rating: 4.8,
-    description: "One of the most respected and comprehensive commentaries on the Quran.",
-  },
-  {
-    id: 6,
-    title: "Sahih al-Bukhari",
-    arabicTitle: "صحيح البخاري",
-    author: "Imam Bukhari",
-    language: "Arabic",
-    topic: "Hadith",
-    edition: "Complete Edition",
-    coverUrl: "/placeholder.svg?height=400&width=300",
-    volumes: 9,
-    pages: 3600,
-    publishYear: 1997,
-    rating: 4.9,
-    description: "The most authentic collection of hadith in Islamic literature.",
-  },
-  {
-    id: 7,
-    title: "Al-Aqidah al-Tahawiyyah",
-    arabicTitle: "العقيدة الطحاوية",
-    author: "Imam At-Tahawi",
-    language: "Arabic",
-    topic: "Aqeedah",
-    edition: "1st Edition",
-    coverUrl: "/placeholder.svg?height=400&width=300",
-    volumes: 1,
-    pages: 180,
-    publishYear: 2000,
-    rating: 4.6,
-    description: "A fundamental text on Islamic creed and belief.",
-  },
-  {
-    id: 8,
-    title: "Fiqh us-Sunnah",
-    author: "Sayyid Sabiq",
-    language: "English",
-    topic: "Fiqh",
-    edition: "2nd Edition",
-    coverUrl: "/placeholder.svg?height=400&width=300",
-    volumes: 5,
-    pages: 2000,
-    publishYear: 2003,
-    rating: 4.7,
-    description: "A comprehensive guide to Islamic jurisprudence based on Quran and Sunnah.",
-  },
-]
+
+
+// Update the Topic interface to match API response
+interface Topic {
+  id: number;
+  name: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+}
+
+// Update the Book interface to match API response
+interface Book {
+  id: number;
+  title: string;
+  arabictitle: string;
+  scholar: string;
+  topic_id: number;
+  topic: Topic;
+  language: string;
+  publisher: string;
+  edition: string;
+  coverimage: string;
+  viewpdfurl: string;
+  download_url: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+}
 
 const BOOKS_PER_PAGE = 12
 
@@ -165,27 +71,29 @@ export default function FilteredLibraryContent({
 
   // Modify the filter logic
   const filteredBooks = useMemo(() => {
-    return books.filter((book) => {
+    return books.filter(book => {
       // Don't filter by topic if we're showing all books
       const topicMatch = topic === "all-books" ? true : 
-        book.topic.toLowerCase() === topicName.toLowerCase() || 
-        book.topic.toLowerCase().replace(/\s+/g, "-") === topic;
+        book.topic?.name.toLowerCase() === topicName.toLowerCase() || 
+        book.topic?.name.toLowerCase().replace(/\s+/g, "-") === topic;
 
-      if (!topicMatch) return false
+      if (!topicMatch) return false;
 
       // Then apply other filters
       const matchesSearch =
         searchQuery === "" ||
         book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         book.scholar.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (book.arabicTitle && book.arabicTitle.includes(searchQuery))
+        (book.arabictitle && book.arabictitle.includes(searchQuery))
 
-      const matchesLanguage = selectedLanguages.length === 0 || selectedLanguages.includes(book.language)
-      const matchesScholar = selectedScholars.length === 0 || selectedScholars.includes(book.scholar)
+      const matchesLanguage = selectedLanguages.length === 0 || 
+        selectedLanguages.includes(book.language);
+      const matchesScholar = selectedScholars.length === 0 || 
+        selectedScholars.includes(book.scholar);
 
       return matchesSearch && matchesLanguage && matchesScholar
     })
-  }, [topic, topicName, searchQuery, selectedLanguages, selectedScholars, books])
+  }, [books, topic, topicName, searchQuery, selectedLanguages, selectedScholars])
 
   // Fetch books from the API
   useEffect(() => {
@@ -356,11 +264,11 @@ export default function FilteredLibraryContent({
               <ResponsiveBookCard
                 key={book.id}
                 book={{
-                  ...book,
+                  ...book, // Spread all properties
+                  topic_id: book.topic_id,
+                  created_at: book.created_at,
+                  updated_at: book.updated_at,
                   coverimage: book.coverimage || "/placeholder.svg",
-                  scholar: book.scholar,
-                  viewpdfurl: book.viewpdfurl,
-                  download_url: book.download_url,
                 }}
               />
             ))}
