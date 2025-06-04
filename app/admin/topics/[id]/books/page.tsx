@@ -20,6 +20,7 @@ import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { Book } from "@/types/book"
+import { toast } from "sonner"
 
 
 export default function BooksManagementPage() {
@@ -46,6 +47,22 @@ export default function BooksManagementPage() {
     fetchBooks()
   }, [topicId])
 
+  const deleteBook = async (bookId: number) => {
+    try {
+      setIsLoading(true)
+      const response = await axios.delete(`http://localhost:8000/api/books/${bookId}`)
+      if (response.status === 200) {
+        toast.success('Book deleted successfully')
+        // Optionally, remove the book from the state
+        setBooks(prevBooks => prevBooks.filter(book => book.id !== bookId))
+      }
+    } catch (error) {
+      toast.error('Failed to delete book')
+      console.error('Error deleting book:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -166,7 +183,10 @@ export default function BooksManagementPage() {
                             View Details
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem className="text-red-600 text-xs sm:text-sm">
+                          <DropdownMenuItem className="text-red-600 text-xs sm:text-sm"
+                            onClick={() => deleteBook(book.id)}
+                          >
+                            
                             Delete Book
                           </DropdownMenuItem>
                         </DropdownMenuContent>

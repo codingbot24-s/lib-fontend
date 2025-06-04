@@ -23,7 +23,8 @@ import {
 import { Loader2 } from "lucide-react"
 import { Book } from "@/types/book"
 import { cn } from "@/lib/utils"
-
+import { toast } from "sonner"
+import axios from "axios"
 
 interface AdminRecentBooksTableProps {
   books : Book[]
@@ -35,9 +36,10 @@ export function AdminRecentBooksTable({
   isLoading,
 }: AdminRecentBooksTableProps) {
   const [currentPage, setCurrentPage] = useState(1)
+   
   const booksPerPage = 5
   const totalPages = Math.ceil(books.length / booksPerPage)
-
+  
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
     return new Intl.DateTimeFormat("en-US", {
@@ -46,6 +48,21 @@ export function AdminRecentBooksTable({
       day: "numeric",
     }).format(date)
   }
+
+
+  const deleteBook = async (bookId: number) => {
+    try {
+      const resposne = await axios.delete(`http://localhost:8000/api/books/${bookId}`)
+      if (resposne.status === 200) {
+        toast.success('Book deleted successfully')
+        
+      }     
+      console.log(`Book with ID ${bookId} deleted`)
+    } catch (error) {
+      console.error("Failed to delete book:", error)
+    }
+  }   
+
 
   if (isLoading) {
     return (
@@ -135,7 +152,11 @@ export function AdminRecentBooksTable({
                             Edit Book
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem className="text-red-600">
+                          <DropdownMenuItem className="text-red-600"
+                            onClick={() => {
+                              deleteBook(book.id)
+                            }}
+                          >
                             <Trash2 className="mr-2 h-4 w-4" />
                             Delete Book
                           </DropdownMenuItem>
