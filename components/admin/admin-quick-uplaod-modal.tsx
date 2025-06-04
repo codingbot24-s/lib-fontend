@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { toast } from "sonner"
 
-import { PlusCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { PlusCircle } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { Loader2 } from "lucide-react"
 
 interface Topic {
   id: number
@@ -122,50 +123,67 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[550px]">
-        <DialogHeader>
-          <DialogTitle>Add New Book</DialogTitle>
-          <DialogDescription>Fill in the details to add a new book to the library.</DialogDescription>
+      <DialogTrigger asChild>
+        <Button 
+          className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white"
+          onClick={() => onOpenChange(true)}
+        >
+          <PlusCircle className="h-4 w-4 mr-2" />
+          <span className="hidden sm:inline">Quick Book Upload</span>
+          <span className="sm:hidden">Upload</span>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="w-[95vw] sm:w-full max-w-[550px] p-4 sm:p-6 md:p-8">
+        <DialogHeader className="space-y-2 sm:space-y-3">
+          <DialogTitle className="text-lg sm:text-xl">Add New Book</DialogTitle>
+          <DialogDescription className="text-xs sm:text-sm">
+            Fill in the details to add a new book to the library.
+          </DialogDescription>
         </DialogHeader>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <div className="grid grid-cols-1 gap-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6">
+            {/* Archive ID Field */}
             <div className="space-y-2">
-              <Label htmlFor="archiveid">Archive ID</Label>
+              <Label htmlFor="archiveid" className="text-sm sm:text-base">Archive ID</Label>
               <Input
                 {...form.register("archiveId")}
                 placeholder="Enter archive.org ID"
-                className="border-emerald-100 dark:border-emerald-900/50"
+                className="h-9 sm:h-10 text-sm sm:text-base border-emerald-100 dark:border-emerald-900/50"
               />
               {form.formState.errors.archiveId && (
-                <p className="text-sm text-red-500">{form.formState.errors.archiveId.message}</p>
+                <p className="text-xs sm:text-sm text-red-500">{form.formState.errors.archiveId.message}</p>
               )}
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="title">Book Title</Label>
-              <Input
-                {...form.register("title")}
-                placeholder="Enter book title"
-                className="border-emerald-100 dark:border-emerald-900/50"
-              />
-              {form.formState.errors.title && (
-                <p className="text-sm text-red-500">{form.formState.errors.title.message}</p>
-              )}
+            {/* Two Column Layout for Title and Arabic Title on larger screens */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="title" className="text-sm sm:text-base">Book Title</Label>
+                <Input
+                  {...form.register("title")}
+                  placeholder="Enter book title"
+                  className="h-9 sm:h-10 text-sm sm:text-base border-emerald-100 dark:border-emerald-900/50"
+                />
+                {form.formState.errors.title && (
+                  <p className="text-xs sm:text-sm text-red-500">{form.formState.errors.title.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="arabictitle" className="text-sm sm:text-base">Arabic Title</Label>
+                <Input
+                  {...form.register("arabictitle")}
+                  placeholder="أدخل عنوان الكتاب بالعربية"
+                  className="h-9 sm:h-10 text-sm sm:text-base border-emerald-100 dark:border-emerald-900/50 font-arabic text-right"
+                  dir="rtl"
+                />
+                {form.formState.errors.arabictitle && (
+                  <p className="text-xs sm:text-sm text-red-500">{form.formState.errors.arabictitle.message}</p>
+                )}
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="arabicTitle">Arabic Title</Label>
-              <Input
-                {...form.register("arabictitle")}
-                placeholder="أدخل عنوان الكتاب بالعربية"
-                className="border-emerald-100 dark:border-emerald-900/50 font-arabic text-right"
-                dir="rtl"
-              />
-              {form.formState.errors.arabictitle && (
-                <p className="text-sm text-red-500">{form.formState.errors.arabictitle.message}</p>
-              )}
-            </div>
-
+            {/* Two Column Layout for Topic and Language */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="topicid">Topic</Label>
@@ -218,70 +236,87 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="author">Author</Label>
-              <Input
-                {...form.register("author")}
-                placeholder="Enter author name"
-                className="border-emerald-100 dark:border-emerald-900/50"
-              />
-              {form.formState.errors.author && (
-                <p className="text-sm text-red-500">{form.formState.errors.author.message}</p>
-              )}
+            {/* Author and Publisher Fields */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="author">Author</Label>
+                <Input
+                  {...form.register("author")}
+                  placeholder="Enter author name"
+                  className="border-emerald-100 dark:border-emerald-900/50"
+                />
+                {form.formState.errors.author && (
+                  <p className="text-sm text-red-500">{form.formState.errors.author.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="publisher">Publisher</Label>
+                <Input
+                  {...form.register("publisher")}
+                  placeholder="Enter publisher name"
+                  className="border-emerald-100 dark:border-emerald-900/50"
+                />
+                {form.formState.errors.publisher && (
+                  <p className="text-sm text-red-500">{form.formState.errors.publisher.message}</p>
+                )}
+              </div>
             </div>
 
+            {/* Edition Field */}
             <div className="space-y-2">
-              <Label htmlFor="publisher">Publisher</Label>
+              <Label htmlFor="Edition" className="text-sm sm:text-base">Edition</Label>
               <Input
-                {...form.register("publisher")}
-                placeholder="Enter publisher name"
-                className="border-emerald-100 dark:border-emerald-900/50"
-              />
-              {form.formState.errors.publisher && (
-                <p className="text-sm text-red-500">{form.formState.errors.publisher.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="Edition">Edition</Label>
-              <Input
-                {...form.register("Edition")} // Changed from edition to Edition
+                {...form.register("Edition")}
                 placeholder="Enter edition"
-                className="border-emerald-100 dark:border-emerald-900/50"
+                className="h-9 sm:h-10 text-sm sm:text-base border-emerald-100 dark:border-emerald-900/50"
               />
               {form.formState.errors.Edition && (
-                <p className="text-sm text-red-500">{form.formState.errors.Edition.message}</p>
+                <p className="text-xs sm:text-sm text-red-500">{form.formState.errors.Edition.message}</p>
               )}
             </div>
 
+            {/* Description Field */}
             <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description" className="text-sm sm:text-base">Description</Label>
               <Textarea
                 {...form.register("description")}
                 placeholder="Enter book description"
-                className="border-emerald-100 dark:border-emerald-900/50"
+                className="min-h-[80px] sm:min-h-[100px] text-sm sm:text-base border-emerald-100 dark:border-emerald-900/50"
                 rows={3}
               />
               {form.formState.errors.description && (
-                <p className="text-sm text-red-500">{form.formState.errors.description.message}</p>
+                <p className="text-xs sm:text-sm text-red-500">{form.formState.errors.description.message}</p>
               )}
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="sm:space-x-2">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
+              className="w-full sm:w-auto h-9 sm:h-10 text-sm sm:text-base"
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="w-full sm:w-auto h-9 sm:h-10 text-sm sm:text-base bg-emerald-600 hover:bg-emerald-700 text-white"
               disabled={form.formState.isSubmitting}
             >
-              {form.formState.isSubmitting ? "Adding..." : "Add Book"}
+              {form.formState.isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <span className="sm:inline">Adding...</span>
+                  <span className="inline sm:hidden">...</span>
+                </>
+              ) : (
+                <>
+                  <span className="sm:inline">Add Book</span>
+                  <span className="inline sm:hidden">Add</span>
+                </>
+              )}
             </Button>
           </DialogFooter>
         </form>

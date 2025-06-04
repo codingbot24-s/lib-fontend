@@ -1,3 +1,5 @@
+"use client"
+import { useState } from "react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Users, ChevronRight } from "lucide-react"
@@ -10,183 +12,231 @@ import { AdminStatCards } from "@/components/admin/admin-stats-card"
 import { AdminRecentBooksTable } from "@/components/admin/admin-recent-book-table"
 import { AdminTopicGrid } from "@/components/admin/admin-topic-grid"
 import { AdminQuickUploadModal } from "@/components/admin/admin-quick-uplaod-modal"
-
-export const metadata: Metadata = {
-  title: "Admin Dashboard | Bayt al-Kutub",
-  description: "Admin dashboard for the Islamic Digital Library",
-}
-
+import { toast } from "sonner"
 export default function AdminDashboardPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  
+  const handleBookCreated = () => {
+    // Handle book creation success if needed
+    toast.success("Book created successfully")
+  }
+  
   return (
-    <div className="space-y-6">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight text-emerald-900 dark:text-emerald-50">Admin Dashboard</h1>
-          <p className="text-muted-foreground">Welcome to Bayt al-Kutub Islamic Library Administration</p>
+    <div className="min-h-screen bg-background">
+      {/* Main Container with proper responsive padding */}
+      <div className="container mx-auto max-w-7xl space-y-4 p-3 sm:space-y-6 sm:p-4 md:p-6 lg:p-8">
+        
+        {/* Page Header - Fully responsive */}
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+          <div className="flex-1 space-y-1 sm:space-y-2">
+            <h1 className="text-xl font-bold tracking-tight text-emerald-900 dark:text-emerald-50 sm:text-2xl md:text-3xl lg:text-4xl">
+              Admin Dashboard
+            </h1>
+            <p className="text-xs text-muted-foreground sm:text-sm md:text-base">
+              Welcome to Bayt al-Kutub Islamic Library Administration
+            </p>
+          </div>
+          <div className="flex-shrink-0 w-full sm:w-auto">
+            <AdminQuickUploadModal 
+              open={isModalOpen}
+              onOpenChange={setIsModalOpen}
+              onSuccess={() => setIsModalOpen(false)}
+            />
+          </div>
         </div>
-        <AdminQuickUploadModal />
-      </div>
 
-      {/* Stats Cards */}
-      <AdminStatCards />
+        {/* Stats Cards Grid - Enhanced mobile layout */}
+        <div className="grid gap-3 grid-cols-2 sm:gap-4 lg:grid-cols-4">
+          <AdminStatCards />
+        </div>
 
-      {/* Main Content Tabs */}
-      <Tabs defaultValue="recent" className="space-y-6">
-        <TabsList className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900">
-          <TabsTrigger value="recent">Recent Books</TabsTrigger>
-          <TabsTrigger value="topics">Books by Topic</TabsTrigger>
-          <TabsTrigger value="activity">Recent Activity</TabsTrigger>
-        </TabsList>
+        {/* Main Content Tabs - Improved mobile navigation */}
+        <Tabs defaultValue="recent" className="space-y-4">
+          {/* Mobile-first tab navigation */}
+          <div className="w-full overflow-hidden">
+            <TabsList className="flex h-auto w-full overflow-x-auto border-b border-emerald-100 bg-transparent p-0 dark:border-emerald-800">
+              <TabsTrigger 
+                value="recent" 
+                className="flex-1 min-w-0 whitespace-nowrap rounded-none border-b-2 border-transparent px-2 py-3 text-xs hover:text-emerald-700 data-[state=active]:border-emerald-700 data-[state=active]:text-emerald-700 sm:px-4 sm:text-sm md:flex-none md:px-6"
+              >
+                Recent Books
+              </TabsTrigger>
+              <TabsTrigger 
+                value="topics"
+                className="flex-1 min-w-0 whitespace-nowrap rounded-none border-b-2 border-transparent px-2 py-3 text-xs hover:text-emerald-700 data-[state=active]:border-emerald-700 data-[state=active]:text-emerald-700 sm:px-4 sm:text-sm md:flex-none md:px-6"
+              >
+                Books by Topic
+              </TabsTrigger>
+              <TabsTrigger 
+                value="activity"
+                className="flex-1 min-w-0 whitespace-nowrap rounded-none border-b-2 border-transparent px-2 py-3 text-xs hover:text-emerald-700 data-[state=active]:border-emerald-700 data-[state=active]:text-emerald-700 sm:px-4 sm:text-sm md:flex-none md:px-6"
+              >
+                Recent Activity
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
-        {/* Recent Books Tab */}
-        <TabsContent value="recent" className="space-y-6">
-          <Card>
-            <CardHeader className="pb-2">
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Recently Added Books</CardTitle>
-                  <CardDescription>Manage and review recently added books</CardDescription>
+          {/* Recent Books Content - Enhanced mobile layout */}
+          <TabsContent value="recent" className="space-y-4">
+            <Card>
+              <CardHeader className="space-y-3 sm:flex sm:items-start sm:justify-between sm:space-y-0">
+                <div className="space-y-1">
+                  <CardTitle className="text-base sm:text-lg md:text-xl lg:text-2xl">
+                    Recently Added Books
+                  </CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">
+                    Manage and review recently added books
+                  </CardDescription>
                 </div>
-                <Link href="/admin/books">
-                  <Button variant="outline" size="sm" className="text-emerald-700 dark:text-emerald-400">
-                    View All
-                    <ChevronRight className="ml-1 h-4 w-4" />
+                <Link href="/admin/books" className="w-full sm:w-auto">
+                  <Button variant="outline" size="sm" className="w-full sm:w-auto">
+                    <span className="sm:hidden">View All Books</span>
+                    <span className="hidden sm:inline">View All</span>
+                    <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <AdminRecentBooksTable />
-            </CardContent>
-          </Card>
-        </TabsContent>
+              </CardHeader>
+              <CardContent className="p-0 sm:p-6">
+                <div className="overflow-x-auto">
+                  <AdminRecentBooksTable />
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-        {/* Books by Topic Tab */}
-        <TabsContent value="topics" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Books by Topic</CardTitle>
-              <CardDescription>Overview of books categorized by Islamic topics</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <AdminTopicGrid />
-            </CardContent>
-          </Card>
-        </TabsContent>
+          {/* Books by Topic Tab - Mobile optimized */}
+          <TabsContent value="topics" className="space-y-4">
+            <Card>
+              <CardHeader className="space-y-1 sm:space-y-2">
+                <CardTitle className="text-base sm:text-lg md:text-xl">
+                  Books by Topic
+                </CardTitle>
+                <CardDescription className="text-xs sm:text-sm">
+                  Overview of books categorized by Islamic topics
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-3 sm:p-6">
+                <AdminTopicGrid />
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-        {/* Recent Activity Tab */}
-        <TabsContent value="activity" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-              <CardDescription>Latest actions by administrators and users</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-5">
-                {/* Activity Items */}
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div
-                    key={i}
-                    className="flex items-start gap-4 pb-4 border-b last:border-0 border-dashed border-emerald-100 dark:border-emerald-900/50"
-                  >
-                    <Avatar className="h-9 w-9 border-2 border-emerald-100 dark:border-emerald-800">
-                      <AvatarImage src={`/placeholder.svg?height=36&width=36&text=U${i}`} />
-                      <AvatarFallback className="bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
-                        U{i}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="space-y-1">
-                      <p className="text-sm">
-                        <span className="font-medium">Admin User {i}</span>{" "}
-                        {i % 2 === 0 ? "added a new book" : "updated book details"}{" "}
-                        <span className="font-medium text-emerald-700 dark:text-emerald-400">
-                          {i % 2 === 0 ? "Riyadh as-Saliheen" : "Bulugh al-Maram"}
-                        </span>
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {i} hour{i !== 1 ? "s" : ""} ago
-                      </p>
+          {/* Recent Activity Tab - Enhanced mobile experience */}
+          <TabsContent value="activity" className="space-y-4">
+            <Card>
+              <CardHeader className="space-y-1 sm:space-y-2">
+                <CardTitle className="text-base sm:text-lg md:text-xl">
+                  Recent Activity
+                </CardTitle>
+                <CardDescription className="text-xs sm:text-sm">
+                  Latest actions by administrators and users
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-3 sm:p-6">
+                <div className="space-y-3 sm:space-y-4">
+                  {/* Activity Items - Mobile optimized */}
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div
+                      key={i}
+                      className="flex items-start gap-2 pb-3 border-b last:border-0 border-dashed border-emerald-100 dark:border-emerald-900/50 sm:gap-4 sm:pb-4"
+                    >
+                      <Avatar className="h-7 w-7 border-2 border-emerald-100 dark:border-emerald-800 sm:h-8 sm:w-8 md:h-9 md:w-9">
+                        <AvatarImage src={`/placeholder.svg?height=36&width=36&text=U${i}`} />
+                        <AvatarFallback className="text-xs sm:text-sm">U{i}</AvatarFallback>
+                      </Avatar>
+                      <div className="space-y-1 min-w-0 flex-1">
+                        <p className="text-xs leading-relaxed sm:text-sm sm:line-clamp-2">
+                          <span className="font-medium">Admin User {i}</span>{" "}
+                          {i % 2 === 0 ? "added a new book" : "updated book details"}{" "}
+                          <span className="font-medium text-emerald-700 dark:text-emerald-400 break-words">
+                            {i % 2 === 0 ? "Riyadh as-Saliheen" : "Bulugh al-Maram"}
+                          </span>
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {i} hour{i !== 1 ? "s" : ""} ago
+                        </p>
+                      </div>
                     </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+
+        {/* Bottom Section - Completely responsive grid */}
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-3">
+          
+          {/* User Engagement Card - Full width on mobile/tablet */}
+          <Card className="lg:col-span-2">
+            <CardHeader className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-4 sm:p-6">
+              <CardTitle className="flex items-center gap-2 text-sm sm:text-base md:text-lg">
+                <Users className="h-4 w-4 sm:h-5 sm:w-5" />
+                User Engagement
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-3 sm:p-4 md:p-6">
+              {/* Stats Grid - Responsive from 2 cols mobile to 4 cols desktop */}
+              <div className="grid gap-3 grid-cols-2 sm:gap-4 md:grid-cols-4">
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground sm:text-sm">Active Users</p>
+                  <p className="text-lg font-bold text-emerald-700 dark:text-emerald-400 sm:text-xl md:text-2xl">2,845</p>
+                  <p className="text-xs text-emerald-600 sm:text-xs">↑ 12% from last month</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground sm:text-sm">Books Read</p>
+                  <p className="text-lg font-bold text-emerald-700 dark:text-emerald-400 sm:text-xl md:text-2xl">12,456</p>
+                  <p className="text-xs text-emerald-600 sm:text-xs">↑ 8% from last month</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground sm:text-sm">New Signups</p>
+                  <p className="text-lg font-bold text-emerald-700 dark:text-emerald-400 sm:text-xl md:text-2xl">342</p>
+                  <p className="text-xs text-emerald-600 sm:text-xs">↑ 24% from last month</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-muted-foreground sm:text-sm">Avg. Session</p>
+                  <p className="text-lg font-bold text-emerald-700 dark:text-emerald-400 sm:text-xl md:text-2xl">18:24</p>
+                  <p className="text-xs text-emerald-600 sm:text-xs">↑ 3% from last month</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Popular Scholars Card - Mobile optimized */}
+          <Card className="lg:col-span-1">
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-sm sm:text-base md:text-lg">Popular Scholars</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">Most viewed scholars this month</CardDescription>
+            </CardHeader>
+            <CardContent className="p-3 sm:p-4 md:p-6">
+              <div className="space-y-3 sm:space-y-4">
+                {[
+                  { name: "Imam an-Nawawi", books: 42, views: 1245 },
+                  { name: "Ibn Taymiyyah", books: 38, views: 982 },
+                  { name: "Ibn Kathir", books: 29, views: 876 },
+                  { name: "Ibn al-Qayyim", books: 35, views: 754 },
+                ].map((scholar, i) => (
+                  <div key={i} className="flex items-center justify-between gap-2 sm:gap-4">
+                    <div className="flex items-center gap-2 min-w-0 flex-1 sm:gap-3">
+                      <Avatar className="h-8 w-8 border-2 border-emerald-100 sm:h-9 sm:w-9 md:h-10 md:w-10">
+                        <AvatarImage src={`/placeholder.svg?text=${scholar.name.charAt(0)}`} />
+                        <AvatarFallback className="text-xs sm:text-sm">{scholar.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate font-medium text-xs sm:text-sm md:text-base">{scholar.name}</p>
+                        <p className="text-xs text-muted-foreground sm:text-sm">{scholar.books} books</p>
+                      </div>
+                    </div>
+                    <Badge variant="outline" className="shrink-0 text-xs px-2 py-1">
+                      <span className="hidden sm:inline">{scholar.views.toLocaleString()} views</span>
+                      <span className="sm:hidden">{scholar.views > 999 ? `${Math.floor(scholar.views/1000)}k` : scholar.views}</span>
+                    </Badge>
                   </div>
                 ))}
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-      </Tabs>
-
-      {/* Bottom Section */}
-      <div className="grid gap-6 md:grid-cols-2">
-        {/* Quick Stats */}
-        <Card className="overflow-hidden border-emerald-200 dark:border-emerald-800">
-          <CardHeader className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
-            <CardTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              User Engagement
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-muted-foreground">Active Users</p>
-                <p className="text-2xl font-bold text-emerald-700 dark:text-emerald-400">2,845</p>
-                <p className="text-xs text-emerald-600 dark:text-emerald-500">↑ 12% from last month</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-muted-foreground">Books Read</p>
-                <p className="text-2xl font-bold text-emerald-700 dark:text-emerald-400">12,456</p>
-                <p className="text-xs text-emerald-600 dark:text-emerald-500">↑ 8% from last month</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-muted-foreground">New Signups</p>
-                <p className="text-2xl font-bold text-emerald-700 dark:text-emerald-400">342</p>
-                <p className="text-xs text-emerald-600 dark:text-emerald-500">↑ 24% from last month</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-muted-foreground">Avg. Session</p>
-                <p className="text-2xl font-bold text-emerald-700 dark:text-emerald-400">18:24</p>
-                <p className="text-xs text-emerald-600 dark:text-emerald-500">↑ 3% from last month</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Popular Scholars */}
-        <Card className="border-emerald-200 dark:border-emerald-800">
-          <CardHeader>
-            <CardTitle>Popular Scholars</CardTitle>
-            <CardDescription>Most viewed scholars this month</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {[
-                { name: "Imam an-Nawawi", books: 42, views: 1245 },
-                { name: "Ibn Taymiyyah", books: 38, views: 982 },
-                { name: "Ibn Kathir", books: 29, views: 876 },
-                { name: "Ibn al-Qayyim", books: 35, views: 754 },
-              ].map((scholar, i) => (
-                <div key={i} className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Avatar className="h-10 w-10 border-2 border-emerald-100 dark:border-emerald-800">
-                      <AvatarImage src={`/placeholder.svg?height=40&width=40&text=${scholar.name.charAt(0)}`} />
-                      <AvatarFallback className="bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
-                        {scholar.name.charAt(0)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-medium">{scholar.name}</p>
-                      <p className="text-xs text-muted-foreground">{scholar.books} books</p>
-                    </div>
-                  </div>
-                  <Badge variant="outline" className="bg-emerald-50 dark:bg-emerald-900/30">
-                    {scholar.views.toLocaleString()} views
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        </div>
       </div>
     </div>
   )

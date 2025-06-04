@@ -2,10 +2,24 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { Edit, Eye, Trash2, ChevronLeft, ChevronRight } from "lucide-react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Edit, Eye, Trash2, ChevronLeft, ChevronRight, MoreVertical } from "lucide-react"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 // Mock data for books
 const books = [
@@ -77,86 +91,120 @@ export function AdminRecentBooksTable() {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-md border border-emerald-100 dark:border-emerald-900/50 overflow-hidden">
-        <Table>
-          <TableHeader className="bg-emerald-50 dark:bg-emerald-900/30">
-            <TableRow className="hover:bg-emerald-100/50 dark:hover:bg-emerald-900/40">
-              <TableHead className="w-[80px]">Cover</TableHead>
-              <TableHead>Title</TableHead>
-              <TableHead className="hidden md:table-cell">Topic</TableHead>
-              <TableHead className="hidden md:table-cell">Scholar</TableHead>
-              <TableHead className="hidden lg:table-cell">Language</TableHead>
-              <TableHead className="hidden lg:table-cell">Upload Date</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {books.map((book) => (
-              <TableRow key={book.id} className="hover:bg-emerald-50 dark:hover:bg-emerald-900/10">
-                <TableCell>
-                  <div className="relative h-12 w-8 overflow-hidden rounded border border-emerald-100 dark:border-emerald-900/50 shadow-sm">
-                    <Image src={book.cover || "/placeholder.svg"} alt={book.title} fill className="object-cover" />
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div>
-                    <p className="font-medium text-emerald-900 dark:text-emerald-50">{book.title}</p>
-                    <p className="text-xs text-muted-foreground font-arabic">{book.arabicTitle}</p>
-                  </div>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  <Badge
-                    variant="outline"
-                    className="bg-emerald-50 dark:bg-emerald-900/30 border-emerald-200 dark:border-emerald-800"
-                  >
-                    {book.topic}
-                  </Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">{book.scholar}</TableCell>
-                <TableCell className="hidden lg:table-cell">{book.language}</TableCell>
-                <TableCell className="hidden lg:table-cell">{formatDate(book.uploadDate)}</TableCell>
-                <TableCell className="text-right">
-                  <div className="flex items-center justify-end gap-2">
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                      <Eye className="h-4 w-4 text-emerald-700 dark:text-emerald-400" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                      <Edit className="h-4 w-4 text-amber-600 dark:text-amber-400" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                      <Trash2 className="h-4 w-4 text-red-600 dark:text-red-400" />
-                    </Button>
-                  </div>
-                </TableCell>
+      <div className="rounded-md border border-emerald-100 dark:border-emerald-900/50">
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader className="bg-emerald-50 dark:bg-emerald-900/30">
+              <TableRow className="hover:bg-emerald-100/50 dark:hover:bg-emerald-900/40">
+                <TableHead className="w-[80px]">Cover</TableHead>
+                <TableHead>Title</TableHead>
+                <TableHead className="hidden md:table-cell">Topic</TableHead>
+                <TableHead className="hidden md:table-cell">Scholar</TableHead>
+                <TableHead className="hidden lg:table-cell">Language</TableHead>
+                <TableHead className="hidden lg:table-cell">Upload Date</TableHead>
+                <TableHead className="w-[100px]">Actions</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {books.map((book) => (
+                <TableRow key={book.id}>
+                  <TableCell className="p-2">
+                    <div className="relative h-12 w-8 sm:h-14 sm:w-10">
+                      <Image
+                        src={book.cover}
+                        alt={book.title}
+                        fill
+                        className="object-cover rounded"
+                      />
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="space-y-1">
+                      <p className="font-medium text-xs sm:text-sm line-clamp-1">
+                        {book.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground font-arabic line-clamp-1">
+                        {book.arabicTitle}
+                      </p>
+                    </div>
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    <Badge variant="outline" className="text-xs">
+                      {book.topic}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    <span className="text-xs sm:text-sm">{book.scholar}</span>
+                  </TableCell>
+                  <TableCell className="hidden lg:table-cell">
+                    <span className="text-xs sm:text-sm">{book.language}</span>
+                  </TableCell>
+                  <TableCell className="hidden lg:table-cell">
+                    <span className="text-xs sm:text-sm">
+                      {formatDate(book.uploadDate)}
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex justify-end gap-2">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <MoreVertical className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-48">
+                          <DropdownMenuItem className="text-xs sm:text-sm">
+                            <Edit className="h-4 w-4 mr-2" />
+                            Edit Details
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="text-xs sm:text-sm">
+                            <Eye className="h-4 w-4 mr-2" />
+                            View Book
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem
+                            className="text-red-600 dark:text-red-400 text-xs sm:text-sm"
+                          >
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            Delete Book
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">
-          Showing <span className="font-medium">{(currentPage - 1) * booksPerPage + 1}</span> to{" "}
-          <span className="font-medium">{Math.min(currentPage * booksPerPage, books.length)}</span> of{" "}
-          <span className="font-medium">{books.length}</span> books
-        </p>
-        <div className="flex items-center gap-2">
+      {/* Pagination - Mobile optimized */}
+      <div className="flex items-center justify-between gap-2 pt-2">
+        <div className="text-xs text-muted-foreground sm:text-sm">
+          Showing {Math.min(currentPage * booksPerPage, books.length)} of{" "}
+          {books.length} books
+        </div>
+        <div className="flex items-center gap-1 sm:gap-2">
           <Button
             variant="outline"
-            size="icon"
-            className="h-8 w-8 border-emerald-100 dark:border-emerald-900/50"
+            size="sm"
+            onClick={() =>
+              setCurrentPage((prev) => Math.max(1, prev - 1))
+            }
             disabled={currentPage === 1}
-            onClick={() => setCurrentPage(currentPage - 1)}
+            className="h-8 w-8 sm:h-9 sm:w-9 p-0"
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
-            size="icon"
-            className="h-8 w-8 border-emerald-100 dark:border-emerald-900/50"
+            size="sm"
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+            }
             disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage(currentPage + 1)}
+            className="h-8 w-8 sm:h-9 sm:w-9 p-0"
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
