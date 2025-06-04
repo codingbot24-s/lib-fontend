@@ -94,7 +94,7 @@ export default function BooksManagementPage() {
                   <TableHead className="hidden md:table-cell">Author</TableHead>
                   <TableHead className="hidden sm:table-cell">Category</TableHead>
                   <TableHead className="hidden lg:table-cell">Language</TableHead>
-                  <TableHead className="hidden sm:table-cell">Status</TableHead>
+                  
                   <TableHead className="w-[60px]">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -132,18 +132,7 @@ export default function BooksManagementPage() {
                     <TableCell className="hidden lg:table-cell text-sm sm:text-base">
                       {book.language}
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
-                      <Badge
-                        variant={book.status === "Published" ? "default" : "outline"}
-                        className={`text-xs sm:text-sm ${
-                          book.status === "Published" 
-                            ? "bg-emerald-600 hover:bg-emerald-700" 
-                            : ""
-                        }`}
-                      >
-                        {book.status}
-                      </Badge>
-                    </TableCell>
+                    
                     <TableCell>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>

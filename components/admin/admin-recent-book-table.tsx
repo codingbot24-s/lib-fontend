@@ -20,62 +20,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Loader2 } from "lucide-react"
+import { Book } from "@/types/book"
+import { cn } from "@/lib/utils"
 
-// Mock data for books
-const books = [
-  {
-    id: 1,
-    title: "Riyadh as-Saliheen",
-    arabicTitle: "رياض الصالحين",
-    topic: "Hadith",
-    scholar: "Imam an-Nawawi",
-    language: "Arabic/English",
-    uploadDate: "2023-05-15",
-    cover: "/placeholder.svg?height=60&width=40",
-  },
-  {
-    id: 2,
-    title: "The Sealed Nectar",
-    arabicTitle: "الرحيق المختوم",
-    topic: "Seerah",
-    scholar: "Safiur-Rahman Mubarakpuri",
-    language: "English",
-    uploadDate: "2023-05-12",
-    cover: "/placeholder.svg?height=60&width=40",
-  },
-  {
-    id: 3,
-    title: "Fiqh of Worship",
-    arabicTitle: "فقه العبادات",
-    topic: "Fiqh",
-    scholar: "Ibn Qudamah al-Maqdisi",
-    language: "Arabic/English",
-    uploadDate: "2023-05-10",
-    cover: "/placeholder.svg?height=60&width=40",
-  },
-  {
-    id: 4,
-    title: "The Quran: English Translation",
-    arabicTitle: "القرآن الكريم",
-    topic: "Quran",
-    scholar: "Abdullah Yusuf Ali",
-    language: "English",
-    uploadDate: "2023-05-08",
-    cover: "/placeholder.svg?height=60&width=40",
-  },
-  {
-    id: 5,
-    title: "Purification of the Heart",
-    arabicTitle: "تزكية النفس",
-    topic: "Spirituality",
-    scholar: "Hamza Yusuf",
-    language: "English",
-    uploadDate: "2023-05-05",
-    cover: "/placeholder.svg?height=60&width=40",
-  },
-]
 
-export function AdminRecentBooksTable() {
+interface AdminRecentBooksTableProps {
+  books : Book[]
+  isLoading: boolean
+}
+
+export function AdminRecentBooksTable({
+  books,
+  isLoading,
+}: AdminRecentBooksTableProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const booksPerPage = 5
   const totalPages = Math.ceil(books.length / booksPerPage)
@@ -89,6 +47,25 @@ export function AdminRecentBooksTable() {
     }).format(date)
   }
 
+  if (isLoading) {
+    return (
+      <div className="p-8 text-center">
+        <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          Loading recent books...
+        </div>
+      </div>
+    )
+  }
+
+  if (books.length === 0) {
+    return (
+      <div className="p-8 text-center">
+        <p className="text-sm text-muted-foreground">No recent books found</p>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-4">
       <div className="rounded-md border border-emerald-100 dark:border-emerald-900/50">
@@ -98,52 +75,48 @@ export function AdminRecentBooksTable() {
               <TableRow className="hover:bg-emerald-100/50 dark:hover:bg-emerald-900/40">
                 <TableHead className="w-[80px]">Cover</TableHead>
                 <TableHead>Title</TableHead>
-                <TableHead className="hidden md:table-cell">Topic</TableHead>
-                <TableHead className="hidden md:table-cell">Scholar</TableHead>
+                <TableHead className="hidden md:table-cell">Author</TableHead>
+                <TableHead className="hidden sm:table-cell">Category</TableHead>
                 <TableHead className="hidden lg:table-cell">Language</TableHead>
-                <TableHead className="hidden lg:table-cell">Upload Date</TableHead>
-                <TableHead className="w-[100px]">Actions</TableHead>
+                
+                <TableHead className="w-[60px]">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {books.map((book) => (
                 <TableRow key={book.id}>
-                  <TableCell className="p-2">
-                    <div className="relative h-12 w-8 sm:h-14 sm:w-10">
+                  <TableCell className="p-2 sm:p-4">
+                    <div className="relative h-10 w-7 sm:h-12 sm:w-8 overflow-hidden rounded border">
                       <Image
-                        src={book.cover}
+                        src={book.coverimage || "/placeholder.svg"}
                         alt={book.title}
                         fill
-                        className="object-cover rounded"
+                        className="object-cover"
                       />
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="space-y-1">
-                      <p className="font-medium text-xs sm:text-sm line-clamp-1">
+                      <p className="font-medium text-sm sm:text-base line-clamp-1">
                         {book.title}
                       </p>
                       <p className="text-xs text-muted-foreground font-arabic line-clamp-1">
-                        {book.arabicTitle}
+                        {book.arabictitle}
                       </p>
                     </div>
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">
+                  <TableCell className="hidden md:table-cell text-sm">
+                    {book.scholar}
+                  </TableCell>
+                  <TableCell className="hidden sm:table-cell">
                     <Badge variant="outline" className="text-xs">
-                      {book.topic}
+                      {book.topic.name}
                     </Badge>
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    <span className="text-xs sm:text-sm">{book.scholar}</span>
+                  <TableCell className="hidden lg:table-cell text-sm">
+                    {book.language}
                   </TableCell>
-                  <TableCell className="hidden lg:table-cell">
-                    <span className="text-xs sm:text-sm">{book.language}</span>
-                  </TableCell>
-                  <TableCell className="hidden lg:table-cell">
-                    <span className="text-xs sm:text-sm">
-                      {formatDate(book.uploadDate)}
-                    </span>
-                  </TableCell>
+                  
                   <TableCell>
                     <div className="flex justify-end gap-2">
                       <DropdownMenu>
@@ -152,20 +125,18 @@ export function AdminRecentBooksTable() {
                             <MoreVertical className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-48">
+                        <DropdownMenuContent align="end" className="w-[160px]">
                           <DropdownMenuItem className="text-xs sm:text-sm">
-                            <Edit className="h-4 w-4 mr-2" />
-                            Edit Details
+                            <Eye className="mr-2 h-4 w-4" />
+                            View Details
                           </DropdownMenuItem>
                           <DropdownMenuItem className="text-xs sm:text-sm">
-                            <Eye className="h-4 w-4 mr-2" />
-                            View Book
+                            <Edit className="mr-2 h-4 w-4" />
+                            Edit Book
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem
-                            className="text-red-600 dark:text-red-400 text-xs sm:text-sm"
-                          >
-                            <Trash2 className="h-4 w-4 mr-2" />
+                          <DropdownMenuItem className="text-red-600">
+                            <Trash2 className="mr-2 h-4 w-4" />
                             Delete Book
                           </DropdownMenuItem>
                         </DropdownMenuContent>
