@@ -34,6 +34,7 @@ export default function TopicPage({ params }: TopicPageProps) {
     const fetchTopicBooks = async () => {
       try {
         setIsLoading(true)
+        
         const response = await axios.get(`http://localhost:8000/api/topics/${resolvedParams.id}/books`)
         setBooks(response.data.books)
         setFilteredBooks(response.data.books)
@@ -116,6 +117,7 @@ export default function TopicPage({ params }: TopicPageProps) {
             ) : (
               <div className="grid grid-cols-3 xs:grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-2 xs:gap-3 sm:gap-4">
                 {filteredBooks.map((book) => (
+                  console.log(book),
                   <ResponsiveBookCard 
                     key={book.id} 
                     book={book}

@@ -81,12 +81,7 @@ export default function AdminDashboardPage() {
           {/* Mobile-first tab navigation */}
           <div className="w-full overflow-hidden">
             <TabsList className="flex h-auto w-full overflow-x-auto border-b border-emerald-100 bg-transparent p-0 dark:border-emerald-800">
-              <TabsTrigger
-                value="recent"
-                className="flex-1 min-w-0 whitespace-nowrap rounded-none border-b-2 border-transparent px-2 py-3 text-xs hover:text-emerald-700 data-[state=active]:border-emerald-700 data-[state=active]:text-emerald-700 sm:px-4 sm:text-sm md:flex-none md:px-6"
-              >
-                Recent Books
-              </TabsTrigger>
+              
           
             </TabsList>
           </div>

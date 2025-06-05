@@ -44,7 +44,17 @@ interface ResponsiveBookCardProps {
     updated_at: string;
     rating? : number;
     publishYear?: string;
-    volumes?: number;
+    volumes?: Array<{
+      id: number;
+      book_id: number;
+      volume_number: number;
+      archive_id: string;
+      archive_url: string;
+      download_url: string;
+      cover_image: string;
+      created_at: string;
+      updated_at: string;
+    }>;
   };
   compact?: boolean;
 }
@@ -117,13 +127,13 @@ export default function ResponsiveBookCard({ book, compact = false }: Responsive
         </div>
 
         {/* Volumes badge */}
-        {book.volumes && book.volumes > 1 && (
+        {book.volumes && book.volumes.length > 1 && (
           <div className="absolute top-2 left-2 z-10">
             <Badge className={cn(
               "bg-emerald-600/90 text-white backdrop-blur-sm",
               compact ? "text-[10px] px-1" : "text-xs"
             )}>
-              {book.volumes} Volumes
+              {book.volumes.length} Volumes
             </Badge>
           </div>
         )}
@@ -163,20 +173,18 @@ export default function ResponsiveBookCard({ book, compact = false }: Responsive
         "space-y-1",
         compact ? "p-2 pt-0" : "p-3 sm:p-4 pt-0 space-y-2"
       )}>
-        {book.volumes && book.volumes > 1 ? (
-          <div className="w-full space-y-1">
-            <Button
-              asChild
-              variant="outline"
-              size="sm"
-              className="w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/20"
-            >
-              <Link href={`/library/books/${book.id}/volumes`}>
-                <BookOpen className={cn("mr-2", compact ? "h-2 w-2" : "h-3 w-3 sm:h-4 sm:w-4")} />
-                View Volumes
-              </Link>
-            </Button>
-          </div>
+        {book.volumes && book.volumes.length > 1 ? (
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/20"
+          >
+            <Link href={`/library/books/${book.id}/volumes`}>
+              <BookOpen className={cn("mr-2", compact ? "h-2 w-2" : "h-3 w-3 sm:h-4 sm:w-4")} />
+              View Volumes
+            </Link>
+          </Button>
         ) : (
           <div className="w-full space-y-1">
             <Button
@@ -185,10 +193,10 @@ export default function ResponsiveBookCard({ book, compact = false }: Responsive
               className={cn("w-full bg-emerald-700 hover:bg-emerald-800 text-white", 
                 compact ? "h-7 text-xs" : "")}
             >
-              <Link href={`/library/books/${book.id}`}>
+              <a href={book.viewpdfurl} target="_blank" rel="noopener noreferrer">
                 <BookOpen className={cn("mr-2", compact ? "h-2 w-2" : "h-3 w-3 sm:h-4 sm:w-4")} />
                 Read Now
-              </Link>
+              </a>
             </Button>
             <Button
               onClick={handleDownload}
