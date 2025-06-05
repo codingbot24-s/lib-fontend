@@ -87,12 +87,7 @@ export default function AdminDashboardPage() {
               >
                 Recent Books
               </TabsTrigger>
-              <TabsTrigger
-                value="topics"
-                className="flex-1 min-w-0 whitespace-nowrap rounded-none border-b-2 border-transparent px-2 py-3 text-xs hover:text-emerald-700 data-[state=active]:border-emerald-700 data-[state=active]:text-emerald-700 sm:px-4 sm:text-sm md:flex-none md:px-6"
-              >
-                Books by Topic
-              </TabsTrigger>
+          
             </TabsList>
           </div>
 
@@ -131,22 +126,7 @@ export default function AdminDashboardPage() {
             </Card>
           </TabsContent>
 
-          {/* Books by Topic Tab - Mobile optimized */}
-          <TabsContent value="topics" className="space-y-4">
-            <Card>
-              <CardHeader className="space-y-1 sm:space-y-2">
-                <CardTitle className="text-base sm:text-lg md:text-xl">
-                  Books by Topic
-                </CardTitle>
-                <CardDescription className="text-xs sm:text-sm">
-                  Overview of books categorized by Islamic topics
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-3 sm:p-6">
-                
-              </CardContent>
-            </Card>
-          </TabsContent>
+        
 
           {/* Recent Activity Tab - Enhanced mobile experience */}
         </Tabs>

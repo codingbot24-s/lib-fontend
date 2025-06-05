@@ -47,8 +47,11 @@ const bookFormSchema = z.object({
   language: z.string().min(1, "Language is required"),
   publisher: z.string().min(1, "Publisher is required"),
   Edition: z.string().min(1, "Edition is required"),
-  volumes: z.array(volumeSchema).min(0).optional().default([]),
-})
+  volumes: z.array(volumeSchema),
+}).transform(data => ({
+  ...data,
+  volumes: data.volumes ?? []
+}))
 
 type BookFormValues = z.infer<typeof bookFormSchema>
 
