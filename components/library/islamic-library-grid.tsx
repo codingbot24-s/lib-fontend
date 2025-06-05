@@ -15,156 +15,42 @@ import {
   Crown,
   Library,
 } from "lucide-react";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
+type Topic = {
+  id : number
+  name : string
+  description? : string
+}
 
-// call apu api/books/topics=
+interface AllApiTopicResponse {
+  topics : Topic[]
+}
 
-const topics = [
-  {
-    id: "tafsir",
-    name: "Tafsir",
-    arabicName: "التفسير",
-    description: "Quranic Commentary & Exegesis",
-    icon: BookOpen,
-    count: 134,
-    gradient: "from-emerald-600 via-emerald-500 to-teal-500",
-    bgPattern: "bg-emerald-50 dark:bg-emerald-900/20",
-    borderColor: "border-emerald-200 dark:border-emerald-700",
-    hoverGlow: "hover:shadow-emerald-300/50 dark:hover:shadow-emerald-600/30",
-    textColor: "text-emerald-800 dark:text-emerald-200",
-    iconBg: "bg-emerald-100 dark:bg-emerald-800",
-  },
-  {
-    id: "hadith",
-    name: "Hadith",
-    arabicName: "الحديث",
-    description: "Prophetic Traditions & Sayings",
-    icon: Scroll,
-    count: 189,
-    gradient: "from-amber-600 via-amber-500 to-orange-500",
-    bgPattern: "bg-amber-50 dark:bg-amber-900/20",
-    borderColor: "border-amber-200 dark:border-amber-700",
-    hoverGlow: "hover:shadow-amber-300/50 dark:hover:shadow-amber-600/30",
-    textColor: "text-amber-800 dark:text-amber-200",
-    iconBg: "bg-amber-100 dark:bg-amber-800",
-  },
-  {
-    id: "fiqh",
-    name: "Fiqh",
-    arabicName: "الفقه",
-    description: "Islamic Jurisprudence & Law",
-    icon: Scale,
-    count: 156,
-    gradient: "from-blue-600 via-blue-500 to-indigo-500",
-    bgPattern: "bg-blue-50 dark:bg-blue-900/20",
-    borderColor: "border-blue-200 dark:border-blue-700",
-    hoverGlow: "hover:shadow-blue-300/50 dark:hover:shadow-blue-600/30",
-    textColor: "text-blue-800 dark:text-blue-200",
-    iconBg: "bg-blue-100 dark:bg-blue-800",
-  },
-  {
-    id: "seerah",
-    name: "Seerah",
-    arabicName: "السيرة",
-    description: "Prophetic Biography & History",
-    icon: User,
-    count: 98,
-    gradient: "from-purple-600 via-purple-500 to-violet-500",
-    bgPattern: "bg-purple-50 dark:bg-purple-900/20",
-    borderColor: "border-purple-200 dark:border-purple-700",
-    hoverGlow: "hover:shadow-purple-300/50 dark:hover:shadow-purple-600/30",
-    textColor: "text-purple-800 dark:text-purple-200",
-    iconBg: "bg-purple-100 dark:bg-purple-800",
-  },
-  {
-    id: "aqeedah",
-    name: "Aqeedah",
-    arabicName: "العقيدة",
-    description: "Islamic Creed & Theology",
-    icon: Heart,
-    count: 87,
-    gradient: "from-rose-600 via-rose-500 to-pink-500",
-    bgPattern: "bg-rose-50 dark:bg-rose-900/20",
-    borderColor: "border-rose-200 dark:border-rose-700",
-    hoverGlow: "hover:shadow-rose-300/50 dark:hover:shadow-rose-600/30",
-    textColor: "text-rose-800 dark:text-rose-200",
-    iconBg: "bg-rose-100 dark:bg-rose-800",
-  },
-  {
-    id: "history",
-    name: "History",
-    arabicName: "التاريخ",
-    description: "Islamic History & Civilization",
-    icon: Clock,
-    count: 65,
-    gradient: "from-orange-600 via-orange-500 to-red-500",
-    bgPattern: "bg-orange-50 dark:bg-orange-900/20",
-    borderColor: "border-orange-200 dark:border-orange-700",
-    hoverGlow: "hover:shadow-orange-300/50 dark:hover:shadow-orange-600/30",
-    textColor: "text-orange-800 dark:text-orange-200",
-    iconBg: "bg-orange-100 dark:bg-orange-800",
-  },
-  {
-    id: "quran",
-    name: "Quran",
-    arabicName: "القرآن",
-    description: "Holy Quran & Recitation",
-    icon: Volume2,
-    count: 234,
-    gradient: "from-green-600 via-green-500 to-emerald-500",
-    bgPattern: "bg-green-50 dark:bg-green-900/20",
-    borderColor: "border-green-200 dark:border-green-700",
-    hoverGlow: "hover:shadow-green-300/50 dark:hover:shadow-green-600/30",
-    textColor: "text-green-800 dark:text-green-200",
-    iconBg: "bg-green-100 dark:bg-green-800",
-  },
-  {
-    id: "tasawwuf",
-    name: "Tasawwuf",
-    arabicName: "التصوف",
-    description: "Islamic Spirituality & Mysticism",
-    icon: Sparkles,
-    count: 76,
-    gradient: "from-indigo-600 via-indigo-500 to-purple-500",
-    bgPattern: "bg-indigo-50 dark:bg-indigo-900/20",
-    borderColor: "border-indigo-200 dark:border-indigo-700",
-    hoverGlow: "hover:shadow-indigo-300/50 dark:hover:shadow-indigo-600/30",
-    textColor: "text-indigo-800 dark:text-indigo-200",
-    iconBg: "bg-indigo-100 dark:bg-indigo-800",
-  }, 
-  {
-    id: "arabic-language",
-    name: "Tasawwuf",
-    arabicName: "التصوف",
-    description: "Islamic Spirituality & Mysticism",
-    icon: Sparkles,
-    count: 76,
-    gradient: "from-indigo-600 via-indigo-500 to-purple-500",
-    bgPattern: "bg-indigo-50 dark:bg-indigo-900/20",
-    borderColor: "border-indigo-200 dark:border-indigo-700",
-    hoverGlow: "hover:shadow-indigo-300/50 dark:hover:shadow-indigo-600/30",
-    textColor: "text-indigo-800 dark:text-indigo-200",
-    iconBg: "bg-indigo-100 dark:bg-indigo-800"
-  }, 
-  {
-    id: "all-books",
-    name: "All Books",
-    arabicName: "جميع الكتب",
-    description: "Browse our complete collection of Islamic books",
-    icon: Library, // Import Library from lucide-react
-    count: 1039, // Total number of books
-    gradient: "from-gray-600 via-gray-500 to-slate-500",
-    bgPattern: "bg-gray-50 dark:bg-gray-900/20",
-    borderColor: "border-gray-200 dark:border-gray-700",
-    hoverGlow: "hover:shadow-gray-300/50 dark:hover:shadow-gray-600/30",
-    textColor: "text-gray-800 dark:text-gray-200",
-    iconBg: "bg-gray-100 dark:bg-gray-800",
-  }
-];
 
 // TODO: Fetch all the topics from the API
 
 export default function IslamicLibraryGrid() {
+  const [topics, setTopics] = useState<Topic[]>([])
+
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        const response = await axios.get<AllApiTopicResponse>(
+          "http://localhost:8000/api/topics"
+        );
+        setTopics(response.data.topics);
+      }
+      catch {
+        console.error("Failed to fetch topics");
+        
+      }
+    }
+    fetchTopics();
+  },[])
+
   return (
     <div className="container mx-auto px-4 space-y-12">
       {/* Featured Quote */}
@@ -186,82 +72,79 @@ export default function IslamicLibraryGrid() {
 
       {/* Topics Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4">
-        {topics.map((topic) => {
-          const IconComponent = topic.icon;
-          return (
-            <Link
-              key={topic.id}
-              href={`/library/${topic.id}`}
-              className="group block"
+        {topics.map((topic) => (
+          <Link
+            key={topic.id}
+            href={`/library/topic/${topic.id}`}
+            className="group block"
+          >
+            <div
+              className={`
+                relative aspect-[3/4] rounded-xl border-2 
+                transition-all duration-500 ease-out
+                hover:-translate-y-2 hover:scale-103
+                shadow-lg hover:shadow-2xl 
+                bg-gradient-to-br from-white/90 to-white/70 dark:from-gray-800/90 dark:to-gray-700/70
+                backdrop-blur-sm overflow-hidden
+                book-spine-effect
+              `}
             >
-              <div
-                className={`
-                  relative aspect-[3/4] rounded-xl border-2 ${topic.borderColor} ${topic.bgPattern}
-                  transition-all duration-500 ease-out
-                  hover:-translate-y-2 hover:scale-103
-                  shadow-lg hover:shadow-2xl ${topic.hoverGlow}
-                  bg-gradient-to-br from-white/90 to-white/70 dark:from-gray-800/90 dark:to-gray-700/70
-                  backdrop-blur-sm overflow-hidden
-                  book-spine-effect
-                `}
-              >
-                {/* Content */}
-                <div className="relative z-10 p-4 lg:p-3 h-full flex flex-col justify-between">
-                  {/* Top Section */}
-                  <div className="space-y-3">
-                    {/* Icon - smaller on desktop */}
-                    <div
-                      className={`w-12 h-12 lg:w-10 lg:h-10 ${topic.iconBg} rounded-full flex items-center justify-center mx-auto shadow-md group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <IconComponent className={`h-6 w-6 lg:h-5 lg:w-5 ${topic.textColor}`} />
-                    </div>
+              {/* Content */}
+              <div className="relative z-10 p-4 lg:p-3 h-full flex flex-col justify-between">
+                {/* Top Section */}
+                <div className="space-y-3">
+                  {/* Icon - smaller on desktop */}
+                  {/* <div
+                    className={`w-12 h-12 lg:w-10 lg:h-10 ${topic.iconBg} rounded-full flex items-center justify-center mx-auto shadow-md group-hover:scale-110 transition-transform duration-300`}
+                  >
+                    <IconComponent className={`h-6 w-6 lg:h-5 lg:w-5 ${topic.textColor}`} />
+                  </div> */}
 
-                    {/* Arabic Title - adjusted text sizes */}
-                    <div className="text-center">
-                      <h3 className="text-xl lg:text-lg font-bold font-arabic text-gray-800 dark:text-gray-200 mb-1 group-hover:scale-105 transition-transform duration-300">
-                        {topic.arabicName}
-                      </h3>
-                      <h4 className="text-lg lg:text-base font-serif font-semibold text-gray-700 dark:text-gray-300">
-                        {topic.name}
-                      </h4>
-                    </div>
-                  </div>
-
-                  {/* Middle Section - smaller text on desktop */}
+                  {/* Arabic Title - adjusted text sizes */}
                   <div className="text-center">
-                    <p className="text-sm lg:text-xs font-serif text-gray-600 dark:text-gray-400 leading-relaxed">
-                      {topic.description}
-                    </p>
-                  </div>
-
-                  {/* Bottom Section - adjusted badge size */}
-                  <div className="space-y-2">
-                    <div className="text-center">
-                      <Badge
-                        className={`
-                          bg-gradient-to-r ${topic.gradient} text-white border-0 
-                          font-serif font-medium px-3 py-0.5 text-xs lg:text-[10px] shadow-md
-                          group-hover:shadow-lg transition-shadow duration-300
-                        `}
-                      >
-                        {topic.count.toLocaleString()}
-                      </Badge>
-                    </div>
+                    {/* <h3 className="text-xl lg:text-lg font-bold font-arabic text-gray-800 dark:text-gray-200 mb-1 group-hover:scale-105 transition-transform duration-300">
+                      {topic.arabicName}
+                    </h3> */}
+                    <h4 className="text-lg lg:text-base font-serif font-semibold text-gray-700 dark:text-gray-300">
+                      {topic.name}
+                    </h4>
                   </div>
                 </div>
 
-                {/* Book Spine Effect */}
-                <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-gray-300 to-gray-400 dark:from-gray-600 dark:to-gray-700 shadow-inner"></div>
+                {/* Middle Section - smaller text on desktop */}
+                <div className="text-center">
+                  <p className="text-sm lg:text-xs font-serif text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {topic.description}
+                  </p>
+                </div>
 
-                {/* Corner Decoration */}
-                <div className="absolute top-4 right-4 opacity-20 dark:opacity-30">
-                  <Crown className="h-6 w-6 text-amber-600" />
+                {/* Bottom Section - adjusted badge size */}
+                <div className="space-y-2">
+                  <div className="text-center">
+                    {/* <Badge
+                      className={`
+                        bg-gradient-to-r ${topic.gradient} text-white border-0 
+                        font-serif font-medium px-3 py-0.5 text-xs lg:text-[10px] shadow-md
+                        group-hover:shadow-lg transition-shadow duration-300
+                      `}
+                    >
+                      {topic.count.toLocaleString()}
+                    </Badge> */}
+                  </div>
                 </div>
               </div>
-            </Link>
-          );
-        })}
+
+              {/* Book Spine Effect */}
+              <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-gray-300 to-gray-400 dark:from-gray-600 dark:to-gray-700 shadow-inner"></div>
+
+              {/* Corner Decoration */}
+              <div className="absolute top-4 right-4 opacity-20 dark:opacity-30">
+                <Crown className="h-6 w-6 text-amber-600" />
+              </div>
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
-  );
+  )
 }

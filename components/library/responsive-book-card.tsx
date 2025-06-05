@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
 import { Spinner } from "@/components/ui/spinner";
+import { cn } from "@/lib/utils";
 
 interface Topic {
   id: number;
@@ -45,9 +46,10 @@ interface ResponsiveBookCardProps {
     publishYear?: string;
     volumes?: number;
   };
+  compact?: boolean;
 }
 
-export default function ResponsiveBookCard({ book }: ResponsiveBookCardProps) {
+export default function ResponsiveBookCard({ book, compact = false }: ResponsiveBookCardProps) {
   const [imageError, setImageError] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
 
@@ -81,9 +83,15 @@ export default function ResponsiveBookCard({ book }: ResponsiveBookCardProps) {
   };
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-lg border bg-white dark:bg-gray-800 hover:shadow-lg transition-shadow">
-      {/* Book Cover with improved image handling */}
-      <div className="aspect-[2/3] relative bg-gray-100 dark:bg-gray-700 overflow-hidden">
+    <div className={cn(
+      "group relative flex flex-col overflow-hidden rounded-lg border bg-white dark:bg-gray-800 hover:shadow-lg transition-shadow",
+      compact ? "text-xs" : "text-sm sm:text-base"
+    )}>
+      {/* Book Cover */}
+      <div className={cn(
+        "relative bg-gray-100 dark:bg-gray-700 overflow-hidden",
+        compact ? "aspect-[2/3]" : "aspect-[2/3]"
+      )}>
         <div className="absolute inset-0">
           <Image
             src={imageError ? "/placeholder-book.jpg" : book.coverimage}
@@ -94,112 +102,91 @@ export default function ResponsiveBookCard({ book }: ResponsiveBookCardProps) {
             onError={() => setImageError(true)}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-
-          {/* Gradient overlay to ensure text readability */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
 
-        {/* Error state overlay */}
-        {imageError && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-gray-50 dark:bg-gray-800">
-            <BookOpen className="h-8 w-8 text-gray-400 dark:text-gray-500 mb-2" />
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              {book.title}
-            </span>
-          </div>
-        )}
-
         {/* Language badge */}
         <div className="absolute top-2 right-2 z-10">
-          <Badge variant="secondary" className="bg-white/90 text-gray-800 dark:bg-black/50 dark:text-white backdrop-blur-sm text-xs">
-            <Globe className="h-3 w-3 mr-1" />
+          <Badge variant="secondary" className={cn(
+            "bg-white/90 text-gray-800 dark:bg-black/50 dark:text-white backdrop-blur-sm",
+            compact ? "text-[10px] px-1" : "text-xs"
+          )}>
+            <Globe className={cn("mr-1", compact ? "h-2 w-2" : "h-3 w-3")} />
             {book.language}
           </Badge>
         </div>
 
-        {/* Volumes badge if applicable */}
+        {/* Volumes badge */}
         {book.volumes && book.volumes > 1 && (
           <div className="absolute top-2 left-2 z-10">
-            <Badge className="bg-emerald-600/90 text-white backdrop-blur-sm text-xs">
+            <Badge className={cn(
+              "bg-emerald-600/90 text-white backdrop-blur-sm",
+              compact ? "text-[10px] px-1" : "text-xs"
+            )}>
               {book.volumes} Volumes
             </Badge>
           </div>
         )}
       </div>
 
-      <div className="flex flex-1 flex-col space-y-2 p-4">
+      <div className={cn(
+        "flex flex-1 flex-col",
+        compact ? "p-2 space-y-1" : "p-4 space-y-2"
+      )}>
         {/* Title and Arabic Title */}
         <div className="space-y-1">
-          <h3 className="font-bold text-emerald-900 dark:text-emerald-100 line-clamp-2 leading-tight text-sm sm:text-base">
+          <h3 className={cn(
+            "font-bold text-emerald-900 text-[15px] dark:text-emerald-100 line-clamp-2 leading-tight sm:block",
+            compact ? "hidden" : "text-sm sm:text-base" // Hide on mobile in compact mode
+          )}>
             {book.title}
           </h3>
-          {book.arabictitle && (
-            <p className="text-xs sm:text-sm text-amber-700 dark:text-amber-400 font-arabic leading-relaxed line-clamp-1">
-              {book.arabictitle}
-            </p>
-          )}
+          <p className={cn(
+            "text-amber-700 dark:text-amber-400 leading-relaxed line-clamp-1",
+            compact ? "text-[10px]" : "text-xs sm:text-sm" // Show only on mobile in compact mode in mobile text small
+          )}>
+            {book.arabictitle}
+          </p>
         </div>
 
-        {/* Author */}
-        <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm font-medium line-clamp-1">
+        {/* Author - hide on mobile in compact mode */}
+        <p className={cn(
+          "text-gray-600 dark:text-gray-300 font-medium line-clamp-1 sm:block",
+          compact ? "hidden" : "text-xs sm:text-sm"
+        )}>
           {book.scholar}
         </p>
-
-        {/* Topic and Rating */}
-        <div className="flex items-center justify-between gap-2">
-          <Badge
-            variant="outline"
-            className="border-emerald-200 text-emerald-700 dark:border-emerald-800 dark:text-emerald-400 text-xs flex-shrink-0"
-          >
-            {book.topic.name || 'Uncategorized'} {/* Display topic name instead of the whole object */}
-          </Badge>
-
-          <div className="flex items-center gap-1 flex-shrink-0">
-            <Star className="h-3 w-3 text-amber-500 fill-amber-500" />
-            <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
-              {book?.rating}
-            </span>
-          </div>
-        </div>
-
-        {/* Publication Year */}
-        <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-          <Calendar className="h-3 w-3" />
-          <span>Published {book?.publishYear}</span>
-        </div>
       </div>
 
-      <CardFooter className="p-3 sm:p-4 pt-0 space-y-2">
+      {/* Keep the footer but make it smaller */}
+      <CardFooter className={cn(
+        "space-y-1",
+        compact ? "p-2 pt-0" : "p-3 sm:p-4 pt-0 space-y-2"
+      )}>
         {book.volumes && book.volumes > 1 ? (
-          <div className="w-full space-y-2">
+          <div className="w-full space-y-1">
             <Button
               asChild
               variant="outline"
               size="sm"
-              className="w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/20 text-xs sm:text-sm"
+              className="w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/20"
             >
               <Link href={`/library/books/${book.id}/volumes`}>
-                <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                <BookOpen className={cn("mr-2", compact ? "h-2 w-2" : "h-3 w-3 sm:h-4 sm:w-4")} />
                 View Volumes
               </Link>
             </Button>
-            <Button
-              asChild
-              size="sm"
-              className="w-full bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm"
-            >
-              <Link href={`/library/books/${book.id}`}>View Details</Link>
-            </Button>
           </div>
         ) : (
-          <div className="w-full space-y-2">
+          <div className="w-full space-y-1">
             <Button
               asChild
               size="sm"
-              className="w-full bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm"
+              className={cn("w-full bg-emerald-700 hover:bg-emerald-800 text-white", 
+                compact ? "h-7 text-xs" : "")}
             >
               <Link href={`/library/books/${book.id}`}>
-                <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                <BookOpen className={cn("mr-2", compact ? "h-2 w-2" : "h-3 w-3 sm:h-4 sm:w-4")} />
                 Read Now
               </Link>
             </Button>
@@ -208,7 +195,10 @@ export default function ResponsiveBookCard({ book }: ResponsiveBookCardProps) {
               disabled={isDownloading}
               variant="outline"
               size="sm"
-              className="w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/20 text-xs sm:text-sm"
+              className={cn(
+                "w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/20",
+                compact && "h-7 text-xs"
+              )}
             >
               {isDownloading ? (
                 <>
@@ -217,7 +207,7 @@ export default function ResponsiveBookCard({ book }: ResponsiveBookCardProps) {
                 </>
               ) : (
                 <>
-                  <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                  <Download className={cn("mr-2", compact ? "h-2 w-2" : "h-3 w-3 sm:h-4 sm:w-4")} />
                   Download
                 </>
               )}

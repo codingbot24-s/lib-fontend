@@ -49,10 +49,10 @@ export default function UnifiedLibrary() {
         searchQuery === "" ||
         book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         book.scholar.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.topic.toLowerCase().includes(searchQuery.toLowerCase())
+        book.topic.name.toLowerCase().includes(searchQuery.toLowerCase())
 
       const matchesLanguage = selectedLanguages.length === 0 || selectedLanguages.includes(book.language)
-      const matchesTopic = selectedTopics.length === 0 || selectedTopics.includes(book.topic)
+      const matchesTopic = selectedTopics.length === 0 || selectedTopics.includes(book.topic.name)
       const matchesScholar = selectedScholars.length === 0 || selectedScholars.includes(book.scholar)
 
       return matchesSearch && matchesLanguage && matchesTopic && matchesScholar
