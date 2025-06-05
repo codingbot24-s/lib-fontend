@@ -228,7 +228,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
           <span className="inline sm:hidden">Upload</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="flex flex-col w-[95vw] max-w-[1400px] h-[95vh] sm:h-[90vh] p-0">
+      <DialogContent className="flex flex-col w-[95vw] max-w-[600px] sm:max-w-[900px] md:max-w-[1200px] h-[95vh] sm:h-[90vh] p-0">
         {/* Fixed Header - More compact on mobile */}
         <DialogHeader className="flex-shrink-0 p-4 sm:p-6 md:p-8 border-b">
           <DialogTitle className="text-xl sm:text-2xl font-bold text-emerald-900 dark:text-emerald-100">
@@ -239,50 +239,48 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
           </DialogDescription>
         </DialogHeader>
         
-        {/* Scrollable Content - Adjusted padding and spacing */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+        {/* Scrollable Content - Responsive and with max height */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 max-h-[70vh]">
           <form onSubmit={form.handleSubmit(onSubmit)} id="book-form" className="space-y-6 sm:space-y-8">
-            {/* Updated grid layout with better mobile support */}
+            {/* Responsive grid layout */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-              {/* Archive ID Field - Full width on mobile */}
-              <div className="space-y-2 col-span-1 sm:col-span-2 lg:col-span-1">
+              {/* Archive ID Field */}
+              <div className="space-y-2 col-span-1">
                 <Label htmlFor="archiveid" className="text-sm font-medium">
                   Archive ID
                 </Label>
                 <Input
                   {...form.register("archiveId")}
                   placeholder="Enter archive.org ID"
-                  className="h-9 sm:h-10 text-sm sm:text-base border-emerald-100 dark:border-emerald-900/50"
+                  className="h-10 text-sm border-emerald-100 dark:border-emerald-900/50 w-full"
                 />
                 {form.formState.errors.archiveId && (
                   <p className="text-xs text-red-500">{form.formState.errors.archiveId.message}</p>
                 )}
               </div>
 
-              {/* Title Fields - Stack vertically on mobile */}
-              <div className="space-y-4 col-span-1 sm:col-span-2 lg:col-span-1">
-                <div className="space-y-2">
-                  <Label htmlFor="title" className="text-sm font-medium">
-                    Book Title
-                  </Label>
-                  <Input
-                    {...form.register("title")}
-                    placeholder="Enter book title"
-                    className="h-9 sm:h-10 text-sm sm:text-base border-emerald-100 dark:border-emerald-900/50"
-                  />
-                  {form.formState.errors.title && (
-                    <p className="text-xs text-red-500">{form.formState.errors.title.message}</p>
-                  )}
-                </div>
+              {/* Title Field */}
+              <div className="space-y-2 col-span-1">
+                <Label htmlFor="title" className="text-sm font-medium">
+                  Book Title
+                </Label>
+                <Input
+                  {...form.register("title")}
+                  placeholder="Enter book title"
+                  className="h-10 text-sm border-emerald-100 dark:border-emerald-900/50 w-full"
+                />
+                {form.formState.errors.title && (
+                  <p className="text-xs text-red-500">{form.formState.errors.title.message}</p>
+                )}
               </div>
 
               {/* Arabic Title Field */}
-              <div className="space-y-2">
+              <div className="space-y-2 col-span-1">
                 <Label htmlFor="arabictitle" className="text-sm">Arabic Title</Label>
                 <Input
                   {...form.register("arabictitle")}
                   placeholder="أدخل عنوان الكتاب بالعربية"
-                  className="h-9 text-sm border-emerald-100 dark:border-emerald-900/50 font-arabic text-right"
+                  className="h-10 text-sm border-emerald-100 dark:border-emerald-900/50 font-arabic text-right w-full"
                   dir="rtl"
                 />
                 {form.formState.errors.arabictitle && (
@@ -290,8 +288,8 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                 )}
               </div>
 
-              {/* Topic and Language Fields */}
-              <div className="space-y-2">
+              {/* Topic Field */}
+              <div className="space-y-2 col-span-1">
                 <Label htmlFor="topicid" className="text-sm">Topic</Label>
                 <Select
                   onValueChange={(value) => {
@@ -318,14 +316,15 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                   </SelectContent>
                 </Select>
                 {form.formState.errors.TopicID && (
-                  <p className="text-sm text-red-500">{form.formState.errors.TopicID.message}</p>
+                  <p className="text-xs text-red-500">{form.formState.errors.TopicID.message}</p>
                 )}
               </div>
 
-              <div className="space-y-2">
+              {/* Language Field */}
+              <div className="space-y-2 col-span-1">
                 <Label htmlFor="language" className="text-sm">Language</Label>
                 <Select onValueChange={(value) => form.setValue("language", value)}>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select language" />
                   </SelectTrigger>
                   <SelectContent>
@@ -336,50 +335,53 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                   </SelectContent>
                 </Select>
                 {form.formState.errors.language && (
-                  <p className="text-sm text-red-500">{form.formState.errors.language.message}</p>
+                  <p className="text-xs text-red-500">{form.formState.errors.language.message}</p>
                 )}
               </div>
 
-              {/* Author and Publisher Fields */}
-              <div className="space-y-2">
+              {/* Author Field */}
+              <div className="space-y-2 col-span-1">
                 <Label htmlFor="author" className="text-sm">Author</Label>
                 <Input
                   {...form.register("author")}
                   placeholder="Enter author name"
-                  className="h-9 text-sm border-emerald-100 dark:border-emerald-900/50"
+                  className="h-10 text-sm border-emerald-100 dark:border-emerald-900/50 w-full"
                 />
               </div>
 
-              <div className="space-y-2">
+              {/* Publisher Field */}
+              <div className="space-y-2 col-span-1">
                 <Label htmlFor="publisher" className="text-sm">Publisher</Label>
                 <Input
                   {...form.register("publisher")}
                   placeholder="Enter publisher name"
-                  className="h-9 text-sm border-emerald-100 dark:border-emerald-900/50"
+                  className="h-10 text-sm border-emerald-100 dark:border-emerald-900/50 w-full"
                 />
               </div>
 
-              <div className="space-y-2">
+              {/* Edition Field */}
+              <div className="space-y-2 col-span-1">
                 <Label htmlFor="Edition" className="text-sm">Edition</Label>
                 <Input
                   {...form.register("Edition")}
                   placeholder="Enter edition"
-                  className="h-9 text-sm border-emerald-100 dark:border-emerald-900/50"
+                  className="h-10 text-sm border-emerald-100 dark:border-emerald-900/50 w-full"
                 />
               </div>
 
-              <div className="space-y-2">
+              {/* Description Field */}
+              <div className="space-y-2 col-span-1 sm:col-span-2 lg:col-span-3">
                 <Label htmlFor="description" className="text-sm">Description</Label>
                 <Textarea
                   {...form.register("description")}
                   placeholder="Enter book description"
-                  className="min-h-[80px] text-sm border-emerald-100 dark:border-emerald-900/50"
+                  className="min-h-[80px] text-sm border-emerald-100 dark:border-emerald-900/50 w-full"
                   rows={3}
                 />
               </div>
             </div>
 
-            {/* Volumes Section - Adjusted for better mobile display */}
+            {/* Volumes Section - Responsive */}
             <div className="border-t pt-4 sm:pt-6">
               <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 sm:p-6">
                 <div className="space-y-4">
@@ -406,7 +408,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                     {volumeCount > 0 ? (
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {Array.from({ length: volumeCount }).map((_, index) => (
-                          <div key={index} className="p-4 border rounded-lg space-y-3">
+                          <div key={index} className="p-4 border rounded-lg space-y-3 bg-white dark:bg-gray-900/30">
                             {/* Volume fields with responsive sizing */}
                             <div className="space-y-2">
                               <Label htmlFor={`volumes.${index}.volume_number`} className="text-xs sm:text-sm">
@@ -418,7 +420,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                                   valueAsNumber: true,
                                 })}
                                 placeholder="Enter volume number"
-                                className="h-8 sm:h-9 text-xs sm:text-sm"
+                                className="h-9 text-xs sm:text-sm w-full"
                               />
                             </div>
                             <div className="space-y-2">
@@ -428,7 +430,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                               <Input
                                 {...form.register(`volumes.${index}.archive_id` as const)}
                                 placeholder="Enter volume archive ID"
-                                className="h-8 sm:h-9 text-xs sm:text-sm"
+                                className="h-9 text-xs sm:text-sm w-full"
                               />
                             </div>
                           </div>
@@ -456,14 +458,14 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="w-full sm:w-auto h-9 sm:h-10 text-sm"
+              className="w-full sm:w-auto h-10 text-sm"
             >
               Cancel
             </Button>
             <Button
               form="book-form"
               type="submit"
-              className="w-full sm:w-auto h-9 sm:h-10 text-sm bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="w-full sm:w-auto h-10 text-sm bg-emerald-600 hover:bg-emerald-700 text-white"
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? (
