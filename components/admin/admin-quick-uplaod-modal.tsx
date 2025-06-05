@@ -30,17 +30,24 @@ interface Topic {
   description: string
 }
 
-// Update the form schema to match backend field names
+// Update the form schema to include volumes
+const volumeSchema = z.object({
+  volume_number: z.number().min(1, "Volume number is required"),
+  archive_id: z.string().min(1, "Archive ID is required"),
+})
+
+// Update the form schema to make volumes truly optional
 const bookFormSchema = z.object({
   archiveId: z.string().min(1, "Archive ID is required"),
   title: z.string().min(1, "Title is required"),
   arabictitle: z.string().min(1, "Arabic Title is required"),
   description: z.string().min(1, "Description is required"),
   author: z.string().min(1, "Author is required"),
-  TopicID: z.number().min(1, "Topic is required"), // Changed from topic to TopicID
+  TopicID: z.number().min(1, "Topic is required"),
   language: z.string().min(1, "Language is required"),
   publisher: z.string().min(1, "Publisher is required"),
-  Edition: z.string().min(1, "Edition is required"), // Changed from edition to Edition
+  Edition: z.string().min(1, "Edition is required"),
+  volumes: z.array(volumeSchema).min(0).optional().default([]),
 })
 
 type BookFormValues = z.infer<typeof bookFormSchema>
@@ -54,6 +61,7 @@ interface AdminQuickUploadModalProps {
 export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQuickUploadModalProps) {
   const [topics, setTopics] = useState<Topic[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [volumeCount, setVolumeCount] = useState(0)
 
   const form = useForm<BookFormValues>({
     resolver: zodResolver(bookFormSchema),
@@ -63,10 +71,11 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
       arabictitle: "",
       description: "",
       author: "",
-      TopicID: 0, // Changed from topic to TopicID
+      TopicID: 0,
       language: "",
       publisher: "",
-      Edition: "", // Changed from edition to Edition
+      Edition: "",
+      volumes: [],
     },
   })
 
@@ -85,7 +94,82 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
     fetchTopics()
   }, [])
 
-  // Update the onSubmit function to match the backend expectations
+  // Update the volumes section in the form
+  const additionalFields = (
+    <>
+      {/* Volumes Section */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="space-y-1">
+            <Label className="text-sm sm:text-base">Volumes (Optional)</Label>
+            <p className="text-xs text-muted-foreground">
+              Add volumes if the book has multiple parts
+            </p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => setVolumeCount(prev => prev + 1)}
+            className="text-xs"
+          >
+            <PlusCircle className="h-4 w-4 mr-1" />
+            Add Volume
+          </Button>
+        </div>
+
+        <div className="space-y-4">
+          {volumeCount > 0 ? (
+            Array.from({ length: volumeCount }).map((_, index) => (
+              <div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 border rounded-lg">
+                <div className="space-y-2">
+                  <Label htmlFor={`volumes.${index}.volume_number`} className="text-sm">
+                    Volume Number
+                  </Label>
+                  <Input
+                    type="number"
+                    {...form.register(`volumes.${index}.volume_number` as const, {
+                      valueAsNumber: true,
+                    })}
+                    placeholder="Enter volume number"
+                    className="h-9 text-sm border-emerald-100 dark:border-emerald-900/50"
+                  />
+                  {form.formState.errors.volumes?.[index]?.volume_number && (
+                    <p className="text-xs text-red-500">
+                      {form.formState.errors.volumes[index]?.volume_number?.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor={`volumes.${index}.archive_id`} className="text-sm">
+                    Volume Archive ID
+                  </Label>
+                  <Input
+                    {...form.register(`volumes.${index}.archive_id` as const)}
+                    placeholder="Enter volume archive ID"
+                    className="h-9 text-sm border-emerald-100 dark:border-emerald-900/50"
+                  />
+                  {form.formState.errors.volumes?.[index]?.archive_id && (
+                    <p className="text-xs text-red-500">
+                      {form.formState.errors.volumes[index]?.archive_id?.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-center py-8 text-muted-foreground">
+              <p className="text-sm">No volumes added yet.</p>
+              <p className="text-xs">Click "Add Volume" to add volumes to this book.</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  )
+
+  // Update the onSubmit function
   const onSubmit = async (data: BookFormValues) => {
     try {
       setIsLoading(true)
@@ -98,7 +182,14 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
         topic: Number(data.TopicID),
         language: data.language,
         publisher: data.publisher,
-        Edition: data.Edition
+        Edition: data.Edition,
+        // Only include volumes if they exist
+        ...(data.volumes && data.volumes.length > 0 && {
+          volumes: data.volumes.map(vol => ({
+            volume_number: vol.volume_number,
+            archive_id: vol.archive_id
+          }))
+        })
       }
 
       const response = await axios.post('http://localhost:8000/api/books', formattedData)
@@ -107,7 +198,8 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
         toast.success('Book created successfully')
         onOpenChange(false)
         form.reset()
-        onSuccess?.() // Call the success callback if provided
+        setVolumeCount(1)
+        onSuccess?.()
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -130,68 +222,78 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
         >
           <PlusCircle className="h-4 w-4 mr-2" />
           <span className="hidden sm:inline">Quick Book Upload</span>
-          <span className="sm:hidden">Upload</span>
+          <span className="inline sm:hidden">Upload</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-[95vw] sm:w-full max-w-[550px] p-4 sm:p-6 md:p-8">
-        <DialogHeader className="space-y-2 sm:space-y-3">
-          <DialogTitle className="text-lg sm:text-xl">Add New Book</DialogTitle>
-          <DialogDescription className="text-xs sm:text-sm">
+      <DialogContent className="flex flex-col w-[95vw] max-w-[1400px] h-[95vh] sm:h-[90vh] p-0">
+        {/* Fixed Header - More compact on mobile */}
+        <DialogHeader className="flex-shrink-0 p-4 sm:p-6 md:p-8 border-b">
+          <DialogTitle className="text-xl sm:text-2xl font-bold text-emerald-900 dark:text-emerald-100">
+            Add New Book
+          </DialogTitle>
+          <DialogDescription className="text-xs sm:text-sm text-muted-foreground">
             Fill in the details to add a new book to the library.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
-          <div className="grid grid-cols-1 gap-4 sm:gap-6">
-            {/* Archive ID Field */}
-            <div className="space-y-2">
-              <Label htmlFor="archiveid" className="text-sm sm:text-base">Archive ID</Label>
-              <Input
-                {...form.register("archiveId")}
-                placeholder="Enter archive.org ID"
-                className="h-9 sm:h-10 text-sm sm:text-base border-emerald-100 dark:border-emerald-900/50"
-              />
-              {form.formState.errors.archiveId && (
-                <p className="text-xs sm:text-sm text-red-500">{form.formState.errors.archiveId.message}</p>
-              )}
-            </div>
-
-            {/* Two Column Layout for Title and Arabic Title on larger screens */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="title" className="text-sm sm:text-base">Book Title</Label>
+        
+        {/* Scrollable Content - Adjusted padding and spacing */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} id="book-form" className="space-y-6 sm:space-y-8">
+            {/* Updated grid layout with better mobile support */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+              {/* Archive ID Field - Full width on mobile */}
+              <div className="space-y-2 col-span-1 sm:col-span-2 lg:col-span-1">
+                <Label htmlFor="archiveid" className="text-sm font-medium">
+                  Archive ID
+                </Label>
                 <Input
-                  {...form.register("title")}
-                  placeholder="Enter book title"
+                  {...form.register("archiveId")}
+                  placeholder="Enter archive.org ID"
                   className="h-9 sm:h-10 text-sm sm:text-base border-emerald-100 dark:border-emerald-900/50"
                 />
-                {form.formState.errors.title && (
-                  <p className="text-xs sm:text-sm text-red-500">{form.formState.errors.title.message}</p>
+                {form.formState.errors.archiveId && (
+                  <p className="text-xs text-red-500">{form.formState.errors.archiveId.message}</p>
                 )}
               </div>
 
+              {/* Title Fields - Stack vertically on mobile */}
+              <div className="space-y-4 col-span-1 sm:col-span-2 lg:col-span-1">
+                <div className="space-y-2">
+                  <Label htmlFor="title" className="text-sm font-medium">
+                    Book Title
+                  </Label>
+                  <Input
+                    {...form.register("title")}
+                    placeholder="Enter book title"
+                    className="h-9 sm:h-10 text-sm sm:text-base border-emerald-100 dark:border-emerald-900/50"
+                  />
+                  {form.formState.errors.title && (
+                    <p className="text-xs text-red-500">{form.formState.errors.title.message}</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Arabic Title Field */}
               <div className="space-y-2">
-                <Label htmlFor="arabictitle" className="text-sm sm:text-base">Arabic Title</Label>
+                <Label htmlFor="arabictitle" className="text-sm">Arabic Title</Label>
                 <Input
                   {...form.register("arabictitle")}
                   placeholder="أدخل عنوان الكتاب بالعربية"
-                  className="h-9 sm:h-10 text-sm sm:text-base border-emerald-100 dark:border-emerald-900/50 font-arabic text-right"
+                  className="h-9 text-sm border-emerald-100 dark:border-emerald-900/50 font-arabic text-right"
                   dir="rtl"
                 />
                 {form.formState.errors.arabictitle && (
-                  <p className="text-xs sm:text-sm text-red-500">{form.formState.errors.arabictitle.message}</p>
+                  <p className="text-xs text-red-500">{form.formState.errors.arabictitle.message}</p>
                 )}
               </div>
-            </div>
 
-            {/* Two Column Layout for Topic and Language */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Topic and Language Fields */}
               <div className="space-y-2">
-                <Label htmlFor="topicid">Topic</Label>
-                {/* Update the Select component for topics */}
+                <Label htmlFor="topicid" className="text-sm">Topic</Label>
                 <Select
                   onValueChange={(value) => {
                     if (value && value !== "loading") {
-                      form.setValue("TopicID", parseInt(value)) // Changed from topic to TopicID
+                      form.setValue("TopicID", parseInt(value))
                     }
                   }}
                 >
@@ -218,7 +320,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="language">Language</Label>
+                <Label htmlFor="language" className="text-sm">Language</Label>
                 <Select onValueChange={(value) => form.setValue("language", value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select language" />
@@ -234,75 +336,131 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                   <p className="text-sm text-red-500">{form.formState.errors.language.message}</p>
                 )}
               </div>
-            </div>
 
-            {/* Author and Publisher Fields */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Author and Publisher Fields */}
               <div className="space-y-2">
-                <Label htmlFor="author">Author</Label>
+                <Label htmlFor="author" className="text-sm">Author</Label>
                 <Input
                   {...form.register("author")}
                   placeholder="Enter author name"
-                  className="border-emerald-100 dark:border-emerald-900/50"
+                  className="h-9 text-sm border-emerald-100 dark:border-emerald-900/50"
                 />
-                {form.formState.errors.author && (
-                  <p className="text-sm text-red-500">{form.formState.errors.author.message}</p>
-                )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="publisher">Publisher</Label>
+                <Label htmlFor="publisher" className="text-sm">Publisher</Label>
                 <Input
                   {...form.register("publisher")}
                   placeholder="Enter publisher name"
-                  className="border-emerald-100 dark:border-emerald-900/50"
+                  className="h-9 text-sm border-emerald-100 dark:border-emerald-900/50"
                 />
-                {form.formState.errors.publisher && (
-                  <p className="text-sm text-red-500">{form.formState.errors.publisher.message}</p>
-                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="Edition" className="text-sm">Edition</Label>
+                <Input
+                  {...form.register("Edition")}
+                  placeholder="Enter edition"
+                  className="h-9 text-sm border-emerald-100 dark:border-emerald-900/50"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="description" className="text-sm">Description</Label>
+                <Textarea
+                  {...form.register("description")}
+                  placeholder="Enter book description"
+                  className="min-h-[80px] text-sm border-emerald-100 dark:border-emerald-900/50"
+                  rows={3}
+                />
               </div>
             </div>
 
-            {/* Edition Field */}
-            <div className="space-y-2">
-              <Label htmlFor="Edition" className="text-sm sm:text-base">Edition</Label>
-              <Input
-                {...form.register("Edition")}
-                placeholder="Enter edition"
-                className="h-9 sm:h-10 text-sm sm:text-base border-emerald-100 dark:border-emerald-900/50"
-              />
-              {form.formState.errors.Edition && (
-                <p className="text-xs sm:text-sm text-red-500">{form.formState.errors.Edition.message}</p>
-              )}
-            </div>
+            {/* Volumes Section - Adjusted for better mobile display */}
+            <div className="border-t pt-4 sm:pt-6">
+              <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 sm:p-6">
+                <div className="space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div className="space-y-1">
+                      <Label className="text-sm sm:text-base">Volumes (Optional)</Label>
+                      <p className="text-xs text-muted-foreground">
+                        Add volumes if the book has multiple parts
+                      </p>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setVolumeCount(prev => prev + 1)}
+                      className="text-xs sm:text-sm w-full sm:w-auto"
+                    >
+                      <PlusCircle className="h-4 w-4 mr-1" />
+                      Add Volume
+                    </Button>
+                  </div>
 
-            {/* Description Field */}
-            <div className="space-y-2">
-              <Label htmlFor="description" className="text-sm sm:text-base">Description</Label>
-              <Textarea
-                {...form.register("description")}
-                placeholder="Enter book description"
-                className="min-h-[80px] sm:min-h-[100px] text-sm sm:text-base border-emerald-100 dark:border-emerald-900/50"
-                rows={3}
-              />
-              {form.formState.errors.description && (
-                <p className="text-xs sm:text-sm text-red-500">{form.formState.errors.description.message}</p>
-              )}
+                  <div className="space-y-4">
+                    {volumeCount > 0 ? (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {Array.from({ length: volumeCount }).map((_, index) => (
+                          <div key={index} className="p-4 border rounded-lg space-y-3">
+                            {/* Volume fields with responsive sizing */}
+                            <div className="space-y-2">
+                              <Label htmlFor={`volumes.${index}.volume_number`} className="text-xs sm:text-sm">
+                                Volume Number
+                              </Label>
+                              <Input
+                                type="number"
+                                {...form.register(`volumes.${index}.volume_number` as const, {
+                                  valueAsNumber: true,
+                                })}
+                                placeholder="Enter volume number"
+                                className="h-8 sm:h-9 text-xs sm:text-sm"
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor={`volumes.${index}.archive_id`} className="text-xs sm:text-sm">
+                                Volume Archive ID
+                              </Label>
+                              <Input
+                                {...form.register(`volumes.${index}.archive_id` as const)}
+                                placeholder="Enter volume archive ID"
+                                className="h-8 sm:h-9 text-xs sm:text-sm"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-6 sm:py-8">
+                        <p className="text-sm">No volumes added yet.</p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Click "Add Volume" to add volumes to this book.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          </form>
+        </div>
 
-          <DialogFooter className="sm:space-x-2">
+        {/* Fixed Footer - Compact on mobile */}
+        <DialogFooter className="flex-shrink-0 p-4 sm:p-6 md:p-8 border-t bg-background">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="w-full sm:w-auto h-9 sm:h-10 text-sm sm:text-base"
+              className="w-full sm:w-auto h-9 sm:h-10 text-sm"
             >
               Cancel
             </Button>
             <Button
+              form="book-form"
               type="submit"
-              className="w-full sm:w-auto h-9 sm:h-10 text-sm sm:text-base bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="w-full sm:w-auto h-9 sm:h-10 text-sm bg-emerald-600 hover:bg-emerald-700 text-white"
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? (
@@ -313,13 +471,14 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                 </>
               ) : (
                 <>
+                  <PlusCircle className="mr-2 h-4 w-4" />
                   <span className="sm:inline">Add Book</span>
                   <span className="inline sm:hidden">Add</span>
                 </>
               )}
             </Button>
-          </DialogFooter>
-        </form>
+          </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )
