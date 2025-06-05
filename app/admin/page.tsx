@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 import Link from "next/link";
-import { Users, ChevronRight } from "lucide-react";
+import { Users, ChevronRight, Check, ChevronsUpDown } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -11,16 +11,53 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";import { AdminRecentBooksTable } from "@/components/admin/admin-recent-book-table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AdminRecentBooksTable } from "@/components/admin/admin-recent-book-table";
 import { AdminQuickUploadModal } from "@/components/admin/admin-quick-uplaod-modal";
 import { toast } from "sonner";
 import axios from "axios";
 import { Book } from "@/types/book";
+import { z } from "zod";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
+import { X } from "lucide-react"
+
+const bookFormSchema = z.object({
+  archiveId: z.string().min(1, "Archive ID is required"),
+  title: z.string().min(1, "Title is required"),
+  arabictitle: z.string().min(1, "Arabic Title is required"),
+  description: z.string().min(1, "Description is required"),
+  author: z.string().min(1, "Author is required"),
+  topicIds: z.array(z.number()).min(1, "At least one topic is required"),
+  language: z.string().min(1, "Language is required"),
+  publisher: z.string().min(1, "Publisher is required"),
+  edition: z.string().min(1, "Edition is required"),
+  volumes: z.array(z.object({
+    volume_number: z.number(),
+    archive_id: z.string()
+  })),
+}).transform(data => ({
+  ...data,
+  volumes: data.volumes ?? []
+}));
 
 export default function AdminDashboardPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [recentBooks, setRecentBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleBookCreated = () => {
     // Handle book creation success if needed
@@ -46,7 +83,47 @@ export default function AdminDashboardPage() {
     fetchRecentBooks();
   }, []);
 
+  const onSubmit = async (data: z.infer<typeof bookFormSchema>) => {
+    try {
+      setIsLoading(true)
+      const formattedData = {
+        archiveId: data.archiveId,
+        title: data.title,
+        arabictitle: data.arabictitle,
+        description: data.description,
+        author: data.author,
+        topicIds: data.topicIds,
+        language: data.language,
+        publisher: data.publisher,
+        edition: data.edition,
+        ...(data.volumes && data.volumes.length > 0 && {
+          volumes: data.volumes.map(vol => ({
+            volume_number: vol.volume_number,
+            archive_id: vol.archive_id
+          }))
+        })
+      }
 
+      const response = await axios.post('http://localhost:8000/api/books', formattedData)
+
+      if (response.status === 201) {
+        toast.success('Book created successfully')
+        setIsModalOpen(false)
+        // form.reset()
+        // setVolumeCount(1)
+        handleBookCreated()
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(`Failed to create book: ${error.response?.data?.message || 'Unknown error'}`)
+      } else {
+        toast.error('Failed to create book')
+      }
+      console.error('Error creating book:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -66,7 +143,7 @@ export default function AdminDashboardPage() {
             <AdminQuickUploadModal
               open={isModalOpen}
               onOpenChange={setIsModalOpen}
-              onSuccess={() => setIsModalOpen(false)}
+              onSuccess={handleBookCreated}
             />
           </div>
         </div>

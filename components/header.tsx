@@ -22,10 +22,53 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import SearchBar from "@/components/search/search-bar"
+import { useTopics } from "@/hooks/use-topics"
+import axios from "axios"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+interface Topic {
+  id: number
+  name: string
+  description: string
+  created_at: string
+  updated_at: string
+}
+
+const bookFormSchema = z.object({
+  archiveId: z.string().min(1, "Archive ID is required"),
+  title: z.string().min(1, "Title is required"),
+  arabictitle: z.string().min(1, "Arabic Title is required"),
+  description: z.string().min(1, "Description is required"),
+  author: z.string().min(1, "Author is required"),
+  TopicID: z.number().min(1, "Topic is required"),
+  language: z.string().min(1, "Language is required"),
+  publisher: z.string().min(1, "Publisher is required"),
+  edition: z.string().min(1, "Edition is required"),
+  volumes: z.array(z.object({
+    volume_number: z.number().min(1, "Volume number is required"),
+    archive_id: z.string().min(1, "Archive ID is required")
+  }))
+}).transform(data => ({
+  ...data,
+  volumes: data.volumes ?? []
+}))
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
+  const { getTopicIdByName } = useTopics()
+  const [topics, setTopics] = useState<Topic[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const form = useForm()
 
   // Add scroll event listener when component mounts
   useEffect(() => {
@@ -43,6 +86,29 @@ export default function Header() {
       window.removeEventListener("scroll", handleScroll)
     }
   }, [])
+
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/topics')
+        console.log('Fetched topics:', response.data.topics) // Debug log
+        setTopics(response.data.topics)
+      } catch (error) {
+        console.error('Error fetching topics:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchTopics()
+  }, [])
+
+  const tafsirId = getTopicIdByName("tafsir")
+  const hadithId = getTopicIdByName("hadith")
+  const hanafiId = getTopicIdByName("Fiqh - Hanafi")
+  const shafiiId = getTopicIdByName("Fiqh - Shafi'i")
+  const malikiId = getTopicIdByName("Fiqh - Maliki")
+  const hanbaliId = getTopicIdByName("Fiqh - Hanbali")
 
   return (
     <header
@@ -74,43 +140,23 @@ export default function Header() {
               Home
             </Link>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-emerald-100 hover:text-emerald-700 dark:hover:text-emerald-400"
-                >
-                  Quran <ChevronDown className="ml-1 h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="center" className="w-56">
-                {/* <DropdownMenuItem>Read Quran</DropdownMenuItem> */}
+            {tafsirId && (
+              <Link
+                href={`/library/topic/${tafsirId}`}
+                className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-emerald-100 hover:text-emerald-700 dark:hover:text-emerald-400 rounded-md"
+              >
+                Tafsir
+              </Link>
+            )}
 
-                <DropdownMenuItem>Tafasir</DropdownMenuItem>
-
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-emerald-100 hover:text-emerald-700 dark:hover:text-emerald-400"
-                >
-                  Hadith <ChevronDown className="ml-1 h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="center" className="w-56">
-                <DropdownMenuItem>Sahih Bukhari</DropdownMenuItem>
-                <DropdownMenuItem>Sahih Muslim</DropdownMenuItem>
-                <DropdownMenuItem>Jami at-Tirmidhi</DropdownMenuItem>
-                <DropdownMenuItem>Sunan Abu Dawood</DropdownMenuItem>
-                <DropdownMenuItem>Sunan an-Nasa'i</DropdownMenuItem>
-                <DropdownMenuItem>Sunan Ibn Majah</DropdownMenuItem>
-                {/* // Browse all will point on all hadith  */}
-                <DropdownMenuItem>Browse All Collections</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {hadithId && (
+              <Link
+                href={`/library/topic/${hadithId}`}
+                className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-emerald-100 hover:text-emerald-700 dark:hover:text-emerald-400 rounded-md"
+              >
+                Hadith
+              </Link>
+            )}
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -122,10 +168,26 @@ export default function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" className="w-56">
-                <DropdownMenuItem>Hanafi</DropdownMenuItem>
-                <DropdownMenuItem>Shafai</DropdownMenuItem>
-                <DropdownMenuItem>Maliki</DropdownMenuItem>
-                <DropdownMenuItem>Hanbali</DropdownMenuItem>
+                {hanafiId && (
+                  <DropdownMenuItem asChild>
+                    <Link href={`/library/topic/${hanafiId}`}>Hanafi</Link>
+                  </DropdownMenuItem>
+                )}
+                {shafiiId && (
+                  <DropdownMenuItem asChild>
+                    <Link href={`/library/topic/${shafiiId}`}>Shafi'i</Link>
+                  </DropdownMenuItem>
+                )}
+                {malikiId && (
+                  <DropdownMenuItem asChild>
+                    <Link href={`/library/topic/${malikiId}`}>Maliki</Link>
+                  </DropdownMenuItem>
+                )}
+                {hanbaliId && (
+                  <DropdownMenuItem asChild>
+                    <Link href={`/library/topic/${hanbaliId}`}>Hanbali</Link>
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
         
