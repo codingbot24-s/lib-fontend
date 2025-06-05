@@ -1,31 +1,31 @@
-
-import HeroSection from "@/components/hero-section"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { BookOpen, ChevronRight, BookMarked, Users, Headphones, Calendar } from "lucide-react"
-import BookCard from "@/components/book-card"
-import FeaturedBookCard from "@/components/featured-book-card"
-import CategoryChip from "@/components/category-chip"
-import FeaturedScholar from "@/components/featured-scholar"
-import AudioCard from "@/components/audio-card"
-import QuranSection from "@/components/quran-section"
-import PrayerTimesWidget from "@/components/prayer-times-widget"
-import FeaturedQuote from "@/components/featured-quote"
-import GuidedLearningPaths from "@/components/guided-learning/guided-learning-paths"
+"use client";
+import HeroSection from "@/components/hero-section";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  BookOpen,
+  ChevronRight,
+  BookMarked,
+  Users,
+  Headphones,
+  Calendar,
+} from "lucide-react";
+import BookCard from "@/components/book-card";
+import FeaturedBookCard from "@/components/featured-book-card";
+import CategoryChip from "@/components/category-chip";
+import FeaturedScholar from "@/components/featured-scholar";
+import AudioCard from "@/components/audio-card";
+import QuranSection from "@/components/quran-section";
+import PrayerTimesWidget from "@/components/prayer-times-widget";
+import FeaturedQuote from "@/components/featured-quote";
+import GuidedLearningPaths from "@/components/guided-learning/guided-learning-paths";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { set } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   // Sample data for categories
-  const categories = [
-    { id: 1, name: "Quran", icon: "book-open" },
-    { id: 2, name: "Hadith", icon: "scroll" },
-    { id: 3, name: "Tafsir", icon: "book" },
-    { id: 4, name: "Fiqh", icon: "scale" },
-    { id: 5, name: "History", icon: "landmark" },
-    { id: 6, name: "Biography", icon: "user" },
-    { id: 7, name: "Sufism", icon: "heart" },
-    { id: 8, name: "Philosophy", icon: "brain" },
-    { id: 9, name: "Contemporary", icon: "calendar" },
-  ]
 
   // Sample data for featured books
   const featuredBooks = [
@@ -53,7 +53,7 @@ export default function HomePage() {
       author: "Imam Al-Ghazali",
       coverUrl: "/placeholder.svg?height=300&width=200",
     },
-  ]
+  ];
 
   // Sample data for popular books
   const popularBooks = [
@@ -62,7 +62,8 @@ export default function HomePage() {
       title: "Purification of the Heart",
       author: "Hamza Yusuf",
       coverUrl: "/placeholder.svg?height=400&width=300",
-      description: "Signs, Symptoms and Cures of the Spiritual Diseases of the Heart",
+      description:
+        "Signs, Symptoms and Cures of the Spiritual Diseases of the Heart",
     },
     {
       id: 2,
@@ -78,7 +79,7 @@ export default function HomePage() {
       coverUrl: "/placeholder.svg?height=400&width=300",
       description: "Acclaimed biography based on early sources",
     },
-  ]
+  ];
 
   // Sample data for scholars
   const scholars = [
@@ -109,7 +110,7 @@ export default function HomePage() {
       imageUrl: "/placeholder.svg?height=200&width=200",
       bookCount: 23,
     },
-  ]
+  ];
 
   // Sample data for audio content
   const audioContent = [
@@ -145,7 +146,7 @@ export default function HomePage() {
       imageUrl: "/placeholder.svg?height=200&width=350",
       category: "Fiqh",
     },
-  ]
+  ];
 
   // Sample data for articles
   const articles = [
@@ -154,7 +155,8 @@ export default function HomePage() {
       title: "The Importance of Seeking Knowledge in Islam",
       author: "Dr. Bilal Philips",
       date: "May 10, 2025",
-      excerpt: "Islam places a high value on education and the pursuit of knowledge...",
+      excerpt:
+        "Islam places a high value on education and the pursuit of knowledge...",
       imageUrl: "/placeholder.svg?height=200&width=350",
       category: "Education",
     },
@@ -163,7 +165,8 @@ export default function HomePage() {
       title: "Understanding the Concept of Tawheed",
       author: "Shaykh Hamza Yusuf",
       date: "May 5, 2025",
-      excerpt: "Tawheed, the oneness of Allah, is the most fundamental concept in Islam...",
+      excerpt:
+        "Tawheed, the oneness of Allah, is the most fundamental concept in Islam...",
       imageUrl: "/placeholder.svg?height=200&width=350",
       category: "Aqeedah",
     },
@@ -172,36 +175,62 @@ export default function HomePage() {
       title: "The Ethics of Disagreement in Islam",
       author: "Dr. Umar F. Abd-Allah",
       date: "April 28, 2025",
-      excerpt: "Differences of opinion have existed among Muslims since the earliest days...",
+      excerpt:
+        "Differences of opinion have existed among Muslims since the earliest days...",
       imageUrl: "/placeholder.svg?height=200&width=350",
       category: "Ethics",
     },
-  ]
+  ];
+
+  interface TopicResponse {
+    topics: Topic[];
+  }
+
+  interface Topic {
+    id: number;
+    name: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
+  }
+  const [topics, setTopics] = useState<TopicResponse>({ topics: [] });
+  useEffect(() => {
+    const fetchTopics = async () => {
+      const response = await axios.get(`http://localhost:8000/api/topics`);
+      setTopics(response.data);
+    };
+    fetchTopics();
+  }, []);
+
+  const router = useRouter();
 
   return (
     <div className="min-h-screen bg-[#f8f5f0] dark:bg-gray-950 font-noto-serif">
       {/* Header */}
-      
 
       {/* Hero Section */}
       <HeroSection />
 
       {/* Main Content */}
       <main>
-        {/* Categories Section */}
+        {/*Topics Section */}
         <section className="py-12 bg-white dark:bg-gray-900">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
                 Browse by Category
               </h2>
-              <Button variant="link" className="text-emerald-700 dark:text-emerald-400">
+              <Button
+                onClick={() => window.location.href = "/library"}
+                variant="link"
+                className="text-emerald-700 dark:text-emerald-400"
+              >
                 View All <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
             </div>
             <div className="flex overflow-x-auto pb-4 space-x-4 scrollbar-hide">
-              {categories.map((category) => (
-                <CategoryChip key={category.id} name={category.name} icon={category.icon} />
+              {topics.topics.map((topic) => (
+                <CategoryChip key={topic.id} name={topic.name} id={topic.id} />
               ))}
             </div>
           </div>
@@ -214,14 +243,24 @@ export default function HomePage() {
         <section className="py-12 bg-emerald-50 dark:bg-emerald-950/30">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">Featured Books</h2>
-              <Button variant="link" className="text-emerald-700 dark:text-emerald-400">
+              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
+                Featured Books
+              </h2>
+              <Button
+                variant="link"
+                className="text-emerald-700 dark:text-emerald-400"
+              >
                 View Library <BookMarked className="ml-1 h-4 w-4" />
               </Button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {featuredBooks.map((book) => (
-                <FeaturedBookCard key={book.id} title={book.title} author={book.author} coverUrl={book.coverUrl} />
+                <FeaturedBookCard
+                  key={book.id}
+                  title={book.title}
+                  author={book.author}
+                  coverUrl={book.coverUrl}
+                />
               ))}
             </div>
           </div>
@@ -257,7 +296,10 @@ export default function HomePage() {
               <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
                 Featured Scholars
               </h2>
-              <Button variant="link" className="text-emerald-700 dark:text-emerald-400">
+              <Button
+                variant="link"
+                className="text-emerald-700 dark:text-emerald-400"
+              >
                 All Scholars <Users className="ml-1 h-4 w-4" />
               </Button>
             </div>
@@ -273,8 +315,13 @@ export default function HomePage() {
         <section className="py-12 bg-white dark:bg-gray-900">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">Audio Content</h2>
-              <Button variant="link" className="text-emerald-700 dark:text-emerald-400">
+              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
+                Audio Content
+              </h2>
+              <Button
+                variant="link"
+                className="text-emerald-700 dark:text-emerald-400"
+              >
                 All Audio <Headphones className="ml-1 h-4 w-4" />
               </Button>
             </div>
@@ -290,8 +337,14 @@ export default function HomePage() {
         <section className="py-12 bg-emerald-50 dark:bg-emerald-950/30">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">Popular Books</h2>
-              <Button variant="link" className="text-emerald-700 dark:text-emerald-400">
+              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
+                Popular Books
+              </h2>
+              <Button
+                variant="link"
+                className="text-emerald-700 dark:text-emerald-400"
+                onClick={() => router.push("/library")}
+              >
                 View All <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
             </div>
@@ -313,8 +366,13 @@ export default function HomePage() {
         <section className="py-12 bg-white dark:bg-gray-900">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">Latest Articles</h2>
-              <Button variant="link" className="text-emerald-700 dark:text-emerald-400">
+              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
+                Latest Articles
+              </h2>
+              <Button
+                variant="link"
+                className="text-emerald-700 dark:text-emerald-400"
+              >
                 All Articles <Calendar className="ml-1 h-4 w-4" />
               </Button>
             </div>
@@ -342,9 +400,16 @@ export default function HomePage() {
                       <span className="mx-2">•</span>
                       <span>{article.author}</span>
                     </div>
-                    <h3 className="font-bold text-emerald-900 dark:text-emerald-100 mb-2">{article.title}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">{article.excerpt}</p>
-                    <Button variant="link" className="p-0 h-auto text-emerald-700 dark:text-emerald-400">
+                    <h3 className="font-bold text-emerald-900 dark:text-emerald-100 mb-2">
+                      {article.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">
+                      {article.excerpt}
+                    </p>
+                    <Button
+                      variant="link"
+                      className="p-0 h-auto text-emerald-700 dark:text-emerald-400"
+                    >
                       Read More
                     </Button>
                   </CardContent>
@@ -357,14 +422,21 @@ export default function HomePage() {
         {/* Call to Action */}
         <section className="py-16 bg-gradient-to-r from-emerald-800 to-emerald-700 dark:from-emerald-900 dark:to-emerald-800">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Join Our Community of Knowledge Seekers</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              Join Our Community of Knowledge Seekers
+            </h2>
             <p className="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
-              Create an account to save your favorite books, track your reading progress, and join discussions with
-              fellow learners.
+              Create an account to save your favorite books, track your reading
+              progress, and join discussions with fellow learners.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button className="bg-white hover:bg-gray-100 text-emerald-800 px-6 py-2">Create Free Account</Button>
-              <Button variant="outline" className="border-white text-white hover:bg-white/10 hover:text-white">
+              <Button className="bg-white hover:bg-gray-100 text-emerald-800 px-6 py-2">
+                Create Free Account
+              </Button>
+              <Button
+                variant="outline"
+                className="border-white text-white hover:bg-white/10 hover:text-white"
+              >
                 Learn More About Membership
               </Button>
             </div>
@@ -372,5 +444,5 @@ export default function HomePage() {
         </section>
       </main>
     </div>
-  )
+  );
 }

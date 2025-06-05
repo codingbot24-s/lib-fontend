@@ -1,10 +1,14 @@
+"use client";
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { BookOpen, BookMarked, Search, Users } from "lucide-react"
 import QuranVerse from "@/components/quran-verse"
 import HeroPattern from "@/components/hero-pattern"
+import { useRouter } from "next/navigation"
 
 export default function HeroSection() {
+  const router = useRouter();
   return (
     <section className="relative py-20 overflow-hidden bg-gradient-to-b from-emerald-900 to-emerald-800 dark:from-emerald-950 dark:to-emerald-900">
       <HeroPattern className="absolute inset-0 opacity-10" />
@@ -35,23 +39,10 @@ export default function HeroSection() {
             <Button
               variant="outline"
               className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 hover:text-white"
-            >
-              Read Quran
-              <BookOpen className="ml-2 h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 hover:text-white"
+              onClick={() => router.push("/library")}
             >
               Browse Books
               <BookMarked className="ml-2 h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 hover:text-white"
-            >
-              Find Scholar
-              <Users className="ml-2 h-4 w-4" />
             </Button>
           </div>
         </div>
