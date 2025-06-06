@@ -103,6 +103,11 @@ export default function Header() {
     fetchTopics()
   }, [])
 
+  // Get Fiqh madhabs from topics
+  const fiqhMadhabs = topics.filter(topic => 
+    topic.name.toLowerCase().startsWith('fiqh')
+  )
+
   const tafsirId = getTopicIdByName("tafsir")
   const hadithId = getTopicIdByName("hadith")
   const hanafiId = getTopicIdByName("Fiqh - Hanafi")
@@ -168,26 +173,13 @@ export default function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" className="w-56">
-                {hanafiId && (
-                  <DropdownMenuItem asChild>
-                    <Link href={`/library/topic/${hanafiId}`}>Hanafi</Link>
+                {fiqhMadhabs.map((madhab) => (
+                  <DropdownMenuItem key={madhab.id} asChild>
+                    <Link href={`/library/topic/${madhab.id}`}>
+                      {madhab.name.replace('Fiqh ', '')}
+                    </Link>
                   </DropdownMenuItem>
-                )}
-                {shafiiId && (
-                  <DropdownMenuItem asChild>
-                    <Link href={`/library/topic/${shafiiId}`}>Shafi'i</Link>
-                  </DropdownMenuItem>
-                )}
-                {malikiId && (
-                  <DropdownMenuItem asChild>
-                    <Link href={`/library/topic/${malikiId}`}>Maliki</Link>
-                  </DropdownMenuItem>
-                )}
-                {hanbaliId && (
-                  <DropdownMenuItem asChild>
-                    <Link href={`/library/topic/${hanbaliId}`}>Hanbali</Link>
-                  </DropdownMenuItem>
-                )}
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
         
@@ -328,51 +320,23 @@ export default function Header() {
                           Home
                         </Link>
 
-                        {/* Quran Section */}
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between py-2 px-3">
-                            <span className="font-medium">Quran</span>
-                          </div>
-                          <div className="pl-4 space-y-1">
-                            <Link
-                              href="/quran/tafsir"
-                              className="flex items-center py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-md"
-                            >
-                              Tafasir
-                            </Link>
-                          </div>
-                        </div>
+                        {tafsirId && (
+                          <Link
+                            href={`/library/topic/${tafsirId}`}
+                            className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                          >
+                            Tafsir
+                          </Link>
+                        )}
 
-                        {/* Hadith Section */}
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between py-2 px-3">
-                            <span className="font-medium">Hadith</span>
-                          </div>
-                          <div className="pl-4 space-y-1">
-                            {[
-                              "Sahih Bukhari",
-                              "Sahih Muslim",
-                              "Jami at-Tirmidhi",
-                              "Sunan Abu Dawood",
-                              "Sunan an-Nasa'i",
-                              "Sunan Ibn Majah",
-                            ].map((collection) => (
-                              <Link
-                                key={collection}
-                                href={`/hadith/${collection.toLowerCase().replace(/\s+/g, '-')}`}
-                                className="flex items-center py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-md"
-                              >
-                                {collection}
-                              </Link>
-                            ))}
-                            <Link
-                              href="/hadith/collections"
-                              className="flex items-center py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-md"
-                            >
-                              Browse All Collections
-                            </Link>
-                          </div>
-                        </div>
+                        {hadithId && (
+                          <Link
+                            href={`/library/topic/${hadithId}`}
+                            className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                          >
+                            Hadith
+                          </Link>
+                        )}
 
                         {/* Fiqh Section */}
                         <div className="space-y-2">
@@ -380,13 +344,13 @@ export default function Header() {
                             <span className="font-medium">Fiqh</span>
                           </div>
                           <div className="pl-4 space-y-1">
-                            {["Hanafi", "Shafai", "Maliki", "Hanbali"].map((madhab) => (
+                            {fiqhMadhabs.map((madhab) => (
                               <Link
-                                key={madhab}
-                                href={`/fiqh/${madhab.toLowerCase()}`}
+                                key={madhab.id}
+                                href={`/library/topic/${madhab.id}`}
                                 className="flex items-center py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-md"
                               >
-                                {madhab}
+                                {madhab.name.replace('Fiqh ', '')}
                               </Link>
                             ))}
                           </div>
@@ -419,21 +383,26 @@ export default function Header() {
                           </div>
                         </div>
 
-                        {/* Other Links */}
-                        {[
-                          { href: "/categories", label: "Categories" },
-                          { href: "/library", label: "Library" },
-                          { href: "/articles", label: "Articles" },
-                          { href: "/forum", label: "Forum" },
-                        ].map((link) => (
-                          <Link
-                            key={link.href}
-                            href={link.href}
-                            className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
-                          >
-                            {link.label}
-                          </Link>
-                        ))}
+                        <Link
+                          href="/library"
+                          className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                        >
+                          Library
+                        </Link>
+
+                        <Link
+                          href="/articles"
+                          className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                        >
+                          Articles
+                        </Link>
+
+                        <Link
+                          href="/forum"
+                          className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                        >
+                          Forum
+                        </Link>
                       </div>
                     </div>
                   </div>
