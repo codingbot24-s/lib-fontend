@@ -43,7 +43,7 @@ const bookFormSchema = z.object({
   arabictitle: z.string().min(1, "Arabic Title is required"),
   description: z.string().min(1, "Description is required"),
   author: z.string().min(1, "Author is required"),
-  TopicID: z.number().min(1, "Topic is required"),
+  TopicIDs: z.array(z.number()).min(1, "At least one topic is required"),
   language: z.string().min(1, "Language is required"),
   publisher: z.string().min(1, "Publisher is required"),
   Edition: z.string().min(1, "Edition is required"),
@@ -65,6 +65,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
   const [topics, setTopics] = useState<Topic[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [volumeCount, setVolumeCount] = useState(0)
+  const [selectedTopics, setSelectedTopics] = useState<number[]>([])
 
   const form = useForm<BookFormValues>({
     resolver: zodResolver(bookFormSchema),
@@ -74,7 +75,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
       arabictitle: "",
       description: "",
       author: "",
-      TopicID: 0,
+      TopicIDs: [],
       language: "",
       publisher: "",
       Edition: "",
@@ -182,7 +183,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
         arabictitle: data.arabictitle,
         description: data.description,
         author: data.author,
-        topic: Number(data.TopicID),
+        topics: data.TopicIDs,
         language: data.language,
         publisher: data.publisher,
         Edition: data.Edition,
@@ -194,7 +195,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
           }))
         })
       }
-
+     console.log("formated data",formattedData);
       const response = await axios.post('http://localhost:8000/api/books', formattedData)
 
       if (response.status === 201) {
@@ -291,32 +292,32 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
               {/* Topic Field */}
               <div className="space-y-2 col-span-1">
                 <Label htmlFor="topicid" className="text-sm">Topic</Label>
-                <Select
-                  onValueChange={(value) => {
-                    if (value && value !== "loading") {
-                      form.setValue("TopicID", parseInt(value))
-                    }
-                  }}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select topic" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {isLoading ? (
-                      <SelectItem value="loading" disabled>Loading...</SelectItem>
-                    ) : topics.length === 0 ? (
-                      <SelectItem value="no-topics" disabled>No topics available</SelectItem>
-                    ) : (
-                      topics.map((topic) => (
-                        <SelectItem key={topic.id} value={topic.id.toString()}>
-                          {topic.name}
-                        </SelectItem>
-                      ))
-                    )}
-                  </SelectContent>
-                </Select>
-                {form.formState.errors.TopicID && (
-                  <p className="text-xs text-red-500">{form.formState.errors.TopicID.message}</p>
+                <div className="flex flex-wrap gap-2">
+                  {topics.map((topic) => (
+                    <Button
+                      key={topic.id}
+                      type="button"
+                      variant={selectedTopics.includes(topic.id) ? "default" : "outline"}
+                      size="sm"
+                      className={`text-xs ${
+                        selectedTopics.includes(topic.id)
+                          ? "bg-emerald-600 hover:bg-emerald-700 text-white"
+                          : "hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                      }`}
+                      onClick={() => {
+                        const newSelectedTopics = selectedTopics.includes(topic.id)
+                          ? selectedTopics.filter(id => id !== topic.id)
+                          : [...selectedTopics, topic.id]
+                        setSelectedTopics(newSelectedTopics)
+                        form.setValue("TopicIDs", newSelectedTopics)
+                      }}
+                    >
+                      {topic.name}
+                    </Button>
+                  ))}
+                </div>
+                {form.formState.errors.TopicIDs && (
+                  <p className="text-xs text-red-500">{form.formState.errors.TopicIDs.message}</p>
                 )}
               </div>
 
