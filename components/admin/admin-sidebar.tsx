@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { BookOpen, Home, Users, Settings, BookMarked, GraduationCap, X, Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -13,6 +14,7 @@ interface AdminSidebarProps {
 
 export function AdminSidebar({ open, setOpen }: AdminSidebarProps) {
   const { theme, setTheme } = useTheme()
+  const pathname = usePathname()
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark")
@@ -47,7 +49,7 @@ export function AdminSidebar({ open, setOpen }: AdminSidebarProps) {
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-emerald-900 dark:text-emerald-50">Bayt al-Kutub</span>
-              <span className="text-xs text-emerald-600 dark:text-emerald-400">Admin Portal</span>
+              <span className="text-xs text-emerald-600 dark:text-emerald-400"></span>
             </div>
           </Link>
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setOpen(false)}>
@@ -60,13 +62,15 @@ export function AdminSidebar({ open, setOpen }: AdminSidebarProps) {
           <nav className="space-y-1">
             {links.map((link) => {
               const Icon = link.icon
+              const isActive = pathname === link.href || 
+                (link.href !== "/admin" && pathname?.startsWith(link.href))
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
                     "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                    link.href === "/admin"
+                    isActive
                       ? "bg-emerald-50 text-emerald-900 dark:bg-emerald-900/30 dark:text-emerald-50"
                       : "text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 dark:text-gray-300 dark:hover:bg-emerald-900/30 dark:hover:text-emerald-50",
                   )}
