@@ -108,6 +108,19 @@ export default function Header() {
     topic.name.toLowerCase().startsWith('fiqh')
   )
 
+  // Get Dars e Nizami levels from topics
+  const darsENizamiLevels = topics.filter(topic => 
+    topic.name.toLowerCase().includes('arabic') || 
+    topic.name.toLowerCase().includes('farsi')
+  ).sort((a, b) => {
+    // Sort by level number if present
+    const getLevelNumber = (name: string) => {
+      const match = name.match(/\d+/)
+      return match ? parseInt(match[0]) : 999 // Put non-numeric levels at the end
+    }
+    return getLevelNumber(a.name) - getLevelNumber(b.name)
+  })
+
   const tafsirId = getTopicIdByName("tafsir")
   const hadithId = getTopicIdByName("hadith")
   const hanafiId = getTopicIdByName("Fiqh - Hanafi")
@@ -193,14 +206,13 @@ export default function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" className="w-56">
-                <DropdownMenuItem>Arabic Haftum</DropdownMenuItem>
-                <DropdownMenuItem>Arabic Shashum</DropdownMenuItem>
-                <DropdownMenuItem>Arabic Panjum</DropdownMenuItem>
-                <DropdownMenuItem>Arabic Charum</DropdownMenuItem>
-                <DropdownMenuItem>Arabic Soum</DropdownMenuItem>
-                <DropdownMenuItem>Arabic Doum</DropdownMenuItem>
-                <DropdownMenuItem>Arabic Awwal</DropdownMenuItem> 
-               <DropdownMenuItem>Farsi</DropdownMenuItem>
+                {darsENizamiLevels.map((level) => (
+                  <DropdownMenuItem key={level.id} asChild>
+                    <Link href={`/library/topic/${level.id}`}>
+                      {level.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -212,7 +224,7 @@ export default function Header() {
               Library
             </Link>
 
-            <Link
+            {/* <Link
               href="/articles"
               className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-emerald-100 hover:text-emerald-700 dark:hover:text-emerald-400 rounded-md"
             >
@@ -224,7 +236,7 @@ export default function Header() {
               className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-emerald-100 hover:text-emerald-700 dark:hover:text-emerald-400 rounded-md"
             >
               Forum
-            </Link>
+            </Link> */}
           </nav>
 
           {/* Right Side Actions */}
@@ -362,22 +374,13 @@ export default function Header() {
                             <span className="font-medium">Dars e Nizami</span>
                           </div>
                           <div className="pl-4 space-y-1">
-                            {[
-                              "Arabic Haftum",
-                              "Arabic Shashum",
-                              "Arabic Panjum",
-                              "Arabic Charum",
-                              "Arabic Soum",
-                              "Arabic Doum",
-                              "Arabic Awwal",
-                              "Farsi"
-                            ].map((level) => (
+                            {darsENizamiLevels.map((level) => (
                               <Link
-                                key={level}
-                                href={`/dars-e-nizami/${level.toLowerCase().replace(/\s+/g, '-')}`}
+                                key={level.id}
+                                href={`/library/topic/${level.id}`}
                                 className="flex items-center py-2 px-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-md"
                               >
-                                {level}
+                                {level.name}
                               </Link>
                             ))}
                           </div>
@@ -390,7 +393,7 @@ export default function Header() {
                           Library
                         </Link>
 
-                        <Link
+                        {/* <Link
                           href="/articles"
                           className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
                         >
@@ -402,7 +405,7 @@ export default function Header() {
                           className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
                         >
                           Forum
-                        </Link>
+                        </Link> */}
                       </div>
                     </div>
                   </div>

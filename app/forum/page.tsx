@@ -3,7 +3,7 @@ import ThreadList from "@/components/forum/thread-list"
 import ForumSidebar from "@/components/forum/forum-sidebar"
 import StartDiscussionButton from "@/components/forum/start-discussion-button"
 import ForumTabs from "@/components/forum/forum-tabs"
-import Header from "@/components/header"
+
 
 export default function ForumPage() {
   // Sample forum categories
@@ -182,7 +182,7 @@ export default function ForumPage() {
 
   return (
     <div className="min-h-screen bg-[#f8f5f0] dark:bg-gray-950">
-      <Header />
+      
 
       <main className="container mx-auto px-4 py-8">
         <ForumHeader />

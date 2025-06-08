@@ -3,7 +3,8 @@ import type { Metadata } from "next"
 import { Inter, Noto_Serif } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import Header from "@/components/header" // Add this import
+import Header from "@/components/header"
+import Footer from "@/components/footer"
 import { Toaster } from 'sonner'
 
 const inter = Inter({
@@ -32,12 +33,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${notoSerif.variable} bg-islamic-pattern`}>
+      <body className={`${inter.variable} ${notoSerif.variable} bg-islamic-pattern min-h-screen flex flex-col`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Header /> {/* Add the Header component here */}
-          <main>
+          <Header />
+          <main className="flex-grow">
             {children}
           </main>
+          <Footer />
           <Toaster 
             position="top-right"
             expand={false}

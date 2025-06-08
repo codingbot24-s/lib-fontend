@@ -149,38 +149,38 @@ export default function HomePage() {
   ];
 
   // Sample data for articles
-  const articles = [
-    {
-      id: 1,
-      title: "The Importance of Seeking Knowledge in Islam",
-      author: "Dr. Bilal Philips",
-      date: "May 10, 2025",
-      excerpt:
-        "Islam places a high value on education and the pursuit of knowledge...",
-      imageUrl: "/placeholder.svg?height=200&width=350",
-      category: "Education",
-    },
-    {
-      id: 2,
-      title: "Understanding the Concept of Tawheed",
-      author: "Shaykh Hamza Yusuf",
-      date: "May 5, 2025",
-      excerpt:
-        "Tawheed, the oneness of Allah, is the most fundamental concept in Islam...",
-      imageUrl: "/placeholder.svg?height=200&width=350",
-      category: "Aqeedah",
-    },
-    {
-      id: 3,
-      title: "The Ethics of Disagreement in Islam",
-      author: "Dr. Umar F. Abd-Allah",
-      date: "April 28, 2025",
-      excerpt:
-        "Differences of opinion have existed among Muslims since the earliest days...",
-      imageUrl: "/placeholder.svg?height=200&width=350",
-      category: "Ethics",
-    },
-  ];
+  // const articles = [
+  //   {
+  //     id: 1,
+  //     title: "The Importance of Seeking Knowledge in Islam",
+  //     author: "Dr. Bilal Philips",
+  //     date: "May 10, 2025",
+  //     excerpt:
+  //       "Islam places a high value on education and the pursuit of knowledge...",
+  //     imageUrl: "/placeholder.svg?height=200&width=350",
+  //     category: "Education",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Understanding the Concept of Tawheed",
+  //     author: "Shaykh Hamza Yusuf",
+  //     date: "May 5, 2025",
+  //     excerpt:
+  //       "Tawheed, the oneness of Allah, is the most fundamental concept in Islam...",
+  //     imageUrl: "/placeholder.svg?height=200&width=350",
+  //     category: "Aqeedah",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "The Ethics of Disagreement in Islam",
+  //     author: "Dr. Umar F. Abd-Allah",
+  //     date: "April 28, 2025",
+  //     excerpt:
+  //       "Differences of opinion have existed among Muslims since the earliest days...",
+  //     imageUrl: "/placeholder.svg?height=200&width=350",
+  //     category: "Ethics",
+  //   },
+  // ];
 
   interface TopicResponse {
     topics: Topic[];
@@ -230,9 +230,14 @@ export default function HomePage() {
             </div>
             <div className="relative">
               <div className="flex flex-wrap gap-3 md:gap-4">
-                {topics.topics.map((topic) => (
-                  <CategoryChip key={topic.id} name={topic.name} id={topic.id} />
-                ))}
+                {topics.topics
+                  .filter(topic => 
+                    !topic.name.toLowerCase().includes('arabic') && 
+                    !topic.name.toLowerCase().includes('farsi')
+                  )
+                  .map((topic) => (
+                    <CategoryChip key={topic.id} name={topic.name} id={topic.id} />
+                  ))}
               </div>
             </div>
           </div>
@@ -365,7 +370,7 @@ export default function HomePage() {
         </section>
 
         {/* Articles Section */}
-        <section className="py-12 bg-white dark:bg-gray-900">
+        {/* <section className="py-12 bg-white dark:bg-gray-900">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
@@ -419,31 +424,9 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
-        {/* Call to Action */}
-        <section className="py-16 bg-gradient-to-r from-emerald-800 to-emerald-700 dark:from-emerald-900 dark:to-emerald-800">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              Join Our Community of Knowledge Seekers
-            </h2>
-            <p className="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
-              Create an account to save your favorite books, track your reading
-              progress, and join discussions with fellow learners.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button className="bg-white hover:bg-gray-100 text-emerald-800 px-6 py-2">
-                Create Free Account
-              </Button>
-              <Button
-                variant="outline"
-                className="border-white text-white hover:bg-white/10 hover:text-white"
-              >
-                Learn More About Membership
-              </Button>
-            </div>
-          </div>
-        </section>
+        
       </main>
     </div>
   );
