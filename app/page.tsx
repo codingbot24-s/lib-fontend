@@ -216,22 +216,24 @@ export default function HomePage() {
         {/*Topics Section */}
         <section className="py-12 bg-white dark:bg-gray-900">
           <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
               <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
                 Browse by Category
               </h2>
               <Button
                 onClick={() => window.location.href = "/library"}
                 variant="link"
-                className="text-emerald-700 dark:text-emerald-400"
+                className="text-emerald-700 dark:text-emerald-400 whitespace-nowrap"
               >
                 View All <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
             </div>
-            <div className="flex overflow-x-auto pb-4 space-x-4 scrollbar-hide">
-              {topics.topics.map((topic) => (
-                <CategoryChip key={topic.id} name={topic.name} id={topic.id} />
-              ))}
+            <div className="relative">
+              <div className="flex flex-wrap gap-3 md:gap-4">
+                {topics.topics.map((topic) => (
+                  <CategoryChip key={topic.id} name={topic.name} id={topic.id} />
+                ))}
+              </div>
             </div>
           </div>
         </section>
