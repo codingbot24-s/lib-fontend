@@ -11,7 +11,8 @@ import {
   Calendar,
 } from "lucide-react";
 import BookCard from "@/components/book-card";
-import FeaturedBookCard from "@/components/featured-book-card";
+import RecentBooks from "@/components/recent-books";
+
 import CategoryChip from "@/components/category-chip";
 import FeaturedScholar from "@/components/featured-scholar";
 import AudioCard from "@/components/audio-card";
@@ -113,40 +114,40 @@ export default function HomePage() {
   ];
 
   // Sample data for audio content
-  const audioContent = [
-    {
-      id: 1,
-      title: "The Life of Prophet Muhammad",
-      speaker: "Sheikh Yasir Qadhi",
-      duration: "45:23",
-      imageUrl: "/placeholder.svg?height=200&width=350",
-      category: "Seerah",
-    },
-    {
-      id: 2,
-      title: "Understanding Surah Al-Kahf",
-      speaker: "Nouman Ali Khan",
-      duration: "32:15",
-      imageUrl: "/placeholder.svg?height=200&width=350",
-      category: "Tafsir",
-    },
-    {
-      id: 3,
-      title: "The Spiritual Heart",
-      speaker: "Hamza Yusuf",
-      duration: "28:47",
-      imageUrl: "/placeholder.svg?height=200&width=350",
-      category: "Spirituality",
-    },
-    {
-      id: 4,
-      title: "Fiqh of Prayer",
-      speaker: "Mufti Menk",
-      duration: "37:10",
-      imageUrl: "/placeholder.svg?height=200&width=350",
-      category: "Fiqh",
-    },
-  ];
+  // const audioContent = [
+  //   {
+  //     id: 1,
+  //     title: "The Life of Prophet Muhammad",
+  //     speaker: "Sheikh Yasir Qadhi",
+  //     duration: "45:23",
+  //     imageUrl: "/placeholder.svg?height=200&width=350",
+  //     category: "Seerah",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Understanding Surah Al-Kahf",
+  //     speaker: "Nouman Ali Khan",
+  //     duration: "32:15",
+  //     imageUrl: "/placeholder.svg?height=200&width=350",
+  //     category: "Tafsir",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "The Spiritual Heart",
+  //     speaker: "Hamza Yusuf",
+  //     duration: "28:47",
+  //     imageUrl: "/placeholder.svg?height=200&width=350",
+  //     category: "Spirituality",
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Fiqh of Prayer",
+  //     speaker: "Mufti Menk",
+  //     duration: "37:10",
+  //     imageUrl: "/placeholder.svg?height=200&width=350",
+  //     category: "Fiqh",
+  //   },
+  // ];
 
   // Sample data for articles
   // const articles = [
@@ -249,26 +250,13 @@ export default function HomePage() {
         {/* Featured Books Section */}
         <section className="py-12 bg-emerald-50 dark:bg-emerald-950/30">
           <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
-                Featured Books
-              </h2>
-              <Button
-                variant="link"
-                className="text-emerald-700 dark:text-emerald-400"
-              >
-                View Library <BookMarked className="ml-1 h-4 w-4" />
-              </Button>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {featuredBooks.map((book) => (
-                <FeaturedBookCard
-                  key={book.id}
-                  title={book.title}
-                  author={book.author}
-                  coverUrl={book.coverUrl}
-                />
-              ))}
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-emerald-900 dark:text-emerald-100">
+                  Recent Books
+                </h2>
+              </div>
+              <RecentBooks />
             </div>
           </div>
         </section>
@@ -319,7 +307,7 @@ export default function HomePage() {
         </section>
 
         {/* Audio Content Section */}
-        <section className="py-12 bg-white dark:bg-gray-900">
+        {/* <section className="py-12 bg-white dark:bg-gray-900">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
@@ -338,7 +326,7 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Popular Books Section */}
         <section className="py-12 bg-emerald-50 dark:bg-emerald-950/30">
