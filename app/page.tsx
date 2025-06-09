@@ -253,7 +253,7 @@ export default function HomePage() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-emerald-900 dark:text-emerald-100">
-                  Recent Books
+                  New Books
                 </h2>
               </div>
               <RecentBooks />
