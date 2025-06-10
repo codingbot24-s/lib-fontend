@@ -247,7 +247,7 @@ export default function HomePage() {
         {/* Guided Learning Paths Section */}
         <GuidedLearningPaths />
 
-        {/* Featured Books Section */}
+        
         <section className="py-12 bg-emerald-50 dark:bg-emerald-950/30">
           <div className="container mx-auto px-4">
             <div className="space-y-6">

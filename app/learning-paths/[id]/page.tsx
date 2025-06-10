@@ -1,4 +1,3 @@
-import Header from "@/components/header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -26,7 +25,7 @@ export default function LearningPathPage({ params }: { params: { id: string } })
         "Establish daily prayer practices",
         "Recognize the importance of the Quran in Islamic life",
       ],
-      modules: [
+      learningModules: [
         {
           id: 1,
           title: "Introduction to Islam",
@@ -81,7 +80,7 @@ export default function LearningPathPage({ params }: { params: { id: string } })
         "Explore thematic approaches to understanding the Quran",
         "Study selected surahs in depth with classical commentaries",
       ],
-      modules: [
+      learningModules: [
         {
           id: 1,
           title: "Introduction to Tafsir",
@@ -112,7 +111,7 @@ export default function LearningPathPage({ params }: { params: { id: string } })
   if (!path) {
     return (
       <div className="min-h-screen bg-[#f8f5f0] dark:bg-gray-950">
-        <Header />
+        
         <main className="container mx-auto px-4 py-12">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-emerald-900 dark:text-emerald-100 mb-4">Learning Path Not Found</h1>
@@ -154,7 +153,7 @@ export default function LearningPathPage({ params }: { params: { id: string } })
 
   return (
     <div className="min-h-screen bg-[#f8f5f0] dark:bg-gray-950">
-      <Header />
+    
 
       <main className="container mx-auto px-4 py-8">
         <div className="mb-6">
@@ -175,7 +174,7 @@ export default function LearningPathPage({ params }: { params: { id: string } })
                 <Badge className={colorClasses.badge}>{path.level}</Badge>
                 <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                   <BookOpen className="h-4 w-4 mr-1" />
-                  <span>{path.modules.length} modules</span>
+                  <span>{Array.isArray(path.modules) ? path.modules.length : 0} modules</span>
                 </div>
                 <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                   <Clock className="h-4 w-4 mr-1" />
@@ -200,9 +199,9 @@ export default function LearningPathPage({ params }: { params: { id: string } })
             <div>
               <h2 className="text-xl font-bold text-emerald-900 dark:text-emerald-100 mb-4">Modules</h2>
               <div className="space-y-4">
-                {path.modules.map((module) => (
-                  <Card
-                    key={module.id}
+                {path.learningModules.map((module: any) => (
+                    <Card
+                      key={module.id}
                     className={`border ${
                       module.status === "locked"
                         ? "bg-gray-50 dark:bg-gray-900/30 border-gray-200 dark:border-gray-800"
