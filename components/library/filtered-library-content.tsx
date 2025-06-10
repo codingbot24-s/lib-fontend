@@ -95,7 +95,7 @@ export default function FilteredLibraryContent({ topicId }: FilteredLibraryConte
     const fetchBooks = async () => {
       try {
         const response = await axios.get<ApiResponse>("http://localhost:8000/api/books")
-        console.log("Fetched books:", response.data.books)
+        
         setBooks(response.data.books)
       } catch (error) {
         console.error("Error fetching books:", error)

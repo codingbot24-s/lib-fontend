@@ -91,7 +91,7 @@ export default function Header() {
     const fetchTopics = async () => {
       try {
         const response = await axios.get('http://localhost:8000/api/topics')
-        console.log('Fetched topics:', response.data.topics) // Debug log
+        
         setTopics(response.data.topics)
       } catch (error) {
         console.error('Error fetching topics:', error)
