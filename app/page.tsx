@@ -329,7 +329,7 @@ export default function HomePage() {
         </section> */}
 
         {/* Popular Books Section */}
-        <section className="py-12 bg-emerald-50 dark:bg-emerald-950/30">
+        {/* <section className="py-12 bg-emerald-50 dark:bg-emerald-950/30">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
@@ -355,7 +355,7 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Articles Section */}
         {/* <section className="py-12 bg-white dark:bg-gray-900">

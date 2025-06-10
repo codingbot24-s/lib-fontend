@@ -26,6 +26,7 @@ export default function BooksManagement() {
         ]);
         setBooks(booksRes.data.books);
         setTopics(topicsRes.data.topics);
+      
       } catch (error) {
         // You can use toast here if you want
         console.error('Error fetching data:', error);
@@ -42,9 +43,22 @@ export default function BooksManagement() {
       book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (book.scholar && book.scholar.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (book.arabictitle && book.arabictitle.includes(searchTerm));
-    const matchesTopic = selectedTopic === 'all' || (book.topic && book.topic.id.toString() === selectedTopic);
+
+    
+    
+    
+    const matchesTopic = selectedTopic === 'all' || 
+      (Array.isArray(book.topic) && book.topic.some(t => t.id.toString() === selectedTopic));
+    
+    
+    
     return matchesSearch && matchesTopic;
   });
+
+  // Debug log for filtered results
+  useEffect(() => {
+    
+  }, [filteredBooks, selectedTopic, searchTerm]);
 
   // Delete book using backend
   const deleteBook = async (bookId: number) => {
@@ -262,15 +276,21 @@ export default function BooksManagement() {
             <div className="flex gap-2 sm:gap-4">
               <select
                 value={selectedTopic}
-                onChange={(e) => setSelectedTopic(e.target.value)}
+                onChange={(e) => {
+                  
+                  setSelectedTopic(e.target.value);
+                }}
                 className="px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
               >
                 <option value="all">All Categories</option>
-                {topics.map(topic => (
-                  <option key={topic.id} value={topic.id.toString()}>
-                    {topic.name}
-                  </option>
-                ))}
+                {topics.map(topic => {
+                  
+                  return (
+                    <option key={topic.id} value={topic.id}>
+                      {topic.name}
+                    </option>
+                  );
+                })}
               </select>
               <div className="flex rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden">
                 <button
