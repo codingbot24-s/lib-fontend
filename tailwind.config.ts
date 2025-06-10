@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss"
 
-const config: Config = {
+const config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -58,6 +58,10 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "islamic-green": "#1c4a3d",
+        "islamic-gold": "#f4c542",
+        "muted-green": "#2d5a4a",
+        "light-green": "#e8f5f0",
         // Islamic color palette
         gold: {
           50: "#fffbeb",
@@ -130,3 +134,4 @@ const config: Config = {
 } satisfies Config
 
 export default config
+
