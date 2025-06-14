@@ -8,8 +8,10 @@ import { BookOpen } from "lucide-react"
 import SignInForm from "@/components/SignInForm"
 import SignUpForm from "@/components/SignUpForm"
 
+
 export default function IslamicLibraryAuth() {
   const [activeTab, setActiveTab] = useState("signin")
+  
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
