@@ -150,38 +150,38 @@ export default function HomePage() {
   // ];
 
   // Sample data for articles
-  // const articles = [
-  //   {
-  //     id: 1,
-  //     title: "The Importance of Seeking Knowledge in Islam",
-  //     author: "Dr. Bilal Philips",
-  //     date: "May 10, 2025",
-  //     excerpt:
-  //       "Islam places a high value on education and the pursuit of knowledge...",
-  //     imageUrl: "/placeholder.svg?height=200&width=350",
-  //     category: "Education",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Understanding the Concept of Tawheed",
-  //     author: "Shaykh Hamza Yusuf",
-  //     date: "May 5, 2025",
-  //     excerpt:
-  //       "Tawheed, the oneness of Allah, is the most fundamental concept in Islam...",
-  //     imageUrl: "/placeholder.svg?height=200&width=350",
-  //     category: "Aqeedah",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "The Ethics of Disagreement in Islam",
-  //     author: "Dr. Umar F. Abd-Allah",
-  //     date: "April 28, 2025",
-  //     excerpt:
-  //       "Differences of opinion have existed among Muslims since the earliest days...",
-  //     imageUrl: "/placeholder.svg?height=200&width=350",
-  //     category: "Ethics",
-  //   },
-  // ];
+  const articles = [
+    {
+      id: 1,
+      title: "The Importance of Seeking Knowledge in Islam",
+      author: "Dr. Bilal Philips",
+      date: "May 10, 2025",
+      description:
+        "Islam places a high value on education and the pursuit of knowledge...",
+      imageUrl: "/placeholder.svg?height=200&width=350",
+      category: "Education",
+    },
+    {
+      id: 2,
+      title: "Understanding the Concept of Tawheed",
+      author: "Shaykh Hamza Yusuf",
+      date: "May 5, 2025",
+      description:
+        "Tawheed, the oneness of Allah, is the most fundamental concept in Islam...",
+      imageUrl: "/placeholder.svg?height=200&width=350",
+      category: "Aqeedah",
+    },
+    {
+      id: 3,
+      title: "The Ethics of Disagreement in Islam",
+      author: "Dr. Umar F. Abd-Allah",
+      date: "April 28, 2025",
+      description:
+        "Differences of opinion have existed among Muslims since the earliest days...",
+      imageUrl: "/placeholder.svg?height=200&width=350",
+      category: "Ethics",
+    },
+  ];
 
   interface TopicResponse {
     topics: Topic[];
@@ -358,7 +358,7 @@ export default function HomePage() {
         </section> */}
 
         {/* Articles Section */}
-        {/* <section className="py-12 bg-white dark:bg-gray-900">
+        <section className="py-12 bg-white dark:bg-gray-900">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
@@ -371,48 +371,61 @@ export default function HomePage() {
                 All Articles <Calendar className="ml-1 h-4 w-4" />
               </Button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {articles.map((article) => (
-                <Card
-                  key={article.id}
-                  className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
-                >
-                  <div className="relative aspect-video">
-                    <img
-                      src={article.imageUrl || "/placeholder.svg"}
-                      alt={article.title}
-                      className="object-cover w-full h-full"
-                    />
-                    <div className="absolute top-2 left-2">
-                      <span className="text-xs font-medium text-white px-2 py-1 rounded-full bg-emerald-700/80">
-                        {article.category}
-                      </span>
+            {articles && articles.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {articles.map((article) => (
+                  <Card
+                    key={article.id}
+                    className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                  >
+                    <div className="relative aspect-video">
+                      <img
+                        src={article.imageUrl || "/placeholder.svg"}
+                        alt={article.title}
+                        className="object-cover w-full h-full"
+                      />
+                      <div className="absolute top-2 left-2">
+                        <span className="text-xs font-medium text-white px-2 py-1 rounded-full bg-emerald-700/80">
+                          {article.category}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <CardContent className="p-4">
-                    <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-2">
-                      <span>{article.date}</span>
-                      <span className="mx-2">•</span>
-                      <span>{article.author}</span>
-                    </div>
-                    <h3 className="font-bold text-emerald-900 dark:text-emerald-100 mb-2">
-                      {article.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">
-                      {article.excerpt}
-                    </p>
-                    <Button
-                      variant="link"
-                      className="p-0 h-auto text-emerald-700 dark:text-emerald-400"
-                    >
-                      Read More
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                    <CardContent className="p-4">
+                      <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-2">
+                        <span>{article.date}</span>
+                        <span className="mx-2">•</span>
+                        <span>{article.author}</span>
+                      </div>
+                      <h3 className="font-bold text-emerald-900 dark:text-emerald-100 mb-2">
+                        {article.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">
+                        {article.description}
+                      </p>
+                      <Button
+                        variant="link"
+                        className="p-0 h-auto text-emerald-700 dark:text-emerald-400"
+                        onClick={() => router.push(`/articles/${article.id}`)}
+                      >
+                        Read More
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <BookMarked className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600 mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+                  No Articles Available
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400">
+                  We're currently working on bringing you insightful articles. Check back soon!
+                </p>
+              </div>
+            )}
           </div>
-        </section> */}
+        </section>
 
         
       </main>

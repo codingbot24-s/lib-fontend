@@ -24,14 +24,6 @@ import {
 import SearchBar from "@/components/search/search-bar"
 import { useTopics } from "@/hooks/use-topics"
 import axios from "axios"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -128,6 +120,7 @@ export default function Header() {
   const malikiId = getTopicIdByName("Fiqh - Maliki")
   const hanbaliId = getTopicIdByName("Fiqh - Hanbali")
 
+  
   return (
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm" : "bg-transparent"
@@ -224,14 +217,14 @@ export default function Header() {
               Library
             </Link>
 
-            {/* <Link
+            <Link
               href="/articles"
               className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-emerald-100 hover:text-emerald-700 dark:hover:text-emerald-400 rounded-md"
             >
               Articles
             </Link>
 
-            <Link
+            {/* <Link
               href="/forum"
               className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-emerald-100 hover:text-emerald-700 dark:hover:text-emerald-400 rounded-md"
             >
@@ -393,14 +386,14 @@ export default function Header() {
                           Library
                         </Link>
 
-                        {/* <Link
+                        <Link
                           href="/articles"
                           className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
                         >
                           Articles
                         </Link>
 
-                        <Link
+                        {/* <Link
                           href="/forum"
                           className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
                         >
