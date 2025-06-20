@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, User, Tag, Globe, Filter, X } from "lucide-react";
-import CategoryChip from "@/components/category-chip";
+import { Filter, X } from "lucide-react";
+
 
 interface Topic {
   id: number;
