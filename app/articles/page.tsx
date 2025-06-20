@@ -26,6 +26,25 @@ interface Article {
   language: 'en' | 'ur' | 'ar';
 }
 
+// Modal UI (simple implementation)
+function Modal({ open, onClose, children }: { open: boolean, onClose: () => void, children: React.ReactNode }) {
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 max-w-md w-full relative animate-in fade-in-0 zoom-in-95">
+        <button
+          className="absolute top-3 right-3 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+          onClick={onClose}
+          aria-label="Close"
+        >
+          <X className="h-5 w-5" />
+        </button>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export default function ArticlesPage() {
   const router = useRouter();
   const [topics, setTopics] = useState<Topic[]>([]);
@@ -34,6 +53,7 @@ export default function ArticlesPage() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -143,8 +163,8 @@ export default function ArticlesPage() {
     <div className="min-h-screen bg-[#f8f5f0] dark:bg-gray-950">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-7xl mx-auto">
-          {/* Header with Mobile Filter Button */}
-          <div className="mb-8 flex justify-between items-center">
+          {/* Header with Mobile Filter Button and Write Article Button */}
+          <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-emerald-900 dark:text-emerald-100 mb-4">
                 Articles
@@ -153,24 +173,55 @@ export default function ArticlesPage() {
                 Explore our collection of insightful articles on various Islamic topics
               </p>
             </div>
-            <Button
-              variant="outline"
-              className="lg:hidden flex items-center gap-2"
-              onClick={() => setIsFilterOpen(!isFilterOpen)}
-            >
-              {isFilterOpen ? (
-                <>
-                  <X className="h-4 w-4" />
-                  Close Filters
-                </>
-              ) : (
-                <>
-                  <Filter className="h-4 w-4" />
-                  Filters
-                </>
-              )}
-            </Button>
+            <div className="flex gap-2 items-center">
+              <Button
+                variant="default"
+                className="font-semibold bg-emerald-700 hover:bg-emerald-800 text-white"
+                onClick={() => setIsModalOpen(true)}
+              >
+                Write Article
+              </Button>
+              <Button
+                variant="outline"
+                className="lg:hidden flex items-center gap-2"
+                onClick={() => setIsFilterOpen(!isFilterOpen)}
+              >
+                {isFilterOpen ? (
+                  <>
+                    <X className="h-4 w-4" />
+                    Close Filters
+                  </>
+                ) : (
+                  <>
+                    <Filter className="h-4 w-4" />
+                    Filters
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
+
+          {/* Write Article Modal */}
+          <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            <h2 className="text-xl font-bold mb-4 text-emerald-900 dark:text-emerald-100">Write an Article</h2>
+            <p className="mb-6 text-gray-600 dark:text-gray-300">Before writing, please review our terms and conditions for submitting articles.</p>
+            <div className="flex flex-col gap-3">
+              <Button
+                variant="outline"
+                onClick={() => { setIsModalOpen(false); router.push('/articles/terms'); }}
+                className="w-full"
+              >
+                Read Terms & Conditions
+              </Button>
+              <Button
+                variant="default"
+                onClick={() => { setIsModalOpen(false); router.push('/articles/write'); }}
+                className="w-full bg-emerald-700 hover:bg-emerald-800 text-white"
+              >
+                Write Article
+              </Button>
+            </div>
+          </Modal>
 
           {/* Main Content with Sidebar */}
           <div className="flex flex-col lg:flex-row gap-8">
