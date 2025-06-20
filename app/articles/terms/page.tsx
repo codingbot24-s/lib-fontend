@@ -126,14 +126,80 @@ const urduSections = [
   }
 ];
 
+const arabicHeader = "شروط وأحكام نشر المقالات (بالعربية)";
+const arabicHeaderContent = "لحفظ الأمانة العلمية، والأخلاق الإسلامية، يجب على كل كاتب الالتزام بالشروط التالية. في حال عدم الالتزام، سيتم حذف المقال بدون إشعار مسبق.";
+const arabicSections = [
+  {
+    title: "قواعد التوثيق",
+    content: [
+      "يجب أن يتضمن كل مرجع:",
+      "اسم الكتاب الكامل",
+      "اسم المؤلف",
+      "رقم المجلد",
+      "رقم الصفحة",
+      "اسم الناشر",
+      "سنة النشر (إن وُجد)",
+      "إذا كان الكتاب موجودًا في مكتبتنا، فيجب إرفاق الرابط.",
+      "سيتم رفض أو حذف أي مقال بدون توثيق كامل."
+    ]
+  },
+  {
+    title: "المصادر الموثوقة فقط",
+    content: [
+      "يُسمح فقط بالمحتوى المدعوم من مصادر إسلامية أصلية ومعتمدة.",
+      "يجب ذكر درجة الحديث ومصدره.",
+      "في حالة الاختلاف الفقهي، يجب تحديد المذهب بوضوح.",
+      "سيتم حذف أي حديث ضعيف أو غير موثق بدون توضيح."
+    ]
+  },
+  {
+    title: "لغة محترمة وغير طائفية",
+    content: [
+      "يُمنع استخدام لغة مسيئة أو طائفية أو مثيرة للفتنة.",
+      "يجب أن يهدف المقال إلى العلم والتقريب، لا الفتنة والانقسام.",
+      "أي محتوى مسيء سيُحذف فورًا."
+    ]
+  },
+  {
+    title: "الأصالة ومنع السرقة الأدبية",
+    content: [
+      "لا تنسخ من مواقع أخرى دون ذكر المصدر.",
+      "يجب أن يكون المقال من كتابتك الأصلية مع التوثيق الكامل.",
+      "سيتم حذف المقالات المنسوخة أو المسروقة."
+    ]
+  },
+  {
+    title: "متطلبات الترجمة",
+    content: [
+      "يجب أن تكون الترجمة دقيقة وموثوقة.",
+      "إذا كانت من مترجم آخر، فيجب ذكر اسمه.",
+      "سيتم رفض الترجمات الضعيفة أو غير الموثقة."
+    ]
+  },
+  {
+    title: "الموافقة",
+    content: [
+      "عند إرسال المقال، فأنت توافق على ما يلي:",
+      "يمكن مراجعة أو تحرير محتواك.",
+      "يمكن حذف المقال دون إشعار في حال عدم الالتزام بالشروط."
+    ]
+  }
+];
+
 // Helper to convert numbers to Urdu numerals
 function toUrduNumber(n: number) {
   const urduDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
   return n.toString().split('').map(d => urduDigits[parseInt(d)]).join('');
 }
 
+// Helper to convert numbers to Arabic numerals
+function toArabicNumber(n: number) {
+  const arabicDigits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  return n.toString().split('').map(d => arabicDigits[parseInt(d)]).join('');
+}
+
 // Helper to detect attention/note lines
-function isAttentionLine(line: string, lang: 'en' | 'ur') {
+function isAttentionLine(line: string, lang: 'en' | 'ur' | 'ar') {
   if (lang === 'en') {
     const trimmed = line.trim().replace(/[.]/g, '').toLowerCase();
     return (
@@ -142,6 +208,9 @@ function isAttentionLine(line: string, lang: 'en' | 'ur') {
       trimmed === 'poor or uncredited translations may lead to content rejection' ||
       trimmed === 'non-compliant articles may be deleted without notice'
     );
+  } else if (lang === 'ar') {
+    // Arabic: look for حذف، رفض، إشعار، تنبيه، مسروقة، غير موثقة
+    return /حذف|رفض|إشعار|تنبيه|مسروقة|غير موثقة/.test(line);
   } else {
     // Urdu: look for 'حذف', 'نوٹ', 'توجہ', 'مسترد'
     return /حذف|نوٹ|توجہ|مسترد/.test(line);
@@ -149,10 +218,10 @@ function isAttentionLine(line: string, lang: 'en' | 'ur') {
 }
 
 export default function TermsPage() {
-  const [lang, setLang] = useState<'en' | 'ur'>('en');
-  const sections = lang === 'en' ? englishSections : urduSections;
-  const header = lang === 'en' ? englishHeader : urduHeader;
-  const headerContent = lang === 'en' ? englishHeaderContent : urduHeaderContent;
+  const [lang, setLang] = useState<'en' | 'ur' | 'ar'>('en');
+  const sections = lang === 'en' ? englishSections : lang === 'ur' ? urduSections : arabicSections;
+  const header = lang === 'en' ? englishHeader : lang === 'ur' ? urduHeader : arabicHeader;
+  const headerContent = lang === 'en' ? englishHeaderContent : lang === 'ur' ? urduHeaderContent : arabicHeaderContent;
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-emerald-50 via-emerald-100 to-emerald-200 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800 py-6 px-2 sm:py-10 sm:px-4">
@@ -196,10 +265,17 @@ export default function TermsPage() {
           >
             <Globe className="h-4 w-4" /> اردو
           </Button>
+          <Button
+            variant={lang === 'ar' ? 'default' : 'outline'}
+            className={`rounded-full px-4 sm:px-7 py-2 text-sm sm:text-base font-semibold shadow-sm transition-all duration-200 flex items-center gap-2 ${lang === 'ar' ? 'bg-emerald-700 text-white scale-105' : ''}`}
+            onClick={() => setLang('ar')}
+          >
+            <Globe className="h-4 w-4" /> العربية
+          </Button>
         </div>
         <div className="border-b border-emerald-100 dark:border-gray-800 mb-6 sm:mb-8"></div>
-        <h2 className={`text-2xl sm:text-4xl font-extrabold mb-2 sm:mb-3 text-emerald-900 dark:text-emerald-100 tracking-tight font-serif text-center drop-shadow-lg ${lang === 'ur' ? 'font-arabic text-right' : ''}`}>{header}</h2>
-        <p className={`mb-6 sm:mb-8 text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed text-center font-sans ${lang === 'ur' ? 'font-arabic text-right' : ''}`}>{headerContent}</p>
+        <h2 className={`text-2xl sm:text-4xl font-extrabold mb-2 sm:mb-3 text-emerald-900 dark:text-emerald-100 tracking-tight font-serif text-center drop-shadow-lg ${lang === 'ur' || lang === 'ar' ? 'font-arabic text-right' : ''}`}>{header}</h2>
+        <p className={`mb-6 sm:mb-8 text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed text-center font-sans ${lang === 'ur' || lang === 'ar' ? 'font-arabic text-right' : ''}`}>{headerContent}</p>
         <div className="space-y-8 sm:space-y-10 mt-6 sm:mt-8">
           {sections.map((section, idx) => (
             <div key={idx}>
@@ -208,18 +284,23 @@ export default function TermsPage() {
                   <span>{section.title}</span>
                   <span className="inline-block w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 flex items-center justify-center text-base sm:text-lg font-bold border border-emerald-200 dark:border-emerald-800 ml-2">{toUrduNumber(idx + 1)}</span>
                 </h3>
+              ) : lang === 'ar' ? (
+                <h3 className="text-xl sm:text-3xl font-bold text-emerald-800 dark:text-emerald-200 font-serif mb-3 sm:mb-4 flex items-center gap-2 font-arabic text-right justify-end">
+                  <span>{section.title}</span>
+                  <span className="inline-block w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 flex items-center justify-center text-base sm:text-lg font-bold border border-emerald-200 dark:border-emerald-800 ml-2">{toArabicNumber(idx + 1)}</span>
+                </h3>
               ) : (
                 <h3 className="text-lg sm:text-2xl font-bold text-emerald-800 dark:text-emerald-200 font-serif mb-3 flex items-center gap-2">
                   <span className="inline-block w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 flex items-center justify-center text-base sm:text-lg font-bold border border-emerald-200 dark:border-emerald-800">{idx + 1}</span>
                   <span>{section.title}</span>
                 </h3>
               )}
-              <div className={`prose dark:prose-invert max-w-none ${lang === 'ur' ? 'font-arabic text-right text-base sm:text-xl leading-8 sm:leading-9' : 'text-sm sm:text-base leading-6 sm:leading-7 font-sans'}`} dir={lang === 'ur' ? 'rtl' : 'ltr'}>
+              <div className={`prose dark:prose-invert max-w-none ${lang === 'ur' || lang === 'ar' ? 'font-arabic text-right text-base sm:text-xl leading-8 sm:leading-9' : 'text-sm sm:text-base leading-6 sm:leading-7 font-sans'}`} dir={lang === 'ur' || lang === 'ar' ? 'rtl' : 'ltr'}>
                 {section.content.map((line, i) =>
                   isAttentionLine(line, lang) ? (
                     <div
                       key={i}
-                      className={`flex items-start gap-2 rounded-lg border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20 px-3 py-2 my-2 ${lang === 'ur' ? 'justify-end' : ''}`}
+                      className={`flex items-start gap-2 rounded-lg border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20 px-3 py-2 my-2 ${lang === 'ur' || lang === 'ar' ? 'justify-end' : ''}`}
                     >
                       <AlertTriangle className="h-5 w-5 text-yellow-600 mt-0.5 flex-shrink-0" />
                       <span className="font-semibold text-yellow-900 dark:text-yellow-200">{line}</span>
