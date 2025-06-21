@@ -6,15 +6,12 @@ import {
   BookOpen,
   ChevronRight,
   BookMarked,
-  Users,
-  Headphones,
   Calendar,
 } from "lucide-react";
 import BookCard from "@/components/book-card";
 import RecentBooks from "@/components/recent-books";
 
 import CategoryChip from "@/components/category-chip";
-import FeaturedScholar from "@/components/featured-scholar";
 import AudioCard from "@/components/audio-card";
 import QuranSection from "@/components/quran-section";
 import PrayerTimesWidget from "@/components/prayer-times-widget";
@@ -79,37 +76,6 @@ export default function HomePage() {
       author: "Martin Lings",
       coverUrl: "/placeholder.svg?height=400&width=300",
       description: "Acclaimed biography based on early sources",
-    },
-  ];
-
-  // Sample data for scholars
-  const scholars = [
-    {
-      id: 1,
-      name: "Imam Al-Ghazali",
-      arabicName: "أبو حامد الغزالي",
-      era: "1058-1111 CE",
-      specialty: "Philosophy, Sufism, Theology",
-      imageUrl: "/placeholder.svg?height=200&width=200",
-      bookCount: 72,
-    },
-    {
-      id: 2,
-      name: "Ibn Taymiyyah",
-      arabicName: "ابن تيمية",
-      era: "1263-1328 CE",
-      specialty: "Fiqh, Hadith, Tafsir",
-      imageUrl: "/placeholder.svg?height=200&width=200",
-      bookCount: 45,
-    },
-    {
-      id: 3,
-      name: "Imam Malik",
-      arabicName: "مالك بن أنس",
-      era: "711-795 CE",
-      specialty: "Hadith, Fiqh",
-      imageUrl: "/placeholder.svg?height=200&width=200",
-      bookCount: 23,
     },
   ];
 
@@ -206,7 +172,7 @@ export default function HomePage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-[#f8f5f0] dark:bg-gray-950 font-noto-serif">
+    <div className="min-h-screen bg-[#f8f5f0] dark:bg-black font-noto-serif">
       {/* Header */}
 
       {/* Hero Section */}
@@ -215,16 +181,16 @@ export default function HomePage() {
       {/* Main Content */}
       <main>
         {/*Topics Section */}
-        <section className="py-12 bg-white dark:bg-gray-900">
+        <section className="py-12 bg-white dark:bg-black">
           <div className="container mx-auto px-4">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
-              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
+              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-white">
                 Browse by Category
               </h2>
               <Button
                 onClick={() => window.location.href = "/library"}
                 variant="link"
-                className="text-emerald-700 dark:text-emerald-400 whitespace-nowrap"
+                className="text-emerald-700 dark:text-gray-300 whitespace-nowrap"
               >
                 View All <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
@@ -248,11 +214,11 @@ export default function HomePage() {
         <GuidedLearningPaths />
 
         
-        <section className="py-12 bg-emerald-50 dark:bg-emerald-950/30">
+        <section className="py-12 bg-emerald-50 dark:bg-black">
           <div className="container mx-auto px-4">
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-emerald-900 dark:text-emerald-100">
+                <h2 className="text-2xl font-bold text-emerald-900 dark:text-white">
                   New Books
                 </h2>
               </div>
@@ -262,13 +228,13 @@ export default function HomePage() {
         </section>
 
         {/* Interactive Quran Section */}
-        {/* <section className="py-12 bg-white dark:bg-gray-900">
+        {/* <section className="py-12 bg-white dark:bg-black">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
+              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-white">
                 Interactive Quran
               </h2>
-              <Button variant="link" className="text-emerald-700 dark:text-emerald-400">
+              <Button variant="link" className="text-emerald-700 dark:text-gray-300">
                 Full Quran <BookOpen className="ml-1 h-4 w-4" />
               </Button>
             </div>
@@ -284,89 +250,16 @@ export default function HomePage() {
           </div>
         </section> */}
 
-        {/* Scholars Section */}
-        <section className="py-12 bg-emerald-50 dark:bg-emerald-950/30">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
-                Featured Scholars
-              </h2>
-              <Button
-                variant="link"
-                className="text-emerald-700 dark:text-emerald-400"
-              >
-                All Scholars <Users className="ml-1 h-4 w-4" />
-              </Button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {scholars.map((scholar) => (
-                <FeaturedScholar key={scholar.id} scholar={scholar} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Audio Content Section */}
-        {/* <section className="py-12 bg-white dark:bg-gray-900">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
-                Audio Content
-              </h2>
-              <Button
-                variant="link"
-                className="text-emerald-700 dark:text-emerald-400"
-              >
-                All Audio <Headphones className="ml-1 h-4 w-4" />
-              </Button>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {audioContent.map((audio) => (
-                <AudioCard key={audio.id} audio={audio} />
-              ))}
-            </div>
-          </div>
-        </section> */}
-
-        {/* Popular Books Section */}
-        {/* <section className="py-12 bg-emerald-50 dark:bg-emerald-950/30">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
-                Popular Books
-              </h2>
-              <Button
-                variant="link"
-                className="text-emerald-700 dark:text-emerald-400"
-                onClick={() => router.push("/library")}
-              >
-                View All <ChevronRight className="ml-1 h-4 w-4" />
-              </Button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {popularBooks.map((book) => (
-                <BookCard
-                  key={book.id}
-                  title={book.title}
-                  author={book.author}
-                  coverUrl={book.coverUrl}
-                  description={book.description}
-                />
-              ))}
-            </div>
-          </div>
-        </section> */}
-
         {/* Articles Section */}
-        <section className="py-12 bg-white dark:bg-gray-900">
+        <section className="py-12 bg-white dark:bg-black">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100">
+              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-white">
                 Latest Articles
               </h2>
               <Button
                 variant="link"
-                className="text-emerald-700 dark:text-emerald-400"
+                className="text-emerald-700 dark:text-gray-300"
               >
                 All Articles <Calendar className="ml-1 h-4 w-4" />
               </Button>
@@ -376,7 +269,7 @@ export default function HomePage() {
                 {articles.map((article) => (
                   <Card
                     key={article.id}
-                    className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                    className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white dark:bg-black border-gray-200 dark:border-gray-700"
                   >
                     <div className="relative aspect-video">
                       <img
@@ -396,7 +289,7 @@ export default function HomePage() {
                         <span className="mx-2">•</span>
                         <span>{article.author}</span>
                       </div>
-                      <h3 className="font-bold text-emerald-900 dark:text-emerald-100 mb-2">
+                      <h3 className="font-bold text-emerald-900 dark:text-white mb-2">
                         {article.title}
                       </h3>
                       <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">
@@ -404,7 +297,7 @@ export default function HomePage() {
                       </p>
                       <Button
                         variant="link"
-                        className="p-0 h-auto text-emerald-700 dark:text-emerald-400"
+                        className="p-0 h-auto text-emerald-700 dark:text-gray-300"
                         onClick={() => router.push(`/articles/${article.id}`)}
                       >
                         Read More
@@ -416,7 +309,7 @@ export default function HomePage() {
             ) : (
               <div className="text-center py-12">
                 <BookMarked className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600 mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
                   No Articles Available
                 </h3>
                 <p className="text-gray-500 dark:text-gray-400">

@@ -271,7 +271,7 @@ export default function TermsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-emerald-50 via-emerald-100 to-emerald-200 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800 py-6 px-2 sm:py-10 sm:px-4">
+    <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-emerald-50 via-emerald-100 to-emerald-200 dark:from-black dark:via-black dark:to-black py-6 px-2 sm:py-10 sm:px-4">
       {/* SVG Blurred Background */}
       <svg className="absolute -top-32 -left-32 w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] opacity-30 blur-2xl select-none pointer-events-none" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="300" cy="300" r="300" fill="url(#paint0_radial)" />
@@ -284,12 +284,12 @@ export default function TermsPage() {
       </svg>
       {/* Sticky Back Button */}
       <Link href="/articles" className="fixed top-3 left-3 z-50 sm:top-6 sm:left-6">
-        <Button variant="outline" className="backdrop-blur bg-white/60 dark:bg-gray-900/60 border border-emerald-200 dark:border-gray-800 shadow-md hover:bg-emerald-50 dark:hover:bg-gray-800 text-xs sm:text-base px-2 sm:px-4 py-1 sm:py-2">
+        <Button variant="outline" className="backdrop-blur bg-white/60 dark:bg-black/60 border border-emerald-200 dark:border-gray-800 shadow-md hover:bg-emerald-50 dark:hover:bg-gray-900 text-xs sm:text-base px-2 sm:px-4 py-1 sm:py-2">
           ← Back to Articles
         </Button>
       </Link>
       {/* Glassmorphism Card */}
-      <div className="w-full max-w-lg sm:max-w-2xl mx-auto rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-8 md:p-10 animate-fade-in relative z-10 bg-white/70 dark:bg-gray-900/80 backdrop-blur-xl border border-emerald-100 dark:border-gray-800">
+      <div className="w-full max-w-lg sm:max-w-2xl mx-auto rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-8 md:p-10 animate-fade-in relative z-10 bg-white/70 dark:bg-black/80 backdrop-blur-xl border border-emerald-100 dark:border-gray-800">
         {/* Decorative Icon */}
         <div className="flex justify-center mb-4">
           <span className="inline-flex items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900 h-12 w-12 sm:h-16 sm:w-16 shadow-lg border-4 border-white dark:border-gray-900 -mt-10 sm:-mt-16 mb-2">
@@ -359,6 +359,27 @@ export default function TermsPage() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Done Reading Button */}
+        <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-emerald-100 dark:border-gray-800">
+          <div className="text-center">
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4">
+              {lang === 'en' && "I have read and agree to the terms and conditions"}
+              {lang === 'ur' && "میں نے شرائط و ضوابط پڑھ لیے ہیں اور ان سے اتفاق کرتا/کرتی ہوں"}
+              {lang === 'ar' && "لقد قرأت وأوافق على الشروط والأحكام"}
+            </p>
+            <Link href="/articles/write">
+              <Button 
+                size="lg" 
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 text-base sm:text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+              >
+                {lang === 'en' && "Done Reading - Write Article"}
+                {lang === 'ur' && "پڑھ لیا - مضمون لکھیں"}
+                {lang === 'ar' && "تم القراءة - اكتب مقالاً"}
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
       <style jsx global>{`

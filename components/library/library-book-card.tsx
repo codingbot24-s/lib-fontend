@@ -55,9 +55,9 @@ export default function LibraryBookCard({ book }: LibraryBookCardProps) {
       <CardContent className="p-4 space-y-3">
         {/* Title and Arabic Title */}
         <div className="space-y-1">
-          <h3 className="font-bold text-emerald-900 dark:text-emerald-100 line-clamp-2 leading-tight">{book.title}</h3>
+          <h3 className="font-bold text-emerald-900 dark:text-white line-clamp-2 leading-tight">{book.title}</h3>
           {book.arabicTitle && (
-            <p className="text-sm text-amber-700 dark:text-amber-400 font-arabic leading-relaxed">{book.arabicTitle}</p>
+            <p className="text-sm text-amber-700 dark:text-gray-300 font-arabic leading-relaxed">{book.arabicTitle}</p>
           )}
         </div>
 
@@ -68,7 +68,7 @@ export default function LibraryBookCard({ book }: LibraryBookCardProps) {
         <div className="flex items-center justify-between">
           <Badge
             variant="outline"
-            className="border-emerald-200 text-emerald-700 dark:border-emerald-800 dark:text-emerald-400"
+            className="border-emerald-200 text-emerald-700 dark:border-gray-600 dark:text-white"
           >
             {book.topic}
           </Badge>
@@ -92,20 +92,20 @@ export default function LibraryBookCard({ book }: LibraryBookCardProps) {
             <Button
               asChild
               variant="outline"
-              className="w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/20"
+              className="w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700"
             >
               <Link href={`/library/books/${book.id}/volumes`}>
                 <BookOpen className="h-4 w-4 mr-2" />
                 View Volumes
               </Link>
             </Button>
-            <Button asChild className="w-full bg-emerald-700 hover:bg-emerald-800 text-white">
+            <Button asChild className="w-full bg-emerald-700 hover:bg-emerald-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black">
               <Link href={`/library/books/${book.id}`}>View Details</Link>
             </Button>
           </div>
         ) : (
           <div className="w-full space-y-2">
-            <Button asChild className="w-full bg-emerald-700 hover:bg-emerald-800 text-white">
+            <Button asChild className="w-full bg-emerald-700 hover:bg-emerald-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black">
               <Link href={`/library/books/${book.id}`}>
                 <BookOpen className="h-4 w-4 mr-2" />
                 Read Now

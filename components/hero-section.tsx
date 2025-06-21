@@ -10,12 +10,12 @@ import { useRouter } from "next/navigation"
 export default function HeroSection() {
   const router = useRouter();
   return (
-    <section className="relative py-20 overflow-hidden bg-gradient-to-b from-emerald-900 to-emerald-800 dark:from-emerald-950 dark:to-emerald-900">
+    <section className="relative py-20 overflow-hidden bg-gradient-to-b from-emerald-900 to-emerald-800 dark:from-black dark:to-black">
       <HeroPattern className="absolute inset-0 opacity-10" />
       <div className="container relative z-10 mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-arabic text-4xl md:text-6xl font-bold text-gold-300 mb-2">بيت الكتب</h1>
-          <h2 className="text-2xl md:text-3xl font-light text-gold-400 mb-6">Bayt al-Kutub</h2>
+          <h1 className="font-arabic text-4xl md:text-6xl font-bold text-gold-300 dark:text-white mb-2">بيت الكتب</h1>
+          <h2 className="text-2xl md:text-3xl font-light text-gold-400 dark:text-gray-300 mb-6">Bayt al-Kutub</h2>
 
           <QuranVerse
             arabic="اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ"
@@ -28,9 +28,9 @@ export default function HeroSection() {
             <Input
               type="text"
               placeholder="Search books, Quran, Hadith..."
-              className="pl-10 pr-4 py-6 w-full rounded-full border-white/20 bg-white/10 backdrop-blur-sm text-white placeholder:text-white/60 focus:border-gold-300 focus:ring focus:ring-gold-200/30"
+              className="pl-10 pr-4 py-6 w-full rounded-full border-white/20 bg-white/10 backdrop-blur-sm text-white placeholder:text-white/60 focus:border-gold-300 focus:ring focus:ring-gold-200/30 dark:border-gray-600 dark:bg-black/50 dark:placeholder:text-gray-400"
             />
-            <Button className="absolute right-1.5 top-1/2 transform -translate-y-1/2 bg-gold-500 hover:bg-gold-600 text-emerald-950 rounded-full px-5">
+            <Button className="absolute right-1.5 top-1/2 transform -translate-y-1/2 bg-gold-500 hover:bg-gold-600 dark:bg-white dark:hover:bg-gray-100 text-emerald-950 dark:text-black rounded-full px-5">
               Search
             </Button>
           </div>
@@ -38,7 +38,7 @@ export default function HeroSection() {
           <div className="flex flex-wrap justify-center gap-4">
             <Button
               variant="outline"
-              className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 hover:text-white"
+              className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 hover:text-white dark:bg-black/50 dark:border-gray-600 dark:text-white dark:hover:bg-gray-900"
               onClick={() => router.push("/library")}
             >
               Browse Books

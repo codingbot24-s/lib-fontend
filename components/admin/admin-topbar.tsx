@@ -20,7 +20,7 @@ interface AdminTopbarProps {
 
 export function AdminTopbar({ sidebarOpen, setSidebarOpen }: AdminTopbarProps) {
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-emerald-100 dark:border-emerald-900/50 bg-white dark:bg-gray-900 px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-emerald-100 dark:border-gray-800 bg-white dark:bg-black px-6">
       <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(!sidebarOpen)}>
         <Menu className="h-5 w-5" />
         <span className="sr-only">Toggle menu</span>
@@ -32,12 +32,12 @@ export function AdminTopbar({ sidebarOpen, setSidebarOpen }: AdminTopbarProps) {
           <Input
             type="search"
             placeholder="Search books, topics, users..."
-            className="w-full bg-background pl-8 md:w-[300px] lg:w-[400px] border-emerald-100 dark:border-emerald-900/50"
+            className="w-full bg-background pl-8 md:w-[300px] lg:w-[400px] border-emerald-100 dark:border-gray-800"
           />
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="outline" size="icon" className="relative border-emerald-100 dark:border-emerald-900/50">
+          <Button variant="outline" size="icon" className="relative border-emerald-100 dark:border-gray-800">
             <Bell className="h-4 w-4" />
             <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-600 text-[10px] font-medium text-white">
               3
@@ -47,9 +47,9 @@ export function AdminTopbar({ sidebarOpen, setSidebarOpen }: AdminTopbarProps) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                <Avatar className="h-8 w-8 border-2 border-emerald-100 dark:border-emerald-800">
+                <Avatar className="h-8 w-8 border-2 border-emerald-100 dark:border-gray-800">
                   <AvatarImage src="/placeholder.svg?height=32&width=32" alt="Admin" />
-                  <AvatarFallback className="bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
+                  <AvatarFallback className="bg-emerald-100 text-emerald-800 dark:bg-gray-900 dark:text-white">
                     AD
                   </AvatarFallback>
                 </Avatar>

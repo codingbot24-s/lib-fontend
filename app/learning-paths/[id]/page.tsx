@@ -110,11 +110,11 @@ export default function LearningPathPage({ params }: { params: { id: string } })
 
   if (!path) {
     return (
-      <div className="min-h-screen bg-[#f8f5f0] dark:bg-gray-950">
+      <div className="min-h-screen bg-[#f8f5f0] dark:bg-black">
         
         <main className="container mx-auto px-4 py-12">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-emerald-900 dark:text-emerald-100 mb-4">Learning Path Not Found</h1>
+            <h1 className="text-2xl font-bold text-emerald-900 dark:text-white mb-4">Learning Path Not Found</h1>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
               The learning path you're looking for doesn't exist or has been moved.
             </p>
@@ -130,29 +130,29 @@ export default function LearningPathPage({ params }: { params: { id: string } })
   // Map color names to Tailwind classes
   const colorMap = {
     emerald: {
-      bg: "bg-emerald-50 dark:bg-emerald-950/30",
-      border: "border-emerald-200 dark:border-emerald-800",
-      text: "text-emerald-900 dark:text-emerald-100",
-      badge: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300",
+      bg: "bg-emerald-50 dark:bg-gray-800",
+      border: "border-emerald-200 dark:border-gray-600",
+      text: "text-emerald-900 dark:text-white",
+      badge: "bg-emerald-100 text-emerald-800 dark:bg-gray-700 dark:text-white",
     },
     teal: {
-      bg: "bg-teal-50 dark:bg-teal-950/30",
-      border: "border-teal-200 dark:border-teal-800",
-      text: "text-teal-900 dark:text-teal-100",
-      badge: "bg-teal-100 text-teal-800 dark:bg-teal-900/50 dark:text-teal-300",
+      bg: "bg-teal-50 dark:bg-gray-800",
+      border: "border-teal-200 dark:border-gray-600",
+      text: "text-teal-900 dark:text-white",
+      badge: "bg-teal-100 text-teal-800 dark:bg-gray-700 dark:text-white",
     },
     cyan: {
-      bg: "bg-cyan-50 dark:bg-cyan-950/30",
-      border: "border-cyan-200 dark:border-cyan-800",
-      text: "text-cyan-900 dark:text-cyan-100",
-      badge: "bg-cyan-100 text-cyan-800 dark:bg-cyan-900/50 dark:text-cyan-300",
+      bg: "bg-cyan-50 dark:bg-gray-800",
+      border: "border-cyan-200 dark:border-gray-600",
+      text: "text-cyan-900 dark:text-white",
+      badge: "bg-cyan-100 text-cyan-800 dark:bg-gray-700 dark:text-white",
     },
   }
 
   const colorClasses = colorMap[path.color as keyof typeof colorMap] || colorMap.emerald
 
   return (
-    <div className="min-h-screen bg-[#f8f5f0] dark:bg-gray-950">
+    <div className="min-h-screen bg-[#f8f5f0] dark:bg-black">
     
 
       <main className="container mx-auto px-4 py-8">
@@ -169,7 +169,7 @@ export default function LearningPathPage({ params }: { params: { id: string } })
           {/* Main content */}
           <div className="lg:col-span-2">
             <div className="mb-6">
-              <h1 className="text-3xl font-bold text-emerald-900 dark:text-emerald-100 mb-2">{path.title}</h1>
+              <h1 className="text-3xl font-bold text-emerald-900 dark:text-white mb-2">{path.title}</h1>
               <div className="flex flex-wrap gap-2 mb-4">
                 <Badge className={colorClasses.badge}>{path.level}</Badge>
                 <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
@@ -185,11 +185,11 @@ export default function LearningPathPage({ params }: { params: { id: string } })
             </div>
 
             <div className="mb-8">
-              <h2 className="text-xl font-bold text-emerald-900 dark:text-emerald-100 mb-4">Learning Objectives</h2>
+              <h2 className="text-xl font-bold text-emerald-900 dark:text-white mb-4">Learning Objectives</h2>
               <ul className="space-y-2">
                 {path.objectives.map((objective, index) => (
                   <li key={index} className="flex items-start">
-                    <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400 mr-2 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-white mr-2 flex-shrink-0 mt-0.5" />
                     <span className="text-gray-700 dark:text-gray-300">{objective}</span>
                   </li>
                 ))}
@@ -197,14 +197,14 @@ export default function LearningPathPage({ params }: { params: { id: string } })
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-emerald-900 dark:text-emerald-100 mb-4">Modules</h2>
+              <h2 className="text-xl font-bold text-emerald-900 dark:text-white mb-4">Modules</h2>
               <div className="space-y-4">
                 {path.learningModules.map((module: any) => (
                     <Card
                       key={module.id}
                     className={`border ${
                       module.status === "locked"
-                        ? "bg-gray-50 dark:bg-gray-900/30 border-gray-200 dark:border-gray-800"
+                        ? "bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-600"
                         : `${colorClasses.bg} ${colorClasses.border}`
                     }`}
                   >
@@ -212,11 +212,11 @@ export default function LearningPathPage({ params }: { params: { id: string } })
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
                           <div className="flex items-center">
-                            <h3 className="text-lg font-medium text-emerald-900 dark:text-emerald-100">
+                            <h3 className="text-lg font-medium text-emerald-900 dark:text-white">
                               {module.title}
                             </h3>
                             {module.status === "locked" && (
-                              <LockKeyhole className="h-4 w-4 text-gray-400 dark:text-gray-600 ml-2" />
+                              <LockKeyhole className="h-4 w-4 text-gray-400 dark:text-gray-500 ml-2" />
                             )}
                           </div>
                           <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{module.description}</p>
@@ -230,7 +230,7 @@ export default function LearningPathPage({ params }: { params: { id: string } })
                           className={
                             module.status === "locked"
                               ? "bg-gray-300 text-gray-600 dark:bg-gray-700 dark:text-gray-400 cursor-not-allowed"
-                              : "bg-emerald-700 hover:bg-emerald-800 text-white"
+                              : "bg-emerald-700 hover:bg-emerald-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black"
                           }
                         >
                           {module.status === "locked" ? "Locked" : "Start"}
@@ -247,7 +247,7 @@ export default function LearningPathPage({ params }: { params: { id: string } })
           <div className="lg:col-span-1">
             <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 sticky top-24">
               <CardContent className="p-6">
-                <h3 className="text-lg font-bold text-emerald-900 dark:text-emerald-100 mb-4">Path Information</h3>
+                <h3 className="text-lg font-bold text-emerald-900 dark:text-white mb-4">Path Information</h3>
 
                 <div className="space-y-4">
                   <div>
@@ -266,7 +266,7 @@ export default function LearningPathPage({ params }: { params: { id: string } })
                   </div>
 
                   <div className="pt-4">
-                    <Button className="w-full bg-emerald-700 hover:bg-emerald-800 text-white">Enroll in Path</Button>
+                    <Button className="w-full bg-emerald-700 hover:bg-emerald-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black">Enroll in Path</Button>
                     <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-2">
                       Track your progress and earn a certificate
                     </p>

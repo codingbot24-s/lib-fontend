@@ -51,13 +51,13 @@ export default function BookCard({
       <CardContent className="p-4">
         <div className="flex justify-between items-start mb-2">
           <div>
-            <h3 className="font-bold text-emerald-900 dark:text-emerald-100">{title}</h3>
-            {arabicTitle && <p className="text-xs text-gold font-arabic">{arabicTitle}</p>}
+            <h3 className="font-bold text-emerald-900 dark:text-white">{title}</h3>
+            {arabicTitle && <p className="text-xs text-gold dark:text-gray-300 font-arabic">{arabicTitle}</p>}
           </div>
           {category && (
             <Badge
               variant="outline"
-              className="border-emerald-200 text-emerald-700 dark:border-emerald-800 dark:text-emerald-400"
+              className="border-emerald-200 text-emerald-700 dark:border-gray-600 dark:text-white"
             >
               {category}
             </Badge>
@@ -73,7 +73,7 @@ export default function BookCard({
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex gap-2">
-        <Button className="w-full bg-emerald-700 hover:bg-emerald-800 text-white">Read Now</Button>
+        <Button className="w-full bg-emerald-700 hover:bg-emerald-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black">Read Now</Button>
       </CardFooter>
     </Card>
   )

@@ -72,7 +72,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSwitchToSignIn }) => {
               placeholder="Enter your full name"
               value={fullName}
               onChange={e => setFullName(e.target.value)}
-              className="block w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md h-11 pl-10 pr-3 text-base placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 dark:focus:border-emerald-500 transition text-gray-900 dark:text-gray-100"
+              className="block w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md h-11 pl-10 pr-3 text-base placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 dark:focus:border-white transition text-gray-900 dark:text-white"
               required
             />
           </div>
@@ -87,7 +87,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSwitchToSignIn }) => {
               placeholder="your.email@example.com"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="block w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md h-11 pl-10 pr-3 text-base placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 dark:focus:border-emerald-500 transition text-gray-900 dark:text-gray-100"
+              className="block w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md h-11 pl-10 pr-3 text-base placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 dark:focus:border-white transition text-gray-900 dark:text-white"
               required
             />
           </div>
@@ -102,14 +102,14 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSwitchToSignIn }) => {
               placeholder="Create a password"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="block w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md h-11 pl-10 pr-3 text-base placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 dark:focus:border-emerald-500 transition text-gray-900 dark:text-gray-100"
+              className="block w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md h-11 pl-10 pr-3 text-base placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 dark:focus:border-white transition text-gray-900 dark:text-white"
               required
             />
             <Button
               type="button"
               variant="ghost"
               size="icon"
-              className="absolute right-0 top-0 h-12 px-3 hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="absolute right-0 top-0 h-12 px-3 hover:bg-gray-100 dark:hover:bg-gray-800"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -121,12 +121,12 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSwitchToSignIn }) => {
         <div id="clerk-captcha"></div>
         
         {error && <div className="text-red-500 dark:text-red-400 text-sm">{error}</div>}
-        <Button type="submit" className="w-full bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white" disabled={loading}>
+        <Button type="submit" className="w-full bg-emerald-700 hover:bg-emerald-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black" disabled={loading}>
           {loading ? 'Signing Up...' : 'Sign Up'}
         </Button>
       </form>
       <div className="flex flex-col gap-2">
-        <Button type="button" variant="outline" onClick={() => handleOAuth('google')} className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-gray-900 dark:text-gray-100">
+        <Button type="button" variant="outline" onClick={() => handleOAuth('google')} className="w-full bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors text-gray-900 dark:text-white">
           <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
           </svg>
@@ -134,8 +134,8 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSwitchToSignIn }) => {
         </Button>
       </div>
       <div className="text-center pt-4">
-        <button className="text-sm text-muted-green dark:text-gray-400 hover:text-green-600 dark:hover:text-emerald-400 transition-colors" onClick={onSwitchToSignIn}>
-          Already have an account? <span className="text-islamic-green dark:text-emerald-400 font-medium">Sign In</span>
+        <button className="text-sm text-muted-green dark:text-gray-400 hover:text-green-600 dark:hover:text-white transition-colors" onClick={onSwitchToSignIn}>
+          Already have an account? <span className="text-islamic-green dark:text-white font-medium">Sign In</span>
         </button>
       </div>
     </CardContent>

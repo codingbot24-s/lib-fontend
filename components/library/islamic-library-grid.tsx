@@ -79,11 +79,11 @@ export default function IslamicLibraryGrid() {
   return (
     <div className="container mx-auto px-4 space-y-12">
       {/* Featured Quote */}
-      <div className="text-center bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-200 dark:border-gray-700 shadow-lg">
-        <blockquote className="text-xl sm:text-2xl font-serif italic text-gray-700 dark:text-gray-300 mb-4">
+      <div className="text-center bg-white/80 dark:bg-black/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-200 dark:border-gray-700 shadow-lg">
+        <blockquote className="text-xl sm:text-2xl font-serif italic text-gray-700 dark:text-white mb-4">
           "اطلبوا العلم من المهد إلى اللحد"
         </blockquote>
-        <p className="text-lg font-serif text-gray-600 dark:text-gray-400">
+        <p className="text-lg font-serif text-gray-600 dark:text-gray-300">
           "Seek knowledge from the cradle to the grave"
         </p>
         <div className="mt-4 flex items-center justify-center gap-2">
@@ -111,7 +111,7 @@ export default function IslamicLibraryGrid() {
                   transition-all duration-500 ease-out
                   hover:-translate-y-2 hover:scale-103
                   shadow-lg hover:shadow-2xl 
-                  bg-gradient-to-br from-white/90 to-white/70 dark:from-gray-800/90 dark:to-gray-700/70
+                  bg-gradient-to-br from-white/90 to-white/70 dark:from-black/90 dark:to-black/70
                   backdrop-blur-sm overflow-hidden
                   book-spine-effect
                 `}
@@ -121,13 +121,13 @@ export default function IslamicLibraryGrid() {
                   {/* Top Section */}
                   <div className="space-y-3">
                     {/* Icon */}
-                    <div className="w-12 h-12 lg:w-10 lg:h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto shadow-md group-hover:scale-110 transition-transform duration-300">
-                      <IconComponent className="h-6 w-6 lg:h-5 lg:w-5 text-emerald-700 dark:text-emerald-400" />
+                    <div className="w-12 h-12 lg:w-10 lg:h-10 bg-emerald-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto shadow-md group-hover:scale-110 transition-transform duration-300">
+                      <IconComponent className="h-6 w-6 lg:h-5 lg:w-5 text-emerald-700 dark:text-white" />
                     </div>
 
                     {/* Title */}
                     <div className="text-center">
-                      <h4 className="text-lg lg:text-base font-serif font-semibold text-gray-700 dark:text-gray-300">
+                      <h4 className="text-lg lg:text-base font-serif font-semibold text-gray-700 dark:text-white">
                         {topic.name}
                       </h4>
                     </div>
@@ -135,7 +135,7 @@ export default function IslamicLibraryGrid() {
 
                   {/* Middle Section */}
                   <div className="text-center">
-                    <p className="text-sm lg:text-xs font-serif text-gray-600 dark:text-gray-400 leading-relaxed">
+                    <p className="text-sm lg:text-xs font-serif text-gray-600 dark:text-gray-300 leading-relaxed">
                       {topic.description}
                     </p>
                   </div>
@@ -144,7 +144,7 @@ export default function IslamicLibraryGrid() {
                   <div className="space-y-2">
                     <div className="text-center">
                       <Badge
-                        className="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-0 
+                        className="bg-emerald-100 dark:bg-gray-700 text-emerald-700 dark:text-white border-0 
                           font-serif font-medium px-3 py-0.5 text-xs lg:text-[10px] shadow-md
                           group-hover:shadow-lg transition-shadow duration-300"
                       >

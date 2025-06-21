@@ -16,7 +16,7 @@ export function TopicsTable({ topics, onEdit, onDelete }: TopicsTableProps) {
   if (topics.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500">No topics found. Create a new topic to get started.</p>
+        <p className="text-gray-500 dark:text-gray-400">No topics found. Create a new topic to get started.</p>
       </div>
     )
   }
@@ -25,25 +25,25 @@ export function TopicsTable({ topics, onEdit, onDelete }: TopicsTableProps) {
     <div className="overflow-x-auto">
       <table className="w-full">
         <thead>
-          <tr className="bg-gray-50 border-b border-gray-200">
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <tr className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Topic Name
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Books</th>
-            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Books</th>
+            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="bg-white dark:bg-black divide-y divide-gray-200 dark:divide-gray-800">
           {topics.map((topic) => (
-            <tr key={topic.id} className="hover:bg-gray-50">
+            <tr key={topic.id} className="hover:bg-gray-50 dark:hover:bg-gray-900">
               <td className="px-6 py-4">
-                <div className="text-sm font-medium text-gray-900">{topic.name}</div>
+                <div className="text-sm font-medium text-gray-900 dark:text-white">{topic.name}</div>
                 {topic.description && (
-                  <p className="text-sm text-gray-500 mt-1">{topic.description}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{topic.description}</p>
                 )}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 dark:bg-gray-900 text-emerald-800 dark:text-emerald-300">
                   {topic?.booksCount} books
                 </span>
               </td>
@@ -64,7 +64,7 @@ export function TopicsTable({ topics, onEdit, onDelete }: TopicsTableProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="hidden sm:inline-flex text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                    className="hidden sm:inline-flex text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 border-red-200 dark:border-red-800"
                     onClick={() => onDelete(topic)}
                   >
                     <Trash2 className="h-4 w-4 mr-1" />

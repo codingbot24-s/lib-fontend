@@ -17,7 +17,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
   }, [pathname])
 
   return (
-    <div className="flex min-h-screen bg-[#f8f7f2] dark:bg-gray-950">
+    <div className="flex min-h-screen bg-[#f8f7f2] dark:bg-black">
       {/* Sidebar */}
       <AdminSidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 

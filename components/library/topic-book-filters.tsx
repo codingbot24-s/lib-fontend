@@ -101,7 +101,7 @@ export function TopicBookFilters({
   )
 
   return (
-    <div className={cn("bg-white dark:bg-gray-800 rounded-lg border p-4", className)}>
+    <div className={cn("bg-white dark:bg-black rounded-lg border p-4", className)}>
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">

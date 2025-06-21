@@ -99,7 +99,7 @@ export default function UsersManagementPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-emerald-900">Users Management</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-emerald-900 dark:text-white">Users Management</h1>
           <p className="text-muted-foreground">Manage all users in the Islamic Digital Library</p>
         </div>
         <Button className="bg-emerald-600 hover:bg-emerald-700">
@@ -135,7 +135,7 @@ export default function UsersManagementPage() {
                   <TableCell>
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
-                      <AvatarFallback className="bg-emerald-100 text-emerald-800 text-xs">
+                      <AvatarFallback className="bg-emerald-100 dark:bg-gray-900 text-emerald-800 dark:text-white text-xs">
                         {user.initials}
                       </AvatarFallback>
                     </Avatar>

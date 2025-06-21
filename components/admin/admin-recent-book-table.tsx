@@ -88,7 +88,7 @@ export function AdminRecentBooksTable({
       {/* Card view for mobile, table for larger screens */}
       <div className="block sm:hidden">
         {books.slice((currentPage - 1) * booksPerPage, currentPage * booksPerPage).map((book) => (
-          <div key={book.id} className="mb-4 p-4 rounded-lg border border-emerald-100 dark:border-emerald-900/50 bg-white dark:bg-gray-800">
+          <div key={book.id} className="mb-4 p-4 rounded-lg border border-emerald-100 dark:border-gray-800 bg-white dark:bg-black">
             <div className="flex gap-4">
               {/* Book cover */}
               <div className="relative h-20 w-14 flex-shrink-0 overflow-hidden rounded border">
@@ -148,10 +148,10 @@ export function AdminRecentBooksTable({
       </div>
 
       {/* Table view for larger screens */}
-      <div className="hidden sm:block rounded-md border border-emerald-100 dark:border-emerald-900/50">
+      <div className="hidden sm:block rounded-md border border-emerald-100 dark:border-gray-800">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-emerald-50 dark:bg-emerald-900/30">
+            <TableHeader className="bg-emerald-50 dark:bg-gray-900">
               <TableRow>
                 <TableHead className="w-[80px]">Cover</TableHead>
                 <TableHead>Title</TableHead>
@@ -163,7 +163,7 @@ export function AdminRecentBooksTable({
             </TableHeader>
             <TableBody>
               {books.slice((currentPage - 1) * booksPerPage, currentPage * booksPerPage).map((book) => (
-                <TableRow key={book.id} className="hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20">
+                <TableRow key={book.id} className="hover:bg-emerald-50/50 dark:hover:bg-gray-900">
                   <TableCell className="p-2 sm:p-4">
                     <div className="relative h-10 w-7 sm:h-12 sm:w-8 overflow-hidden rounded border">
                       <Image

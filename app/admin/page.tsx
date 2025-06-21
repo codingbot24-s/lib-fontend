@@ -132,7 +132,7 @@ export default function AdminDashboardPage() {
         {/* Page Header - Fully responsive */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
           <div className="flex-1 space-y-1 sm:space-y-2">
-            <h1 className="text-xl font-bold tracking-tight text-emerald-900 dark:text-emerald-50 sm:text-2xl md:text-3xl lg:text-4xl">
+            <h1 className="text-xl font-bold tracking-tight text-emerald-900 dark:text-white sm:text-2xl md:text-3xl lg:text-4xl">
               Admin Dashboard
             </h1>
             <p className="text-xs text-muted-foreground sm:text-sm md:text-base">
@@ -157,7 +157,7 @@ export default function AdminDashboardPage() {
         <Tabs defaultValue="recent" className="space-y-4">
           {/* Mobile-first tab navigation */}
           <div className="w-full overflow-hidden">
-            <TabsList className="flex h-auto w-full overflow-x-auto border-b border-emerald-100 bg-transparent p-0 dark:border-emerald-800">
+            <TabsList className="flex h-auto w-full overflow-x-auto border-b border-emerald-100 bg-transparent p-0 dark:border-gray-800">
               
           
             </TabsList>

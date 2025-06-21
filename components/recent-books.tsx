@@ -119,13 +119,13 @@ export default function RecentBooks() {
 
   if (books.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[300px] bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 text-center">
+      <div className="flex flex-col items-center justify-center min-h-[300px] bg-white dark:bg-black rounded-lg shadow-md p-8 text-center">
         <div className="w-16 h-16 mb-4 text-emerald-500">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
           </svg>
         </div>
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">No Books Available</h3>
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Books Available</h3>
         <p className="text-gray-600 dark:text-gray-400 max-w-md">
           We couldn't find any recent books at the moment. Please check back later for new additions to our library.
         </p>
@@ -138,7 +138,7 @@ export default function RecentBooks() {
       {books.map((book) => (
         <div
           key={book.id}
-          className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 group"
+          className="bg-white dark:bg-black rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 group"
         >
           <div className="relative h-32 sm:h-48 md:h-56 lg:h-64">
             <Image
@@ -152,7 +152,7 @@ export default function RecentBooks() {
                 {book.volumes && book.volumes.length > 1 ? (
                   <Button
                     onClick={() => router.push(`/library/books/${book.id}/volumes`)}
-                    className="w-full bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm py-1 sm:py-2"
+                    className="w-full bg-emerald-700 hover:bg-emerald-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black text-xs sm:text-sm py-1 sm:py-2"
                   >
                     <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" /> View Volumes
                   </Button>
@@ -160,7 +160,7 @@ export default function RecentBooks() {
                   <>
                     <Button
                       asChild
-                      className="w-full bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm py-1 sm:py-2"
+                      className="w-full bg-emerald-700 hover:bg-emerald-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black text-xs sm:text-sm py-1 sm:py-2"
                     >
                       <a href={book.volumes?.[0]?.viewpdfurl || book.viewpdfurl} target="_blank" rel="noopener noreferrer">
                         <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" /> Read Now
@@ -170,7 +170,7 @@ export default function RecentBooks() {
                       onClick={() => handleDownload(book)}
                       disabled={downloading === book.id || !(book.volumes?.[0]?.download_url || book.download_url)}
                       variant="outline"
-                      className="w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/20 text-xs sm:text-sm py-1 sm:py-2"
+                      className="w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-gray-600 dark:text-white dark:hover:bg-gray-900 text-xs sm:text-sm py-1 sm:py-2"
                     >
                       {downloading === book.id ? (
                         <>
@@ -190,20 +190,20 @@ export default function RecentBooks() {
             </div>
           </div>
           <div className="p-2 sm:p-4">
-            <h3 className="text-sm sm:text-base font-bold text-gray-800 dark:text-gray-100 mb-1 line-clamp-1">
+            <h3 className="text-sm sm:text-base font-bold text-gray-800 dark:text-white mb-1 line-clamp-1">
               {book.title}
             </h3>
-            <p className="text-sm sm:text-base text-amber-700 dark:text-amber-400 mb-1 sm:mb-2 line-clamp-1">
+            <p className="text-sm sm:text-base text-amber-700 dark:text-gray-300 mb-1 sm:mb-2 line-clamp-1">
               {book.arabictitle}
             </p>
-            <p className="text-xs sm:text-sm text-emerald-700 dark:text-emerald-400 mb-1 sm:mb-2 line-clamp-1">
+            <p className="text-xs sm:text-sm text-emerald-700 dark:text-gray-400 mb-1 sm:mb-2 line-clamp-1">
               By {book.scholar}
             </p>
             <div className="flex flex-wrap gap-1 sm:gap-2">
               {book.topic.map((topic) => (
                 <span
                   key={topic.id}
-                  className="text-[10px] sm:text-xs bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full"
+                  className="text-[10px] sm:text-xs bg-emerald-100 dark:bg-gray-700 text-emerald-700 dark:text-white px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full"
                 >
                   {topic.name}
                 </span>

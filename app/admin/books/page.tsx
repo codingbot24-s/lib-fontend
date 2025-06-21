@@ -76,7 +76,7 @@ export default function BooksManagement() {
 
   // Book Card for grid view
   const BookCard = ({ book }: { book: Book }) => (
-    <div className="group bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 overflow-hidden">
+    <div className="group bg-white dark:bg-black rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-300 overflow-hidden">
       <div className="aspect-[3/4] relative overflow-hidden bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-gray-700 dark:to-gray-600">
         <img
           src={book.coverimage}
@@ -86,15 +86,15 @@ export default function BooksManagement() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="flex space-x-1">
-            <button className="p-1.5 bg-white/90 dark:bg-gray-800/90 rounded-lg backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 transition-colors">
+            <button className="p-1.5 bg-white/90 dark:bg-black/90 rounded-lg backdrop-blur-sm hover:bg-white dark:hover:bg-black transition-colors">
               <Eye className="w-4 h-4 text-gray-700 dark:text-gray-300" />
             </button>
-            <button className="p-1.5 bg-white/90 dark:bg-gray-800/90 rounded-lg backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 transition-colors">
+            <button className="p-1.5 bg-white/90 dark:bg-black/90 rounded-lg backdrop-blur-sm hover:bg-white dark:hover:bg-black transition-colors">
               <Edit className="w-4 h-4 text-gray-700 dark:text-gray-300" />
             </button>
             <button 
               onClick={() => deleteBook(book.id)}
-              className="p-1.5 bg-white/90 dark:bg-gray-800/90 rounded-lg backdrop-blur-sm hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+              className="p-1.5 bg-white/90 dark:bg-black/90 rounded-lg backdrop-blur-sm hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
             >
               <Trash2 className="w-4 h-4 text-red-600 dark:text-red-400" />
             </button>
@@ -115,7 +115,7 @@ export default function BooksManagement() {
           <span className="truncate">{book.scholar}</span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="inline-flex items-center px-2 py-1 rounded-md bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 text-xs font-medium">
+          <span className="inline-flex items-center px-2 py-1 rounded-md bg-emerald-50 dark:bg-gray-900 text-emerald-700 dark:text-emerald-300 text-xs font-medium">
             {book.topic?.name}
           </span>
           <div className="flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-400">
@@ -129,7 +129,7 @@ export default function BooksManagement() {
 
   // Table row for table view
   const TableRow = ({ book }: { book: Book }) => (
-    <tr className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+    <tr className="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
       <td className="px-4 py-4">
         <div className="flex items-center space-x-3">
           <div className="relative w-10 h-12 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-gray-700 dark:to-gray-600 rounded-md overflow-hidden">
@@ -153,7 +153,7 @@ export default function BooksManagement() {
         {book.scholar}
       </td>
       <td className="px-4 py-4 hidden sm:table-cell">
-        <span className="inline-flex items-center px-2 py-1 rounded-md bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 text-xs font-medium">
+        <span className="inline-flex items-center px-2 py-1 rounded-md bg-emerald-50 dark:bg-gray-900 text-emerald-700 dark:text-emerald-300 text-xs font-medium">
           {book.topic?.name}
         </span>
       </td>
@@ -171,10 +171,10 @@ export default function BooksManagement() {
       </td>
       <td className="px-4 py-4">
         <div className="flex items-center space-x-1">
-          <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors">
+          <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-900 rounded transition-colors">
             <Eye className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           </button>
-          <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors">
+          <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-900 rounded transition-colors">
             <Edit className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           </button>
           <button 
@@ -189,7 +189,7 @@ export default function BooksManagement() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Header */}
         <div className="mb-8">

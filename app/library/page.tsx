@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function LibraryPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-emerald-50 to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-emerald-50 to-blue-50 dark:from-black dark:via-black dark:to-black">
       <Suspense fallback={<LibraryLoadingSkeleton />}>
         <IslamicLibraryGrid />
       </Suspense>
@@ -23,7 +23,7 @@ function LibraryLoadingSkeleton() {
       {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
         <div
           key={i}
-          className="aspect-[3/4] bg-gradient-to-br from-amber-100 to-emerald-100 dark:from-gray-700 dark:to-gray-600 rounded-lg shadow-lg animate-pulse"
+          className="aspect-[3/4] bg-gradient-to-br from-amber-100 to-emerald-100 dark:from-black dark:to-black rounded-lg shadow-lg animate-pulse"
         />
       ))}
     </div>

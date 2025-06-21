@@ -94,7 +94,7 @@ export default function ResponsiveBookCard({ book, compact = false }: Responsive
 
   return (
     <div className={cn(
-      "group relative flex flex-col overflow-hidden rounded-lg border bg-white dark:bg-gray-800 hover:shadow-lg transition-shadow",
+      "group relative flex flex-col overflow-hidden rounded-lg border bg-white dark:bg-black hover:shadow-lg transition-shadow",
       compact ? "text-xs" : "text-sm sm:text-base"
     )}>
       {/* Book Cover */}
@@ -152,13 +152,13 @@ export default function ResponsiveBookCard({ book, compact = false }: Responsive
         {/* Title and Arabic Title */}
         <div className="space-y-1">
           <h3 className={cn(
-            "font-bold text-emerald-900 text-[15px] dark:text-emerald-100 line-clamp-2 leading-tight sm:block",
+            "font-bold text-emerald-900 text-[15px] dark:text-white line-clamp-2 leading-tight sm:block",
             compact ? "hidden" : "text-sm sm:text-base" // Hide on mobile in compact mode
           )}>
             {book.title}
           </h3>
           <p className={cn(
-            "text-amber-700 dark:text-amber-400 leading-relaxed line-clamp-1",
+            "text-amber-700 dark:text-gray-300 leading-relaxed line-clamp-1",
             compact ? "text-[10px]" : "text-xs sm:text-sm" // Show only on mobile in compact mode in mobile text small
           )}>
             {book.arabictitle}
@@ -184,7 +184,7 @@ export default function ResponsiveBookCard({ book, compact = false }: Responsive
             asChild
             variant="outline"
             size="sm"
-            className="w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/20"
+            className="w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-gray-600 dark:text-white dark:hover:bg-gray-900"
           >
             <Link href={`/library/books/${book.id}/volumes`}>
               <BookOpen className={cn("mr-2", compact ? "h-2 w-2" : "h-3 w-3 sm:h-4 sm:w-4")} />
@@ -196,7 +196,7 @@ export default function ResponsiveBookCard({ book, compact = false }: Responsive
             <Button
               asChild
               size="sm"
-              className={cn("w-full bg-emerald-700 hover:bg-emerald-800 text-white", 
+              className={cn("w-full bg-emerald-700 hover:bg-emerald-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black", 
                 compact ? "h-7 text-xs" : "")}
             >
               <a href={book.viewpdfurl} target="_blank" rel="noopener noreferrer">
@@ -210,7 +210,7 @@ export default function ResponsiveBookCard({ book, compact = false }: Responsive
               variant="outline"
               size="sm"
               className={cn(
-                "w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/20",
+                "w-full border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-gray-600 dark:text-white dark:hover:bg-gray-900",
                 compact && "h-7 text-xs"
               )}
             >

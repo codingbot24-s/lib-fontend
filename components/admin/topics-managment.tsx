@@ -205,7 +205,7 @@ export function TopicsManagement() {
             <div className="relative">
                 <div className="islamic-pattern-top h-1.5 w-full rounded-full mb-6"></div>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <h1 className="text-2xl font-semibold text-gray-900">Manage Topics</h1>
+                    <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Manage Topics</h1>
                     <Button onClick={() => setIsCreateModalOpen(true)} className="bg-emerald-600 hover:bg-emerald-700 text-white">
                         <Plus className="mr-2 h-4 w-4" />
                         Create Topic
@@ -214,7 +214,7 @@ export function TopicsManagement() {
             </div>
 
             {/* Search and filters */}
-            <div className="flex flex-col sm:flex-row gap-4 items-center justify-between bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-between bg-white dark:bg-black p-4 rounded-lg border border-gray-100 dark:border-gray-800 shadow-sm">
                 <div className="relative w-full sm:w-72">
                     <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
                     <Input
@@ -224,23 +224,23 @@ export function TopicsManagement() {
                             setSearchQuery(e.target.value)
                             setCurrentPage(1) // Reset to first page on search
                         }}
-                        className="pl-9 bg-gray-50 border-gray-200 focus-visible:ring-emerald-500"
+                        className="pl-9 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus-visible:ring-emerald-500"
                     />
                 </div>
-                <div className="text-sm text-gray-500 w-full sm:w-auto text-center sm:text-right">
+                <div className="text-sm text-gray-500 dark:text-gray-400 w-full sm:w-auto text-center sm:text-right">
                     Showing {filteredTopics.length} topics
                 </div>
             </div>
 
             {/* Topics table */}
-            <div className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden">
+            <div className="bg-white dark:bg-black rounded-lg border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
                 <TopicsTable topics={paginatedTopics} onEdit={openEditModal} onDelete={openDeleteModal} />
 
                 {/* Pagination */}
                 {totalPages > 1 && (
-                    <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 sm:px-6">
+                    <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-800 sm:px-6">
                         <div className="hidden sm:block">
-                            <p className="text-sm text-gray-700">
+                            <p className="text-sm text-gray-700 dark:text-gray-300">
                                 Showing <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> to{" "}
                                 <span className="font-medium">{Math.min(currentPage * itemsPerPage, filteredTopics.length)}</span> of{" "}
                                 <span className="font-medium">{filteredTopics.length}</span> topics

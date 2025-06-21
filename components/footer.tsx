@@ -6,29 +6,29 @@ import { BookOpen, Mail, Phone, MapPin, Clock } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="bg-emerald-900 text-emerald-100">
+    <footer className="bg-emerald-900 dark:bg-black text-emerald-100 dark:text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About */}
           <div>
             <div className="flex items-center mb-4">
-              <BookOpen className="h-6 w-6 text-gold mr-2" />
+              <BookOpen className="h-6 w-6 text-gold dark:text-gray-400 mr-2" />
               <div>
                 <h3 className="text-lg font-bold text-white font-display">Bayt al-Kutub</h3>
-                <span className="text-xs text-gold font-arabic">بيت الكتب</span>
+                <span className="text-xs text-gold dark:text-gray-500 font-arabic">بيت الكتب</span>
               </div>
             </div>
-            <p className="text-sm mb-4">
+            <p className="text-sm mb-4 text-emerald-200 dark:text-gray-300">
               Bayt al-Kutub is a comprehensive Islamic library dedicated to preserving and sharing Islamic knowledge
               through books, audio, and digital content.
             </p>
             <div className="flex space-x-3">
-              <Link href="#" className="text-emerald-200 hover:text-gold">
+              <Link href="#" className="text-emerald-200 dark:text-gray-400 hover:text-gold dark:hover:text-white">
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                 </svg>
               </Link>
-              <Link href="#" className="text-emerald-200 hover:text-gold">
+              <Link href="#" className="text-emerald-200 dark:text-gray-400 hover:text-gold dark:hover:text-white">
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path
                     fillRule="evenodd"
@@ -37,7 +37,7 @@ export default function Footer() {
                   />
                 </svg>
               </Link>
-              <Link href="#" className="text-emerald-200 hover:text-gold">
+              <Link href="#" className="text-emerald-200 dark:text-gray-400 hover:text-gold dark:hover:text-white">
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path
                     fillRule="evenodd"
@@ -46,7 +46,7 @@ export default function Footer() {
                   />
                 </svg>
               </Link>
-              <Link href="#" className="text-emerald-200 hover:text-gold">
+              <Link href="#" className="text-emerald-200 dark:text-gray-400 hover:text-gold dark:hover:text-white">
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path
                     fillRule="evenodd"
@@ -63,42 +63,42 @@ export default function Footer() {
             <h3 className="text-lg font-bold text-white mb-4 font-display">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/about" className="hover:text-gold transition-colors">
+                <Link href="/about" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/quran" className="hover:text-gold transition-colors">
+                <Link href="/quran" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
                   Quran
                 </Link>
               </li>
               <li>
-                <Link href="/hadith" className="hover:text-gold transition-colors">
+                <Link href="/hadith" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
                   Hadith
                 </Link>
               </li>
               <li>
-                <Link href="/books" className="hover:text-gold transition-colors">
+                <Link href="/books" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
                   Books
                 </Link>
               </li>
               <li>
-                <Link href="/scholars" className="hover:text-gold transition-colors">
+                <Link href="/scholars" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
                   Scholars
                 </Link>
               </li>
               <li>
-                <Link href="/articles" className="hover:text-gold transition-colors">
+                <Link href="/articles" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
                   Articles
                 </Link>
               </li>
               <li>
-                <Link href="/donate" className="hover:text-gold transition-colors">
+                <Link href="/donate" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
                   Support Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-gold transition-colors">
+                <Link href="/contact" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
                   Contact
                 </Link>
               </li>
@@ -110,20 +110,20 @@ export default function Footer() {
             <h3 className="text-lg font-bold text-white mb-4 font-display">Contact Us</h3>
             <ul className="space-y-3 text-sm">
               <li className="flex items-start">
-                <MapPin className="h-5 w-5 text-gold mr-2 mt-0.5 flex-shrink-0" />
-                <span>123 Islamic Center St, Knowledge City, 12345</span>
+                <MapPin className="h-5 w-5 text-gold dark:text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
+                <span className="text-emerald-200 dark:text-gray-300">123 Islamic Center St, Knowledge City, 12345</span>
               </li>
               <li className="flex items-center">
-                <Phone className="h-5 w-5 text-gold mr-2 flex-shrink-0" />
-                <span>+1 (555) 123-4567</span>
+                <Phone className="h-5 w-5 text-gold dark:text-gray-400 mr-2 flex-shrink-0" />
+                <span className="text-emerald-200 dark:text-gray-300">+1 (555) 123-4567</span>
               </li>
               <li className="flex items-center">
-                <Mail className="h-5 w-5 text-gold mr-2 flex-shrink-0" />
-                <span>info@baytkutub.org</span>
+                <Mail className="h-5 w-5 text-gold dark:text-gray-400 mr-2 flex-shrink-0" />
+                <span className="text-emerald-200 dark:text-gray-300">info@baytkutub.org</span>
               </li>
               <li className="flex items-start">
-                <Clock className="h-5 w-5 text-gold mr-2 mt-0.5 flex-shrink-0" />
-                <span>
+                <Clock className="h-5 w-5 text-gold dark:text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
+                <span className="text-emerald-200 dark:text-gray-300">
                   Monday - Friday: 9am - 5pm
                   <br />
                   Saturday: 10am - 2pm
@@ -137,42 +137,42 @@ export default function Footer() {
           {/* Newsletter */}
           <div>
             <h3 className="text-lg font-bold text-white mb-4 font-display">Newsletter</h3>
-            <p className="text-sm mb-4">
+            <p className="text-sm mb-4 text-emerald-200 dark:text-gray-300">
               Subscribe to our newsletter to receive updates on new books, articles, and events.
             </p>
             <div className="space-y-2">
               <Input
                 type="email"
                 placeholder="Your email address"
-                className="bg-emerald-800/50 border-emerald-700 text-white placeholder:text-emerald-300/70"
+                className="bg-emerald-800/50 dark:bg-gray-800 border-emerald-700 dark:border-gray-600 text-white dark:text-white placeholder:text-emerald-300/70 dark:placeholder:text-gray-400"
               />
-              <Button className="w-full bg-gold hover:bg-gold/90 text-emerald-900">Subscribe</Button>
+              <Button className="w-full bg-gold hover:bg-gold/90 dark:bg-white dark:hover:bg-gray-100 text-emerald-900 dark:text-black">Subscribe</Button>
             </div>
           </div>
         </div>
 
         {/* Inspirational Quote */}
         <div className="mt-12 text-center">
-          <blockquote className="italic text-emerald-200 max-w-2xl mx-auto">
+          <blockquote className="italic text-emerald-200 dark:text-gray-300 max-w-2xl mx-auto">
             <p className="text-lg font-arabic mb-2">طلب العلم فريضة على كل مسلم</p>
             <p>"Seeking knowledge is an obligation upon every Muslim."</p>
-            <cite className="text-sm text-gold block mt-2">— Prophet Muhammad ﷺ</cite>
+            <cite className="text-sm text-gold dark:text-gray-400 block mt-2">— Prophet Muhammad ﷺ</cite>
           </blockquote>
         </div>
 
-        <Separator className="my-8 bg-emerald-800" />
+        <Separator className="my-8 bg-emerald-800 dark:bg-gray-700" />
 
         {/* Bottom Footer */}
         <div className="flex flex-col md:flex-row justify-between items-center text-sm">
-          <p>© 2025 Bayt al-Kutub. All rights reserved.</p>
+          <p className="text-emerald-200 dark:text-gray-300">© 2025 Bayt al-Kutub. All rights reserved.</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <Link href="/privacy" className="hover:text-gold transition-colors">
+            <Link href="/privacy" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-gold transition-colors">
+            <Link href="/terms" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
               Terms of Service
             </Link>
-            <Link href="/cookies" className="hover:text-gold transition-colors">
+            <Link href="/cookies" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
               Cookie Policy
             </Link>
           </div>

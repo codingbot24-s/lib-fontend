@@ -86,7 +86,7 @@ export default function ArticlePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#f8f5f0] dark:bg-gray-950 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f5f0] dark:bg-black flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
       </div>
     );
@@ -94,7 +94,7 @@ export default function ArticlePage() {
 
   if (!article) {
     return (
-      <div className="min-h-screen bg-[#f8f5f0] dark:bg-gray-950 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f5f0] dark:bg-black flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Article Not Found</h1>
           <Button onClick={() => router.push('/')}>Return Home</Button>
@@ -107,7 +107,7 @@ export default function ArticlePage() {
   const fontClass = isRTL ? 'font-arabic' : '';
 
   return (
-    <div className="min-h-screen bg-[#f8f5f0] dark:bg-gray-950">
+    <div className="min-h-screen bg-[#f8f5f0] dark:bg-black">
       <article className="max-w-4xl mx-auto px-4 py-12">
         <Button
           variant="ghost"
@@ -118,7 +118,7 @@ export default function ArticlePage() {
           {getBackButtonText(article.language)}
         </Button>
 
-        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+        <div className="bg-white dark:bg-black rounded-lg shadow-lg overflow-hidden">
           <div className={`p-8 ${isRTL ? 'text-right' : ''}`}>
             <h1 className={`text-3xl md:text-4xl font-bold text-emerald-900 dark:text-emerald-100 mb-6 ${fontClass}`}>
               {article.title}

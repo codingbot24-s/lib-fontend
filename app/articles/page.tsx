@@ -31,7 +31,7 @@ function Modal({ open, onClose, children }: { open: boolean, onClose: () => void
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 max-w-md w-full relative animate-in fade-in-0 zoom-in-95">
+      <div className="bg-white dark:bg-black rounded-lg shadow-lg p-8 max-w-md w-full relative animate-in fade-in-0 zoom-in-95">
         <button
           className="absolute top-3 right-3 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
           onClick={onClose}
@@ -160,13 +160,13 @@ export default function ArticlesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-100 dark:from-black dark:via-black dark:to-black">
       <div className="container mx-auto px-4 py-8 sm:py-12">
         <div className="max-w-7xl mx-auto">
           {/* Enhanced Header */}
           <div className="mb-8 sm:mb-12">
             <div className="text-center mb-8">
-              <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-emerald-700 to-emerald-900 bg-clip-text text-transparent mb-4">
+              <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-emerald-700 to-emerald-900 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-4">
                 Articles
               </h1>
               <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
@@ -178,14 +178,14 @@ export default function ArticlesPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 variant="default"
-                className="font-semibold bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                className="font-semibold bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 dark:from-white dark:to-gray-100 dark:hover:from-gray-100 dark:hover:to-gray-200 text-white dark:text-black px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 onClick={() => setIsModalOpen(true)}
               >
                 ✍️ Write Article
               </Button>
               <Button
                 variant="outline"
-                className="lg:hidden flex items-center gap-2 border-emerald-200 hover:bg-emerald-50 dark:border-emerald-700 dark:hover:bg-emerald-900/20 px-6 py-3 rounded-full"
+                className="lg:hidden flex items-center gap-2 border-emerald-200 hover:bg-emerald-50 dark:border-gray-600 dark:hover:bg-gray-800 px-6 py-3 rounded-full"
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
               >
                 {isFilterOpen ? (
@@ -206,23 +206,23 @@ export default function ArticlesPage() {
           {/* Enhanced Write Article Modal */}
           <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-white dark:to-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">✍️</span>
               </div>
-              <h2 className="text-2xl font-bold mb-4 text-emerald-900 dark:text-emerald-100">Write an Article</h2>
+              <h2 className="text-2xl font-bold mb-4 text-emerald-900 dark:text-white">Write an Article</h2>
               <p className="mb-8 text-gray-600 dark:text-gray-300">Share your knowledge with the community. Before writing, please review our terms and conditions.</p>
               <div className="flex flex-col gap-4">
                 <Button
                   variant="outline"
                   onClick={() => { setIsModalOpen(false); router.push('/articles/terms'); }}
-                  className="w-full py-3 border-emerald-200 hover:bg-emerald-50 dark:border-emerald-700 dark:hover:bg-emerald-900/20"
+                  className="w-full py-3 border-emerald-200 hover:bg-emerald-50 dark:border-gray-600 dark:hover:bg-gray-900"
                 >
                   📋 Read Terms & Conditions
                 </Button>
                 <Button
                   variant="default"
                   onClick={() => { setIsModalOpen(false); router.push('/articles/write'); }}
-                  className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white py-3"
+                  className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 dark:from-white dark:to-gray-100 dark:hover:from-gray-100 dark:hover:to-gray-200 text-white dark:text-black py-3"
                 >
                   ✍️ Start Writing
                 </Button>
@@ -234,10 +234,10 @@ export default function ArticlesPage() {
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Enhanced Filters Sidebar */}
             <div className={`lg:w-72 flex-shrink-0 ${isFilterOpen ? 'block' : 'hidden'} lg:block`}>
-              <div className="lg:sticky lg:top-4 space-y-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-emerald-100 dark:border-gray-700">
+              <div className="lg:sticky lg:top-4 space-y-6 bg-white/80 dark:bg-black/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-emerald-100 dark:border-gray-700">
                 {/* Language Filter */}
                 <div>
-                  <h2 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100 mb-4 flex items-center gap-2">
+                  <h2 className="text-lg font-semibold text-emerald-900 dark:text-white mb-4 flex items-center gap-2">
                     <Globe className="h-5 w-5" />
                     Language
                   </h2>
@@ -248,7 +248,7 @@ export default function ArticlesPage() {
                         setSelectedLanguage('all');
                         setIsFilterOpen(false);
                       }}
-                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedLanguage === 'all' ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-md" : "hover:bg-emerald-50 dark:hover:bg-emerald-900/20"}`}
+                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedLanguage === 'all' ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 dark:from-white dark:to-gray-100 dark:hover:from-gray-100 dark:hover:to-gray-200 text-white dark:text-black shadow-md" : "hover:bg-emerald-50 dark:hover:bg-gray-900"}`}
                     >
                       🌍 All Languages
                     </Button>
@@ -258,7 +258,7 @@ export default function ArticlesPage() {
                         setSelectedLanguage('en');
                         setIsFilterOpen(false);
                       }}
-                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedLanguage === 'en' ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-md" : "hover:bg-emerald-50 dark:hover:bg-emerald-900/20"}`}
+                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedLanguage === 'en' ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 dark:from-white dark:to-gray-100 dark:hover:from-gray-100 dark:hover:to-gray-200 text-white dark:text-black shadow-md" : "hover:bg-emerald-50 dark:hover:bg-gray-900"}`}
                     >
                     English
                     </Button>
@@ -268,7 +268,7 @@ export default function ArticlesPage() {
                         setSelectedLanguage('ur');
                         setIsFilterOpen(false);
                       }}
-                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedLanguage === 'ur' ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-md" : "hover:bg-emerald-50 dark:hover:bg-emerald-900/20"}`}
+                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedLanguage === 'ur' ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 dark:from-white dark:to-gray-100 dark:hover:from-gray-100 dark:hover:to-gray-200 text-white dark:text-black shadow-md" : "hover:bg-emerald-50 dark:hover:bg-gray-900"}`}
                     >
                    اردو
                     </Button>
@@ -278,7 +278,7 @@ export default function ArticlesPage() {
                         setSelectedLanguage('ar');
                         setIsFilterOpen(false);
                       }}
-                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedLanguage === 'ar' ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-md" : "hover:bg-emerald-50 dark:hover:bg-emerald-900/20"}`}
+                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedLanguage === 'ar' ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 dark:from-white dark:to-gray-100 dark:hover:from-gray-100 dark:hover:to-gray-200 text-white dark:text-black shadow-md" : "hover:bg-emerald-50 dark:hover:bg-gray-900"}`}
                     >
                     العربية
                     </Button>
@@ -287,7 +287,7 @@ export default function ArticlesPage() {
 
                 {/* Topics Filter */}
                 <div>
-                  <h2 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100 mb-4 flex items-center gap-2">
+                  <h2 className="text-lg font-semibold text-emerald-900 dark:text-white mb-4 flex items-center gap-2">
                     <Tag className="h-5 w-5" />
                     Topics
                   </h2>
@@ -298,7 +298,7 @@ export default function ArticlesPage() {
                         setSelectedTopic(null);
                         setIsFilterOpen(false);
                       }}
-                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedTopic === null ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-md" : "hover:bg-emerald-50 dark:hover:bg-emerald-900/20"}`}
+                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedTopic === null ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 dark:from-white dark:to-gray-100 dark:hover:from-gray-100 dark:hover:to-gray-200 text-white dark:text-black shadow-md" : "hover:bg-emerald-50 dark:hover:bg-gray-900"}`}
                     >
                       📚 All Topics
                     </Button>
@@ -310,7 +310,7 @@ export default function ArticlesPage() {
                           setSelectedTopic(topic.id);
                           setIsFilterOpen(false);
                         }}
-                        className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedTopic === topic.id ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-md" : "hover:bg-emerald-50 dark:hover:bg-emerald-900/20"}`}
+                        className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedTopic === topic.id ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 dark:from-white dark:to-gray-100 dark:hover:from-gray-100 dark:hover:to-gray-200 text-white dark:text-black shadow-md" : "hover:bg-emerald-50 dark:hover:bg-gray-900"}`}
                       >
                         {topic.name}
                       </Button>
@@ -325,22 +325,22 @@ export default function ArticlesPage() {
               {/* Enhanced Active Filters Display */}
               <div className="mb-8 flex flex-wrap gap-3">
                 {selectedLanguage !== 'all' && (
-                  <span className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-800 dark:from-emerald-900 dark:to-emerald-800 dark:text-emerald-100 shadow-sm">
+                  <span className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-800 dark:from-gray-700 dark:to-gray-600 dark:text-white shadow-sm">
                     {getLanguageLabel(selectedLanguage)}
                     <button
                       onClick={() => setSelectedLanguage('all')}
-                      className="ml-2 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
+                      className="ml-2 hover:text-emerald-600 dark:hover:text-gray-300 transition-colors"
                     >
                       <X className="h-4 w-4" />
                     </button>
                   </span>
                 )}
                 {selectedTopic !== null && (
-                  <span className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-800 dark:from-emerald-900 dark:to-emerald-800 dark:text-emerald-100 shadow-sm">
+                  <span className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-800 dark:from-gray-700 dark:to-gray-600 dark:text-white shadow-sm">
                     {topics.find(t => t.id === selectedTopic)?.name}
                     <button
                       onClick={() => setSelectedTopic(null)}
-                      className="ml-2 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
+                      className="ml-2 hover:text-emerald-600 dark:hover:text-gray-300 transition-colors"
                     >
                       <X className="h-4 w-4" />
                     </button>
@@ -360,7 +360,7 @@ export default function ArticlesPage() {
                   {filteredArticles.map((article) => (
                     <Card
                       key={article.id}
-                      className="group overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-emerald-100 dark:border-gray-700 rounded-2xl hover:border-emerald-200 dark:hover:border-emerald-600"
+                      className="group overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 bg-white/80 dark:bg-black/80 backdrop-blur-sm border-emerald-100 dark:border-gray-700 rounded-2xl hover:border-emerald-200 dark:hover:border-emerald-600"
                     >
                       <CardContent className="p-8">
                         <div className="flex items-center justify-between mb-4">
@@ -383,7 +383,7 @@ export default function ArticlesPage() {
                           </span>
                         </div>
                         <h3 
-                          className={`text-xl font-bold text-emerald-900 dark:text-emerald-100 mb-4 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors ${article.language === 'ar' || article.language === 'ur' ? 'font-arabic' : ''}`}
+                          className={`text-xl font-bold text-emerald-900 dark:text-white mb-4 group-hover:text-emerald-700 dark:group-hover:text-gray-300 transition-colors ${article.language === 'ar' || article.language === 'ur' ? 'font-arabic' : ''}`}
                           dir={getLanguageDirection(article.language)}
                         >
                           {article.title}
@@ -396,7 +396,7 @@ export default function ArticlesPage() {
                         </p>
                         <Button
                           variant="link"
-                          className="p-0 h-auto text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 font-semibold group-hover:underline transition-all duration-200"
+                          className="p-0 h-auto text-emerald-700 dark:text-gray-300 hover:text-emerald-800 dark:hover:text-white font-semibold group-hover:underline transition-all duration-200"
                           onClick={() => router.push(`/articles/${article.id}`)}
                         >
                           {article.language === 'ar' ? 'اقرأ المزيد →' : 
@@ -409,10 +409,10 @@ export default function ArticlesPage() {
                 </div>
               ) : (
                 <div className="text-center py-16">
-                  <div className="w-24 h-24 bg-gradient-to-r from-emerald-100 to-emerald-200 dark:from-emerald-900 dark:to-emerald-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <div className="w-24 h-24 bg-gradient-to-r from-emerald-100 to-emerald-200 dark:from-gray-700 dark:to-gray-600 rounded-full flex items-center justify-center mx-auto mb-6">
                     <span className="text-3xl">📚</span>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
                     No Articles Found
                   </h3>
                   <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto">

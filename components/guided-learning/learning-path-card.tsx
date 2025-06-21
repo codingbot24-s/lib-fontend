@@ -29,46 +29,46 @@ export default function LearningPathCard({ path }: LearningPathCardProps) {
   // Map color names to Tailwind classes
   const colorMap = {
     emerald: {
-      bg: "bg-emerald-50 dark:bg-emerald-950/30",
-      hoverBg: "bg-emerald-100 dark:bg-emerald-900/40",
-      border: "border-emerald-200 dark:border-emerald-800",
-      icon: "text-emerald-600 dark:text-emerald-400",
-      badge: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300",
+      bg: "bg-emerald-50 dark:bg-black",
+      hoverBg: "bg-emerald-100 dark:bg-black",
+      border: "border-emerald-200 dark:border-gray-600",
+      icon: "text-emerald-600 dark:text-white",
+      badge: "bg-emerald-100 text-emerald-800 dark:bg-gray-700 dark:text-white",
     },
     teal: {
-      bg: "bg-teal-50 dark:bg-teal-950/30",
-      hoverBg: "bg-teal-100 dark:bg-teal-900/40",
-      border: "border-teal-200 dark:border-teal-800",
-      icon: "text-teal-600 dark:text-teal-400",
-      badge: "bg-teal-100 text-teal-800 dark:bg-teal-900/50 dark:text-teal-300",
+      bg: "bg-teal-50 dark:bg-black",
+      hoverBg: "bg-teal-100 dark:bg-black",
+      border: "border-teal-200 dark:border-gray-600",
+      icon: "text-teal-600 dark:text-white",
+      badge: "bg-teal-100 text-teal-800 dark:bg-gray-700 dark:text-white",
     },
     cyan: {
-      bg: "bg-cyan-50 dark:bg-cyan-950/30",
-      hoverBg: "bg-cyan-100 dark:bg-cyan-900/40",
-      border: "border-cyan-200 dark:border-cyan-800",
-      icon: "text-cyan-600 dark:text-cyan-400",
-      badge: "bg-cyan-100 text-cyan-800 dark:bg-cyan-900/50 dark:text-cyan-300",
+      bg: "bg-cyan-50 dark:bg-black",
+      hoverBg: "bg-cyan-100 dark:bg-black",
+      border: "border-cyan-200 dark:border-gray-600",
+      icon: "text-cyan-600 dark:text-white",
+      badge: "bg-cyan-100 text-cyan-800 dark:bg-gray-700 dark:text-white",
     },
     blue: {
-      bg: "bg-blue-50 dark:bg-blue-950/30",
-      hoverBg: "bg-blue-100 dark:bg-blue-900/40",
-      border: "border-blue-200 dark:border-blue-800",
-      icon: "text-blue-600 dark:text-blue-400",
-      badge: "bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300",
+      bg: "bg-blue-50 dark:bg-black",
+      hoverBg: "bg-blue-100 dark:bg-black",
+      border: "border-blue-200 dark:border-gray-600",
+      icon: "text-blue-600 dark:text-white",
+      badge: "bg-blue-100 text-blue-800 dark:bg-gray-700 dark:text-white",
     },
     indigo: {
-      bg: "bg-indigo-50 dark:bg-indigo-950/30",
-      hoverBg: "bg-indigo-100 dark:bg-indigo-900/40",
-      border: "border-indigo-200 dark:border-indigo-800",
-      icon: "text-indigo-600 dark:text-indigo-400",
-      badge: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300",
+      bg: "bg-indigo-50 dark:bg-black",
+      hoverBg: "bg-indigo-100 dark:bg-black",
+      border: "border-indigo-200 dark:border-gray-600",
+      icon: "text-indigo-600 dark:text-white",
+      badge: "bg-indigo-100 text-indigo-800 dark:bg-gray-700 dark:text-white",
     },
     violet: {
-      bg: "bg-violet-50 dark:bg-violet-950/30",
-      hoverBg: "bg-violet-100 dark:bg-violet-900/40",
-      border: "border-violet-200 dark:border-violet-800",
-      icon: "text-violet-600 dark:text-violet-400",
-      badge: "bg-violet-100 text-violet-800 dark:bg-violet-900/50 dark:text-violet-300",
+      bg: "bg-violet-50 dark:bg-black",
+      hoverBg: "bg-violet-100 dark:bg-black",
+      border: "border-violet-200 dark:border-gray-600",
+      icon: "text-violet-600 dark:text-white",
+      badge: "bg-violet-100 text-violet-800 dark:bg-gray-700 dark:text-white",
     },
   }
 
@@ -91,14 +91,14 @@ export default function LearningPathCard({ path }: LearningPathCardProps) {
           <div
             className={cn(
               "p-3 rounded-full transition-colors",
-              isHovered ? "bg-white dark:bg-gray-800" : "bg-white/80 dark:bg-gray-800/80",
+              isHovered ? "bg-white dark:bg-black" : "bg-white/80 dark:bg-black/80",
               colorClasses.icon,
             )}
           >
             {path.icon}
           </div>
           <div className="flex-1">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-1">{path.title}</h3>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">{path.title}</h3>
             <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-2 mb-3">{path.description}</p>
             <div className="flex flex-wrap gap-2">
               <Badge variant="secondary" className={colorClasses.badge}>
@@ -123,7 +123,7 @@ export default function LearningPathCard({ path }: LearningPathCardProps) {
             "transition-colors",
             isHovered
               ? "bg-emerald-700 hover:bg-emerald-800 text-white"
-              : "bg-white hover:bg-gray-50 text-emerald-700 border border-emerald-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-emerald-400 dark:border-emerald-800",
+              : "bg-white hover:bg-gray-50 text-emerald-700 border border-emerald-200 dark:bg-black dark:hover:bg-gray-900 dark:text-white dark:border-gray-600",
           )}
         >
           <Link href={`/learning-paths/${path.id}`}>

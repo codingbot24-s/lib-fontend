@@ -64,7 +64,7 @@ export default function TopicPage({ params }: TopicPageProps) {
   }, [books, activeFilters])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-amber-50 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-amber-50 dark:from-black dark:to-black">
       <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
         <Breadcrumb className="mb-6">
           <BreadcrumbList>

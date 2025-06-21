@@ -67,10 +67,10 @@ export default function GuidedLearningPaths() {
   ]
 
   return (
-    <section className="py-12 bg-[#f8f5f0] dark:bg-gray-950">
+    <section className="py-12 bg-[#f8f5f0] dark:bg-black">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-100 font-display mb-3">
+          <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-white font-display mb-3">
             Guided Learning Paths
           </h2>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">

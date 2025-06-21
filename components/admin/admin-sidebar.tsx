@@ -37,18 +37,18 @@ export function AdminSidebar({ open, setOpen }: AdminSidebarProps) {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-900 border-r border-emerald-100 dark:border-emerald-900/50 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-auto",
+          "fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-black border-r border-emerald-100 dark:border-gray-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-auto",
           open ? "translate-x-0" : "-translate-x-full",
         )}
       >
         {/* Sidebar Header */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-emerald-100 dark:border-emerald-900/50">
+        <div className="h-16 flex items-center justify-between px-4 border-b border-emerald-100 dark:border-gray-800">
           <Link href="/admin" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-600 to-teal-600 flex items-center justify-center">
               <BookMarked className="h-4 w-4 text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-emerald-900 dark:text-emerald-50">Bayt al-Kutub</span>
+              <span className="font-bold text-emerald-900 dark:text-white">Bayt al-Kutub</span>
               <span className="text-xs text-emerald-600 dark:text-emerald-400"></span>
             </div>
           </Link>
@@ -71,8 +71,8 @@ export function AdminSidebar({ open, setOpen }: AdminSidebarProps) {
                   className={cn(
                     "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
                     isActive
-                      ? "bg-emerald-50 text-emerald-900 dark:bg-emerald-900/30 dark:text-emerald-50"
-                      : "text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 dark:text-gray-300 dark:hover:bg-emerald-900/30 dark:hover:text-emerald-50",
+                      ? "bg-emerald-50 text-emerald-900 dark:bg-gray-900 dark:text-white"
+                      : "text-gray-700 hover:bg-emerald-50 hover:text-emerald-900 dark:text-gray-300 dark:hover:bg-gray-900 dark:hover:text-white",
                   )}
                 >
                   <Icon className="h-5 w-5" />
@@ -84,7 +84,7 @@ export function AdminSidebar({ open, setOpen }: AdminSidebarProps) {
         </div>
 
         {/* Sidebar Footer */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-emerald-100 dark:border-emerald-900/50">
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-emerald-100 dark:border-gray-800">
           <div className="flex items-center justify-between">
             <span className="text-xs text-gray-500 dark:text-gray-400">v1.0.0</span>
             <Button variant="ghost" size="icon" onClick={toggleTheme}>
