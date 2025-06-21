@@ -1,8 +1,47 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Globe, AlertTriangle } from "lucide-react";
 import Link from "next/link";
+
+// Add better fonts for Arabic and Urdu
+const fontStyles = `
+  @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap');
+  
+  .arabic-title {
+    font-family: 'Amiri', serif !important;
+    font-weight: 700 !important;
+    line-height: 1.5 !important;
+    font-size: 1.1em !important;
+  }
+  
+  .urdu-title {
+    font-family: 'Noto Nastaliq Urdu', serif !important;
+    font-weight: 700 !important;
+    line-height: 1.8 !important;
+  }
+  
+  .arabic-body {
+    font-family: 'Amiri', serif !important;
+    font-weight: 400 !important;
+    line-height: 1.8 !important;
+    font-size: 1.05em !important;
+  }
+  
+  .urdu-body {
+    font-family: 'Noto Nastaliq Urdu', serif !important;
+    font-weight: 400 !important;
+    line-height: 2 !important;
+  }
+  
+  .arabic-content p {
+    margin-bottom: 0.8rem !important;
+  }
+  
+  .arabic-content p:last-child {
+    margin-bottom: 0 !important;
+  }
+`;
 
 const englishHeader = "Terms & Conditions for Posting Articles";
 const englishHeaderContent = "To ensure academic integrity, Islamic ethics, and a respectful learning environment, every contributor must follow the rules below. Failure to comply will result in removal of the article without prior notice.";
@@ -223,6 +262,14 @@ export default function TermsPage() {
   const header = lang === 'en' ? englishHeader : lang === 'ur' ? urduHeader : arabicHeader;
   const headerContent = lang === 'en' ? englishHeaderContent : lang === 'ur' ? urduHeaderContent : arabicHeaderContent;
 
+  useEffect(() => {
+    // Load fonts dynamically
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+  }, []);
+
   return (
     <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-emerald-50 via-emerald-100 to-emerald-200 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800 py-6 px-2 sm:py-10 sm:px-4">
       {/* SVG Blurred Background */}
@@ -274,18 +321,18 @@ export default function TermsPage() {
           </Button>
         </div>
         <div className="border-b border-emerald-100 dark:border-gray-800 mb-6 sm:mb-8"></div>
-        <h2 className={`text-2xl sm:text-4xl font-extrabold mb-2 sm:mb-3 text-emerald-900 dark:text-emerald-100 tracking-tight font-serif text-center drop-shadow-lg ${lang === 'ur' || lang === 'ar' ? 'font-arabic text-right' : ''}`}>{header}</h2>
-        <p className={`mb-6 sm:mb-8 text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed text-center font-sans ${lang === 'ur' || lang === 'ar' ? 'font-arabic text-right' : ''}`}>{headerContent}</p>
+        <h2 className={`text-2xl sm:text-4xl font-extrabold mb-2 sm:mb-3 text-emerald-900 dark:text-emerald-100 tracking-tight drop-shadow-lg ${lang === 'ar' ? 'arabic-title text-right' : lang === 'ur' ? 'urdu-title text-right' : 'font-serif text-center'}`}>{header}</h2>
+        <p className={`mb-6 sm:mb-8 text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed text-center ${lang === 'ar' ? 'arabic-body text-right' : lang === 'ur' ? 'urdu-body text-right' : 'font-sans'}`}>{headerContent}</p>
         <div className="space-y-8 sm:space-y-10 mt-6 sm:mt-8">
           {sections.map((section, idx) => (
             <div key={idx}>
               {lang === 'ur' ? (
-                <h3 className="text-xl sm:text-3xl font-bold text-emerald-800 dark:text-emerald-200 font-serif mb-3 sm:mb-4 flex items-center gap-2 font-arabic text-right justify-end">
+                <h3 className="text-xl sm:text-3xl font-bold text-emerald-800 dark:text-emerald-200 mb-3 sm:mb-4 flex items-center gap-2 urdu-title text-right justify-end">
                   <span>{section.title}</span>
                   <span className="inline-block w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 flex items-center justify-center text-base sm:text-lg font-bold border border-emerald-200 dark:border-emerald-800 ml-2">{toUrduNumber(idx + 1)}</span>
                 </h3>
               ) : lang === 'ar' ? (
-                <h3 className="text-xl sm:text-3xl font-bold text-emerald-800 dark:text-emerald-200 font-serif mb-3 sm:mb-4 flex items-center gap-2 font-arabic text-right justify-end">
+                <h3 className="text-xl sm:text-3xl font-bold text-emerald-800 dark:text-emerald-200 mb-3 sm:mb-4 flex items-center gap-2 arabic-title text-right justify-end">
                   <span>{section.title}</span>
                   <span className="inline-block w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 flex items-center justify-center text-base sm:text-lg font-bold border border-emerald-200 dark:border-emerald-800 ml-2">{toArabicNumber(idx + 1)}</span>
                 </h3>
@@ -295,7 +342,7 @@ export default function TermsPage() {
                   <span>{section.title}</span>
                 </h3>
               )}
-              <div className={`prose dark:prose-invert max-w-none ${lang === 'ur' || lang === 'ar' ? 'font-arabic text-right text-base sm:text-xl leading-8 sm:leading-9' : 'text-sm sm:text-base leading-6 sm:leading-7 font-sans'}`} dir={lang === 'ur' || lang === 'ar' ? 'rtl' : 'ltr'}>
+              <div className={`prose dark:prose-invert max-w-none ${lang === 'ar' ? 'arabic-body arabic-content text-right text-base sm:text-xl leading-8 sm:leading-9' : lang === 'ur' ? 'urdu-body text-right text-base sm:text-xl leading-8 sm:leading-9' : 'text-sm sm:text-base leading-6 sm:leading-7 font-sans'}`} dir={lang === 'ur' || lang === 'ar' ? 'rtl' : 'ltr'}>
                 {section.content.map((line, i) =>
                   isAttentionLine(line, lang) ? (
                     <div
@@ -322,6 +369,7 @@ export default function TermsPage() {
           from { opacity: 0; transform: translateY(24px); }
           to { opacity: 1; transform: none; }
         }
+        ${fontStyles}
       `}</style>
     </div>
   );
