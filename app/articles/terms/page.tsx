@@ -57,7 +57,7 @@ const englishSections = [
       "Page Number",
       "Publisher",
       "Publication Year (if known)",
-      "If the book exists in our library, you must attach a link to the book's page.",
+
       "Articles without complete references will be rejected or removed."
     ]
   },
@@ -118,7 +118,7 @@ const urduSections = [
       "صفحہ نمبر",
       "ناشر",
       "اشاعت کا سال (اگر معلوم ہو)",
-      "اگر کتاب ہماری لائبریری میں موجود ہو تو اس کا لنک دینا لازمی ہے۔",
+
       "نامکمل حوالہ ہونے کی صورت میں مضمون مسترد یا حذف کر دیا جائے گا۔"
     ]
   },
@@ -178,7 +178,7 @@ const arabicSections = [
       "رقم الصفحة",
       "اسم الناشر",
       "سنة النشر (إن وُجد)",
-      "إذا كان الكتاب موجودًا في مكتبتنا، فيجب إرفاق الرابط.",
+
       "سيتم رفض أو حذف أي مقال بدون توثيق كامل."
     ]
   },
@@ -227,13 +227,13 @@ const arabicSections = [
 
 // Helper to convert numbers to Urdu numerals
 function toUrduNumber(n: number) {
-  const urduDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  const urduDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
   return n.toString().split('').map(d => urduDigits[parseInt(d)]).join('');
 }
 
 // Helper to convert numbers to Arabic numerals
 function toArabicNumber(n: number) {
-  const arabicDigits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
   return n.toString().split('').map(d => arabicDigits[parseInt(d)]).join('');
 }
 
