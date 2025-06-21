@@ -46,7 +46,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSwitchToSignIn }) => {
     }
   }
 
-  async function handleOAuth(provider: 'google' | 'facebook') {
+  async function handleOAuth(provider: 'google') {
     try {
       if (!signUp) throw new Error('Sign up not initialized');
       await signUp.authenticateWithRedirect({
@@ -65,14 +65,14 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSwitchToSignIn }) => {
         <div className="space-y-2">
           <Label htmlFor="name">Full Name</Label>
           <div className="relative">
-            <User className="absolute left-3 top-3 h-4 w-4 text-muted-green/60" />
+            <User className="absolute left-3 top-3 h-4 w-4 text-muted-green/60 dark:text-gray-400" />
             <Input
               id="name"
               type="text"
               placeholder="Enter your full name"
               value={fullName}
               onChange={e => setFullName(e.target.value)}
-              className="block w-full bg-white border border-gray-300 rounded-md h-11 pl-10 pr-3 text-base placeholder-gray-400 focus:outline-none focus:border-primary-500 transition"
+              className="block w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md h-11 pl-10 pr-3 text-base placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 dark:focus:border-emerald-500 transition text-gray-900 dark:text-gray-100"
               required
             />
           </div>
@@ -80,14 +80,14 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSwitchToSignIn }) => {
         <div className="space-y-2">
           <Label htmlFor="signup-email">Email Address</Label>
           <div className="relative">
-            <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-green/60" />
+            <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-green/60 dark:text-gray-400" />
             <Input
               id="signup-email"
               type="email"
               placeholder="your.email@example.com"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="block w-full bg-white border border-gray-300 rounded-md h-11 pl-10 pr-3 text-base placeholder-gray-400 focus:outline-none focus:border-primary-500 transition"
+              className="block w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md h-11 pl-10 pr-3 text-base placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 dark:focus:border-emerald-500 transition text-gray-900 dark:text-gray-100"
               required
             />
           </div>
@@ -95,49 +95,47 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSwitchToSignIn }) => {
         <div className="space-y-2">
           <Label htmlFor="signup-password">Password</Label>
           <div className="relative">
-            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-green/60" />
+            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-green/60 dark:text-gray-400" />
             <Input
               id="signup-password"
               type={showPassword ? "text" : "password"}
               placeholder="Create a password"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="block w-full bg-white border border-gray-300 rounded-md h-11 pl-10 pr-3 text-base placeholder-gray-400 focus:outline-none focus:border-primary-500 transition"
+              className="block w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md h-11 pl-10 pr-3 text-base placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 dark:focus:border-emerald-500 transition text-gray-900 dark:text-gray-100"
               required
             />
             <Button
               type="button"
               variant="ghost"
               size="icon"
-              className="absolute right-0 top-0 h-12 px-3"
+              className="absolute right-0 top-0 h-12 px-3 hover:bg-gray-100 dark:hover:bg-gray-700"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </Button>
           </div>
         </div>
-        {error && <div className="text-red-500 text-sm">{error}</div>}
-        <Button type="submit" className="w-full" disabled={loading}>
+        
+        {/* Clerk CAPTCHA Element */}
+        <div id="clerk-captcha"></div>
+        
+        {error && <div className="text-red-500 dark:text-red-400 text-sm">{error}</div>}
+        <Button type="submit" className="w-full bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white" disabled={loading}>
           {loading ? 'Signing Up...' : 'Sign Up'}
         </Button>
       </form>
       <div className="flex flex-col gap-2">
-        <Button type="button" variant="outline" onClick={() => handleOAuth('google')} className="w-full bg-gray-300/30 border border-gray-400/40 hover:bg-gray-400/40 transition-colors">
+        <Button type="button" variant="outline" onClick={() => handleOAuth('google')} className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-gray-900 dark:text-gray-100">
           <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
           </svg>
           Sign up with Google
         </Button>
-        <Button type="button" variant="outline" onClick={() => handleOAuth('facebook')} className="w-full bg-gray-300/30 border border-gray-400/40 hover:bg-gray-400/40 transition-colors">
-          <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-          </svg>
-          Sign up with Facebook
-        </Button>
       </div>
       <div className="text-center pt-4">
-        <button className="text-sm text-muted-green hover:text-green-600 transition-colors" onClick={onSwitchToSignIn}>
-          Already have an account? <span className="text-islamic-green font-medium">Sign In</span>
+        <button className="text-sm text-muted-green dark:text-gray-400 hover:text-green-600 dark:hover:text-emerald-400 transition-colors" onClick={onSwitchToSignIn}>
+          Already have an account? <span className="text-islamic-green dark:text-emerald-400 font-medium">Sign In</span>
         </button>
       </div>
     </CardContent>

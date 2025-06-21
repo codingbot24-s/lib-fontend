@@ -11,8 +11,8 @@ import {
   SheetTrigger
 } from "@/components/ui/sheet"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { BookOpen, Menu, Search, ChevronDown, User, BookText, FileText, Globe } from "lucide-react"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { BookOpen, Menu, Search, ChevronDown, User, BookText, FileText, Globe, LogOut, Settings, UserCircle } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,6 +26,8 @@ import { useTopics } from "@/hooks/use-topics"
 import axios from "axios"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { useUser, useClerk } from "@clerk/nextjs"
+import { useRouter } from "next/navigation"
 
 interface Topic {
   id: number
@@ -61,6 +63,9 @@ export default function Header() {
   const [topics, setTopics] = useState<Topic[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const form = useForm()
+  const { user } = useUser()
+  const clerk = useClerk()
+  const router = useRouter()
 
   // Add scroll event listener when component mounts
   useEffect(() => {
@@ -240,56 +245,47 @@ export default function Header() {
               <Search className="h-5 w-5" />
             </Button>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="hidden md:flex">
-                  <Globe className="h-5 w-5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>English</DropdownMenuItem>
-                <DropdownMenuItem>العربية</DropdownMenuItem>
-                <DropdownMenuItem>اردو</DropdownMenuItem>
-                <DropdownMenuItem>Bahasa Indonesia</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="hidden md:flex">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback className="bg-emerald-100 text-emerald-800">
-                      <User className="h-4 w-4" />
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Profile</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <BookText className="mr-2 h-4 w-4" />
-                  <span>My Library</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <BookOpen className="mr-2 h-4 w-4" />
-                  <span>Reading History</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <FileText className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Sign out</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/* Clerk User Authentication */}
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="hidden md:flex">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={user.imageUrl} alt={user.fullName || user.emailAddresses[0]?.emailAddress || 'User'} />
+                      <AvatarFallback className="bg-emerald-100 text-emerald-800">
+                        {user.firstName ? user.firstName[0].toUpperCase() : user.emailAddresses[0]?.emailAddress[0].toUpperCase() || 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel className="flex items-center gap-2">
+                    <UserCircle className="h-4 w-4" />
+                    <span className="truncate">{user.fullName || user.emailAddresses[0]?.emailAddress}</span>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => clerk.openUserProfile()}>
+                      <User className="mr-2 h-4 w-4" />
+                    <span>Profile Settings</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => clerk.signOut()}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Sign out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button 
+                className="hidden md:flex bg-emerald-700 hover:bg-emerald-800 text-white"
+                onClick={() => router.push('/auth')}
+              >
+                Sign In
+              </Button>
+            )}
 
-            <Button className="hidden md:flex bg-emerald-700 hover:bg-emerald-800 text-white">Sign In</Button>
             {/* TODO: make a mobile navbar according the nav in desktop */}
             {/* Mobile Menu */}
             <Sheet>
@@ -411,30 +407,57 @@ export default function Header() {
                         <ThemeToggle />
                       </div>
 
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">Language</span>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="outline" size="sm" className="flex items-center gap-1">
-                              <Globe className="h-4 w-4" /> English
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem>English</DropdownMenuItem>
-                            <DropdownMenuItem>العربية</DropdownMenuItem>
-                            <DropdownMenuItem>اردو</DropdownMenuItem>
-                            <DropdownMenuItem>Bahasa Indonesia</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
+                      
 
                       <div className="flex flex-col space-y-2">
-                        <Button className="w-full bg-emerald-700 hover:bg-emerald-800 text-white">
-                          Sign In
-                        </Button>
-                        <Button variant="outline" className="w-full">
-                          Create Account
-                        </Button>
+                        {user ? (
+                          <>
+                            <div className="flex items-center gap-3 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+                              <Avatar className="h-10 w-10">
+                                <AvatarImage src={user.imageUrl} alt={user.fullName || user.emailAddresses[0]?.emailAddress || 'User'} />
+                                <AvatarFallback className="bg-emerald-100 text-emerald-800">
+                                  {user.firstName ? user.firstName[0].toUpperCase() : user.emailAddresses[0]?.emailAddress[0].toUpperCase() || 'U'}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                                  {user.fullName || user.emailAddresses[0]?.emailAddress}
+                                </p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">Signed in</p>
+                              </div>
+                            </div>
+                            <Button 
+                              variant="outline" 
+                              className="w-full" 
+                              onClick={() => clerk.openUserProfile()}
+                            >
+                              Profile Settings
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              className="w-full text-red-600 hover:text-red-700" 
+                              onClick={() => clerk.signOut()}
+                            >
+                              Sign Out
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <Button 
+                              className="w-full bg-emerald-700 hover:bg-emerald-800 text-white"
+                              onClick={() => router.push('/auth')}
+                            >
+                              Sign In
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              className="w-full"
+                              onClick={() => router.push('/auth')}
+                            >
+                              Create Account
+                            </Button>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>

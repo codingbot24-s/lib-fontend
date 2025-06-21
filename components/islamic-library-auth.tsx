@@ -14,37 +14,37 @@ export default function IslamicLibraryAuth() {
   
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center p-4">
       {/* Subtle background pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-light-green/30  via-white to-light-green/20"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-light-green/30 via-white to-light-green/20 dark:from-emerald-900/20 dark:via-gray-950 dark:to-emerald-800/10"></div>
 
       <div className="w-full max-w-md mx-auto relative z-10">
         {/* Logo and Title */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-3">
-            <div className="w-12 h-12 bg-islamic-green/10 rounded-full flex items-center justify-center mr-3">
-              <BookOpen className="w-6 h-6 text-islamic-green" />
+            <div className="w-12 h-12 bg-islamic-green/10 dark:bg-emerald-500/20 rounded-full flex items-center justify-center mr-3">
+              <BookOpen className="w-6 h-6 text-islamic-green dark:text-emerald-400" />
             </div>
             <div>
-              <h1 className="text-2xl font-serif text-islamic-green font-medium">Bayt al-Kutub</h1>
-              <p className="text-muted-green text-sm">Digital Islamic Library</p>
+              <h1 className="text-2xl font-serif text-islamic-green dark:text-emerald-400 font-medium">Bayt al-Kutub</h1>
+              <p className="text-muted-green dark:text-gray-400 text-sm">Digital Islamic Library</p>
             </div>
           </div>
         </div>
 
         {/* Auth Card */}
-        <Card className="backdrop-blur-sm bg-islamic-green/5 border border-islamic-green/20 shadow-lg rounded-2xl overflow-hidden">
+        <Card className="backdrop-blur-sm bg-islamic-green/5 dark:bg-gray-900/80 border border-islamic-green/20 dark:border-gray-700 shadow-lg rounded-2xl overflow-hidden">
           <Tabs defaultValue="signin" value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid grid-cols-2 bg-[#f3f6f4] rounded-t-xl border-b border-[#dbe3dd] p-0 h-12 w-full">
+            <TabsList className="grid grid-cols-2 bg-[#f3f6f4] dark:bg-gray-800 rounded-t-xl border-b border-[#dbe3dd] dark:border-gray-700 p-0 h-12 w-full">
               <TabsTrigger
                 value="signin"
-                className="w-full h-full flex items-center justify-center text-base font-semibold text-[#2d4739] rounded-t-xl data-[state=active]:bg-[#e3e8e3] data-[state=active]:text-[#2d4739] data-[state=active]:shadow-none data-[state=active]:border-none transition-colors"
+                className="w-full h-full flex items-center justify-center text-base font-semibold text-[#2d4739] dark:text-gray-200 rounded-t-xl data-[state=active]:bg-[#e3e8e3] dark:data-[state=active]:bg-emerald-900/30 data-[state=active]:text-[#2d4739] dark:data-[state=active]:text-emerald-300 data-[state=active]:shadow-none data-[state=active]:border-none transition-colors"
               >
                 Sign In
               </TabsTrigger>
               <TabsTrigger
                 value="signup"
-                className="w-full h-full flex items-center justify-center text-base font-semibold text-[#2d4739] rounded-t-xl data-[state=active]:bg-[#e3e8e3] data-[state=active]:text-[#2d4739] data-[state=active]:shadow-none data-[state=active]:border-none transition-colors"
+                className="w-full h-full flex items-center justify-center text-base font-semibold text-[#2d4739] dark:text-gray-200 rounded-t-xl data-[state=active]:bg-[#e3e8e3] dark:data-[state=active]:bg-emerald-900/30 data-[state=active]:text-[#2d4739] dark:data-[state=active]:text-emerald-300 data-[state=active]:shadow-none data-[state=active]:border-none transition-colors"
               >
                 Sign Up
               </TabsTrigger>
@@ -53,10 +53,10 @@ export default function IslamicLibraryAuth() {
             {/* Sign In Tab */}
             <TabsContent value="signin" className="p-0">
               <CardHeader className="pt-8 pb-6 px-8">
-                <CardTitle className="text-2xl font-serif text-islamic-green text-center mb-2">
+                <CardTitle className="text-2xl font-serif text-islamic-green dark:text-emerald-400 text-center mb-2">
                   Sign In to Bayt al-Kutub
                 </CardTitle>
-                <CardDescription className="text-muted-green text-center">
+                <CardDescription className="text-muted-green dark:text-gray-400 text-center">
                   Welcome back to your digital Islamic library
                 </CardDescription>
               </CardHeader>
@@ -66,10 +66,10 @@ export default function IslamicLibraryAuth() {
             {/* Sign Up Tab */}
             <TabsContent value="signup" className="p-0">
               <CardHeader className="pt-8 pb-6 px-8">
-                <CardTitle className="text-2xl font-serif text-islamic-green text-center mb-2">
+                <CardTitle className="text-2xl font-serif text-islamic-green dark:text-emerald-400 text-center mb-2">
                   Create a New Account
                 </CardTitle>
-                <CardDescription className="text-muted-green text-center">
+                <CardDescription className="text-muted-green dark:text-gray-400 text-center">
                   Join our community of knowledge seekers
                 </CardDescription>
               </CardHeader>
@@ -80,8 +80,8 @@ export default function IslamicLibraryAuth() {
 
         {/* Footer */}
         <div className="text-center mt-8">
-          <p className="text-muted-green/70 text-sm font-serif">"And say: My Lord, increase me in knowledge"</p>
-          <p className="text-muted-green/50 text-xs mt-1">Quran 20:114</p>
+          <p className="text-muted-green/70 dark:text-gray-500 text-sm font-serif">"And say: My Lord, increase me in knowledge"</p>
+          <p className="text-muted-green/50 dark:text-gray-600 text-xs mt-1">Quran 20:114</p>
         </div>
       </div>
     </div>

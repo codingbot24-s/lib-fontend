@@ -17,6 +17,8 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Globe2, BookOpen, Check, Bold, Italic, Underline as UnderlineIcon, Strikethrough, List, ListOrdered, Quote, Code, Highlighter } from "lucide-react";
 import axios from "axios";
+import { useUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 interface Topic {
   id: number;
@@ -77,6 +79,7 @@ function MediumBubbleMenu({ editor }: { editor: Editor | null }) {
 
 export default function WriteArticlePage() {
   const router = useRouter();
+  const { user, isLoaded } = useUser();
   const [activeLang, setActiveLang] = useState<LangCode>("en");
   const [form, setForm] = useState<Record<LangCode, { title: string; content: string }> & { topic: string }>({
     en: { title: "", content: "" },
@@ -88,6 +91,20 @@ export default function WriteArticlePage() {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [loading, setLoading] = useState(true);
   const [showTopicSelector, setShowTopicSelector] = useState(false);
+
+  // Redirect if not authenticated
+  if (isLoaded && !user) {
+    redirect('/auth')
+  }
+
+  // Show loading while Clerk is loading
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen w-full bg-gradient-to-br from-emerald-50 via-white to-emerald-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-2 border-emerald-200 border-t-emerald-600"></div>
+      </div>
+    )
+  }
 
   // Fetch topics from API
   useEffect(() => {
