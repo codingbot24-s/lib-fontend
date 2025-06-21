@@ -119,24 +119,6 @@ export default function ArticlePage() {
         </Button>
 
         <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
-          <div className="relative aspect-video">
-            <img
-              src={article.imageUrl}
-              alt={article.title}
-              className="object-cover w-full h-full"
-            />
-            <div className="absolute top-4 left-4">
-              <span className="text-sm font-medium text-white px-3 py-1 rounded-full bg-emerald-700/80">
-                {article.category}
-              </span>
-            </div>
-            <div className="absolute top-4 right-4">
-              <span className="text-sm font-medium text-white px-3 py-1 rounded-full bg-emerald-700/80">
-                {getLanguageLabel(article.language)}
-              </span>
-            </div>
-          </div>
-
           <div className={`p-8 ${isRTL ? 'text-right' : ''}`}>
             <h1 className={`text-3xl md:text-4xl font-bold text-emerald-900 dark:text-emerald-100 mb-6 ${fontClass}`}>
               {article.title}
@@ -154,6 +136,10 @@ export default function ArticlePage() {
               <div className="flex items-center">
                 <Tag className="h-4 w-4 mr-2" />
                 {article.category}
+              </div>
+              <div className="flex items-center">
+                <Globe className="h-4 w-4 mr-2" />
+                {getLanguageLabel(article.language)}
               </div>
             </div>
 

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Filter, X } from "lucide-react";
+import { Filter, X, Globe, Tag, Calendar, User } from "lucide-react";
 
 
 interface Topic {
@@ -160,30 +160,32 @@ export default function ArticlesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f5f0] dark:bg-gray-950">
-      <div className="container mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800">
+      <div className="container mx-auto px-4 py-8 sm:py-12">
         <div className="max-w-7xl mx-auto">
-          {/* Header with Mobile Filter Button and Write Article Button */}
-          <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-emerald-900 dark:text-emerald-100 mb-4">
+          {/* Enhanced Header */}
+          <div className="mb-8 sm:mb-12">
+            <div className="text-center mb-8">
+              <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-emerald-700 to-emerald-900 bg-clip-text text-transparent mb-4">
                 Articles
               </h1>
-              <p className="text-gray-600 dark:text-gray-400">
-                Explore our collection of insightful articles on various Islamic topics
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Explore our collection of insightful articles on various Islamic topics, written by scholars and experts
               </p>
             </div>
-            <div className="flex gap-2 items-center">
+            
+            {/* Enhanced Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 variant="default"
-                className="font-semibold bg-emerald-700 hover:bg-emerald-800 text-white"
+                className="font-semibold bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 onClick={() => setIsModalOpen(true)}
               >
-                Write Article
+                ✍️ Write Article
               </Button>
               <Button
                 variant="outline"
-                className="lg:hidden flex items-center gap-2"
+                className="lg:hidden flex items-center gap-2 border-emerald-200 hover:bg-emerald-50 dark:border-emerald-700 dark:hover:bg-emerald-900/20 px-6 py-3 rounded-full"
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
               >
                 {isFilterOpen ? (
@@ -201,36 +203,42 @@ export default function ArticlesPage() {
             </div>
           </div>
 
-          {/* Write Article Modal */}
+          {/* Enhanced Write Article Modal */}
           <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-            <h2 className="text-xl font-bold mb-4 text-emerald-900 dark:text-emerald-100">Write an Article</h2>
-            <p className="mb-6 text-gray-600 dark:text-gray-300">Before writing, please review our terms and conditions for submitting articles.</p>
-            <div className="flex flex-col gap-3">
-              <Button
-                variant="outline"
-                onClick={() => { setIsModalOpen(false); router.push('/articles/terms'); }}
-                className="w-full"
-              >
-                Read Terms & Conditions
-              </Button>
-              <Button
-                variant="default"
-                onClick={() => { setIsModalOpen(false); router.push('/articles/write'); }}
-                className="w-full bg-emerald-700 hover:bg-emerald-800 text-white"
-              >
-                Write Article
-              </Button>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">✍️</span>
+              </div>
+              <h2 className="text-2xl font-bold mb-4 text-emerald-900 dark:text-emerald-100">Write an Article</h2>
+              <p className="mb-8 text-gray-600 dark:text-gray-300">Share your knowledge with the community. Before writing, please review our terms and conditions.</p>
+              <div className="flex flex-col gap-4">
+                <Button
+                  variant="outline"
+                  onClick={() => { setIsModalOpen(false); router.push('/articles/terms'); }}
+                  className="w-full py-3 border-emerald-200 hover:bg-emerald-50 dark:border-emerald-700 dark:hover:bg-emerald-900/20"
+                >
+                  📋 Read Terms & Conditions
+                </Button>
+                <Button
+                  variant="default"
+                  onClick={() => { setIsModalOpen(false); router.push('/articles/write'); }}
+                  className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white py-3"
+                >
+                  ✍️ Start Writing
+                </Button>
+              </div>
             </div>
           </Modal>
 
-          {/* Main Content with Sidebar */}
+          {/* Main Content with Enhanced Sidebar */}
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Filters Sidebar - Hidden on mobile unless opened */}
-            <div className={`lg:w-64 flex-shrink-0 ${isFilterOpen ? 'block' : 'hidden'} lg:block`}>
-              <div className="lg:sticky lg:top-4 space-y-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            {/* Enhanced Filters Sidebar */}
+            <div className={`lg:w-72 flex-shrink-0 ${isFilterOpen ? 'block' : 'hidden'} lg:block`}>
+              <div className="lg:sticky lg:top-4 space-y-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-emerald-100 dark:border-gray-700">
                 {/* Language Filter */}
                 <div>
-                  <h2 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100 mb-4">
+                  <h2 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100 mb-4 flex items-center gap-2">
+                    <Globe className="h-5 w-5" />
                     Language
                   </h2>
                   <div className="space-y-2">
@@ -240,9 +248,9 @@ export default function ArticlesPage() {
                         setSelectedLanguage('all');
                         setIsFilterOpen(false);
                       }}
-                      className="w-full justify-start bg-emerald-700 hover:bg-emerald-800 text-white"
+                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedLanguage === 'all' ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-md" : "hover:bg-emerald-50 dark:hover:bg-emerald-900/20"}`}
                     >
-                      All Languages
+                      🌍 All Languages
                     </Button>
                     <Button
                       variant={selectedLanguage === 'en' ? "default" : "outline"}
@@ -250,9 +258,9 @@ export default function ArticlesPage() {
                         setSelectedLanguage('en');
                         setIsFilterOpen(false);
                       }}
-                      className={`w-full justify-start ${selectedLanguage === 'en' ? "bg-emerald-700 hover:bg-emerald-800 text-white" : ""}`}
+                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedLanguage === 'en' ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-md" : "hover:bg-emerald-50 dark:hover:bg-emerald-900/20"}`}
                     >
-                      English
+                    English
                     </Button>
                     <Button
                       variant={selectedLanguage === 'ur' ? "default" : "outline"}
@@ -260,9 +268,9 @@ export default function ArticlesPage() {
                         setSelectedLanguage('ur');
                         setIsFilterOpen(false);
                       }}
-                      className={`w-full justify-start ${selectedLanguage === 'ur' ? "bg-emerald-700 hover:bg-emerald-800 text-white" : ""}`}
+                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedLanguage === 'ur' ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-md" : "hover:bg-emerald-50 dark:hover:bg-emerald-900/20"}`}
                     >
-                      اردو
+                   اردو
                     </Button>
                     <Button
                       variant={selectedLanguage === 'ar' ? "default" : "outline"}
@@ -270,16 +278,17 @@ export default function ArticlesPage() {
                         setSelectedLanguage('ar');
                         setIsFilterOpen(false);
                       }}
-                      className={`w-full justify-start ${selectedLanguage === 'ar' ? "bg-emerald-700 hover:bg-emerald-800 text-white" : ""}`}
+                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedLanguage === 'ar' ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-md" : "hover:bg-emerald-50 dark:hover:bg-emerald-900/20"}`}
                     >
-                      العربية
+                    العربية
                     </Button>
                   </div>
                 </div>
 
                 {/* Topics Filter */}
                 <div>
-                  <h2 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100 mb-4">
+                  <h2 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100 mb-4 flex items-center gap-2">
+                    <Tag className="h-5 w-5" />
                     Topics
                   </h2>
                   <div className="space-y-2">
@@ -289,9 +298,9 @@ export default function ArticlesPage() {
                         setSelectedTopic(null);
                         setIsFilterOpen(false);
                       }}
-                      className="w-full justify-start bg-emerald-700 hover:bg-emerald-800 text-white"
+                      className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedTopic === null ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-md" : "hover:bg-emerald-50 dark:hover:bg-emerald-900/20"}`}
                     >
-                      All Topics
+                      📚 All Topics
                     </Button>
                     {topics.map((topic) => (
                       <Button
@@ -301,7 +310,7 @@ export default function ArticlesPage() {
                           setSelectedTopic(topic.id);
                           setIsFilterOpen(false);
                         }}
-                        className={`w-full justify-start ${selectedTopic === topic.id ? "bg-emerald-700 hover:bg-emerald-800 text-white" : ""}`}
+                        className={`w-full justify-start rounded-lg transition-all duration-200 ${selectedTopic === topic.id ? "bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-md" : "hover:bg-emerald-50 dark:hover:bg-emerald-900/20"}`}
                       >
                         {topic.name}
                       </Button>
@@ -311,102 +320,105 @@ export default function ArticlesPage() {
               </div>
             </div>
 
-            {/* Articles Grid */}
+            {/* Enhanced Articles Grid */}
             <div className="flex-1">
-              {/* Active Filters Display */}
-              <div className="mb-6 flex flex-wrap gap-2">
+              {/* Enhanced Active Filters Display */}
+              <div className="mb-8 flex flex-wrap gap-3">
                 {selectedLanguage !== 'all' && (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100">
+                  <span className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-800 dark:from-emerald-900 dark:to-emerald-800 dark:text-emerald-100 shadow-sm">
                     {getLanguageLabel(selectedLanguage)}
                     <button
                       onClick={() => setSelectedLanguage('all')}
-                      className="ml-2 hover:text-emerald-600 dark:hover:text-emerald-300"
+                      className="ml-2 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
                     >
-                      <X className="h-3 w-3" />
+                      <X className="h-4 w-4" />
                     </button>
                   </span>
                 )}
                 {selectedTopic !== null && (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100">
+                  <span className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-800 dark:from-emerald-900 dark:to-emerald-800 dark:text-emerald-100 shadow-sm">
                     {topics.find(t => t.id === selectedTopic)?.name}
                     <button
                       onClick={() => setSelectedTopic(null)}
-                      className="ml-2 hover:text-emerald-600 dark:hover:text-emerald-300"
+                      className="ml-2 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
                     >
-                      <X className="h-3 w-3" />
+                      <X className="h-4 w-4" />
                     </button>
                   </span>
                 )}
               </div>
 
               {loading ? (
-                <div className="flex justify-center items-center py-12">
-                  <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500"></div>
+                <div className="flex justify-center items-center py-16">
+                  <div className="relative">
+                    <div className="animate-spin rounded-full h-16 w-16 border-4 border-emerald-200 border-t-emerald-600"></div>
+                    <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-emerald-400 animate-ping"></div>
+                  </div>
                 </div>
               ) : filteredArticles.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {filteredArticles.map((article) => (
                     <Card
                       key={article.id}
-                      className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                      className="group overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-emerald-100 dark:border-gray-700 rounded-2xl hover:border-emerald-200 dark:hover:border-emerald-600"
                     >
-                      <div className="relative aspect-video">
-                        <img
-                          src={article.imageUrl}
-                          alt={article.title}
-                          className="object-cover w-full h-full"
-                        />
-                        <div className="absolute top-2 left-2">
-                          <span className="text-xs font-medium text-white px-2 py-1 rounded-full bg-emerald-700/80">
+                      <CardContent className="p-8">
+                        <div className="flex items-center justify-between mb-4">
+                          <span className="text-xs font-semibold text-white px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 shadow-sm">
                             {article.category}
                           </span>
-                        </div>
-                        <div className="absolute top-2 right-2">
-                          <span className="text-xs font-medium text-white px-2 py-1 rounded-full bg-emerald-700/80">
+                          <span className="text-xs font-semibold text-white px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 shadow-sm">
                             {getLanguageLabel(article.language)}
                           </span>
                         </div>
-                      </div>
-                      <CardContent className="p-4">
-                        <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-2">
-                          <span>{article.date}</span>
-                          <span className="mx-2">•</span>
-                          <span>{article.author}</span>
+                        <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-4">
+                          <span className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            {article.date}
+                          </span>
+                          <span className="mx-3">•</span>
+                          <span className="flex items-center gap-1">
+                            <User className="h-3 w-3" />
+                            {article.author}
+                          </span>
                         </div>
                         <h3 
-                          className={`font-bold text-emerald-900 dark:text-emerald-100 mb-2 ${article.language === 'ar' || article.language === 'ur' ? 'font-arabic' : ''}`}
+                          className={`text-xl font-bold text-emerald-900 dark:text-emerald-100 mb-4 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors ${article.language === 'ar' || article.language === 'ur' ? 'font-arabic' : ''}`}
                           dir={getLanguageDirection(article.language)}
                         >
                           {article.title}
                         </h3>
                         <p 
-                          className={`text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-3 ${article.language === 'ar' || article.language === 'ur' ? 'font-arabic' : ''}`}
+                          className={`text-gray-600 dark:text-gray-300 line-clamp-3 mb-6 leading-relaxed ${article.language === 'ar' || article.language === 'ur' ? 'font-arabic' : ''}`}
                           dir={getLanguageDirection(article.language)}
                         >
                           {article.description}
                         </p>
                         <Button
                           variant="link"
-                          className="p-0 h-auto text-emerald-700 dark:text-emerald-400"
+                          className="p-0 h-auto text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 font-semibold group-hover:underline transition-all duration-200"
                           onClick={() => router.push(`/articles/${article.id}`)}
                         >
-                          {article.language === 'ar' ? 'اقرأ المزيد' : 
-                           article.language === 'ur' ? 'مزید پڑھیں' : 
-                           'Read More'}
+                          {article.language === 'ar' ? 'اقرأ المزيد →' : 
+                           article.language === 'ur' ? 'مزید پڑھیں →' : 
+                           'Read More →'}
                         </Button>
                       </CardContent>
                     </Card>
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-12">
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+                <div className="text-center py-16">
+                  <div className="w-24 h-24 bg-gradient-to-r from-emerald-100 to-emerald-200 dark:from-emerald-900 dark:to-emerald-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span className="text-3xl">📚</span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">
                     No Articles Found
                   </h3>
-                  <p className="text-gray-500 dark:text-gray-400">
+                  <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
                     {selectedTopic
-                      ? "No articles available for this topic yet."
-                      : "No articles available at the moment."}
+                      ? "No articles available for this topic yet. Check back later or try a different filter."
+                      : "No articles available at the moment. Be the first to contribute!"}
                   </p>
                 </div>
               )}
