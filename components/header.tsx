@@ -222,12 +222,12 @@ export default function Header() {
               Library
             </Link>
 
-            <Link
+            {/* <Link
               href="/articles"
               className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-white hover:text-emerald-700 dark:hover:text-gray-300 rounded-md"
             >
               Articles
-            </Link>
+            </Link> */}
 
             {/* <Link
               href="/forum"
@@ -407,18 +407,11 @@ export default function Header() {
                           Library
                         </Link>
 
-                        <Link
+                        {/* <Link
                           href="/articles"
                           className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-gray-800 text-emerald-900 dark:text-white"
                         >
                           Articles
-                        </Link>
-
-                        {/* <Link
-                          href="/forum"
-                          className="flex items-center py-2 px-3 rounded-md hover:bg-emerald-50 dark:hover:bg-gray-800 text-emerald-900 dark:text-white"
-                        >
-                          Forum
                         </Link> */}
                       </div>
                     </div>

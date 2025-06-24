@@ -87,11 +87,11 @@ export default function Footer() {
                   Scholars
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/articles" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
                   Articles
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link href="/donate" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
                   Support Us
@@ -138,7 +138,7 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-bold text-white mb-4 font-display">Newsletter</h3>
             <p className="text-sm mb-4 text-emerald-200 dark:text-gray-300">
-              Subscribe to our newsletter to receive updates on new books, articles, and events.
+              Subscribe to our newsletter to receive updates on new books and events.
             </p>
             <div className="space-y-2">
               <Input

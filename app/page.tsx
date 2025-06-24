@@ -3,23 +3,17 @@ import HeroSection from "@/components/hero-section";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  BookOpen,
   ChevronRight,
   BookMarked,
   Calendar,
 } from "lucide-react";
-import BookCard from "@/components/book-card";
 import RecentBooks from "@/components/recent-books";
 
 import CategoryChip from "@/components/category-chip";
-import AudioCard from "@/components/audio-card";
-import QuranSection from "@/components/quran-section";
-import PrayerTimesWidget from "@/components/prayer-times-widget";
-import FeaturedQuote from "@/components/featured-quote";
+
 import GuidedLearningPaths from "@/components/guided-learning/guided-learning-paths";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { set } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
 export default function HomePage() {
@@ -211,10 +205,7 @@ export default function HomePage() {
         </section>
 
         {/* Guided Learning Paths Section */}
-        <GuidedLearningPaths />
-
-        
-        <section className="py-12 bg-emerald-50 dark:bg-black">
+        <section className="py-12 bg-white dark:bg-black">
           <div className="container mx-auto px-4">
             <div className="space-y-6">
               <div className="flex items-center justify-between">
@@ -223,6 +214,26 @@ export default function HomePage() {
                 </h2>
               </div>
               <RecentBooks />
+            </div>
+          </div>
+        </section>
+
+        {/* Guided Learning Paths Coming Soon Section */}
+        <section className="py-12 bg-emerald-50 dark:bg-black">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col items-center justify-center text-center py-12">
+              <svg className="h-16 w-16 text-emerald-600 mb-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 12l2 2 4-4" />
+              </svg>
+              <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 dark:text-white mb-4">Guided Learning Paths Coming Soon!</h2>
+              <p className="text-lg text-emerald-800 dark:text-gray-300 max-w-2xl mb-6">
+                We're working on a curated set of learning journeys to help you explore Islamic knowledge step by step. Stay tuned for a beautiful, interactive experience designed to guide you through essential topics and books!
+              </p>
+              <span className="inline-block bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-200 px-4 py-2 rounded-full font-medium text-sm animate-pulse">
+                Launching Soon InshaAllah
+              </span>
             </div>
           </div>
         </section>
@@ -251,72 +262,21 @@ export default function HomePage() {
         </section> */}
 
         {/* Articles Section */}
-        <section className="py-12 bg-white dark:bg-black">
+        <section className="py-12 bg-emerald-50 dark:bg-black">
           <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-white">
-                Latest Articles
-              </h2>
-              <Button
-                variant="link"
-                className="text-emerald-700 dark:text-gray-300"
-              >
-                All Articles <Calendar className="ml-1 h-4 w-4" />
-              </Button>
+            <div className="flex flex-col items-center justify-center text-center py-12">
+              <svg className="h-16 w-16 text-emerald-600 mb-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12c0 3.59-2.91 6.5-6.5 6.5S6.5 15.59 6.5 12 9.41 5.5 13 5.5 19.5 8.41 19.5 12z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 1" />
+              </svg>
+              <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 dark:text-white mb-4">Articles Coming Soon!</h2>
+              <p className="text-lg text-emerald-800 dark:text-gray-300 max-w-2xl mb-6">
+                We're preparing a collection of insightful articles to deepen your understanding and inspire your journey. Stay tuned for thought-provoking reads on a variety of Islamic topics!
+              </p>
+              <span className="inline-block bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-200 px-4 py-2 rounded-full font-medium text-sm animate-pulse">
+                Launching Soon InshaAllah
+              </span>
             </div>
-            {articles && articles.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {articles.map((article) => (
-                  <Card
-                    key={article.id}
-                    className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white dark:bg-black border-gray-200 dark:border-gray-700"
-                  >
-                    <div className="relative aspect-video">
-                      <img
-                        src={article.imageUrl || "/placeholder.svg"}
-                        alt={article.title}
-                        className="object-cover w-full h-full"
-                      />
-                      <div className="absolute top-2 left-2">
-                        <span className="text-xs font-medium text-white px-2 py-1 rounded-full bg-emerald-700/80">
-                          {article.category}
-                        </span>
-                      </div>
-                    </div>
-                    <CardContent className="p-4">
-                      <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-2">
-                        <span>{article.date}</span>
-                        <span className="mx-2">•</span>
-                        <span>{article.author}</span>
-                      </div>
-                      <h3 className="font-bold text-emerald-900 dark:text-white mb-2">
-                        {article.title}
-                      </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">
-                        {article.description}
-                      </p>
-                      <Button
-                        variant="link"
-                        className="p-0 h-auto text-emerald-700 dark:text-gray-300"
-                        onClick={() => router.push(`/articles/${article.id}`)}
-                      >
-                        Read More
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <BookMarked className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600 mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                  No Articles Available
-                </h3>
-                <p className="text-gray-500 dark:text-gray-400">
-                  We're currently working on bringing you insightful articles. Check back soon!
-                </p>
-              </div>
-            )}
           </div>
         </section>
 
