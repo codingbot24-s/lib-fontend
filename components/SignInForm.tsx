@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSignIn } from "@clerk/nextjs";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,20 +8,27 @@ import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 
 interface SignInFormProps {
   onSwitchToSignUp: () => void;
+  setLoading?: (state: boolean) => void;
+  onLoaded?: () => void;
 }
 
-const SignInForm: React.FC<SignInFormProps> = ({ onSwitchToSignUp }) => {
+const SignInForm: React.FC<SignInFormProps> = ({ onSwitchToSignUp, setLoading, onLoaded }) => {
   const { isLoaded, signIn, setActive } = useSignIn();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
-  if (!isLoaded) return <div>Loading...</div>;
+  useEffect(() => {
+    if (isLoaded) onLoaded?.();
+  }, [isLoaded, onLoaded]);
+
+  if (!isLoaded) return null;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError('');
+    setLoading?.(true);
     try {
       if (!signIn) throw new Error('Sign in not initialized');
       const result = await signIn.create({ identifier: email, password });
@@ -34,10 +41,13 @@ const SignInForm: React.FC<SignInFormProps> = ({ onSwitchToSignUp }) => {
       }
     } catch (err: any) {
       setError(err.errors?.[0]?.message || 'Sign in failed');
+    } finally {
+      setLoading?.(false);
     }
   }
 
   async function handleOAuth(provider: 'google') {
+    setLoading?.(true);
     try {
       if (!signIn) throw new Error('Sign in not initialized');
       await signIn.authenticateWithRedirect({
@@ -47,6 +57,7 @@ const SignInForm: React.FC<SignInFormProps> = ({ onSwitchToSignUp }) => {
       });
     } catch (err: any) {
       setError(err.errors?.[0]?.message || 'OAuth failed');
+      setLoading?.(false);
     }
   }
 

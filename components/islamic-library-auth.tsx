@@ -8,15 +8,31 @@ import { BookOpen } from "lucide-react"
 import SignInForm from "@/components/SignInForm"
 import SignUpForm from "@/components/SignUpForm"
 
+function AuthLoader({ message }: { message: string }) {
+  return (
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/80 dark:bg-black/80 backdrop-blur-sm">
+      <svg className="animate-spin h-12 w-12 text-emerald-700 mb-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+      </svg>
+      <div className="text-xl font-semibold text-emerald-900 dark:text-white animate-pulse">{message}</div>
+    </div>
+  )
+}
 
 export default function IslamicLibraryAuth() {
   const [activeTab, setActiveTab] = useState("signin")
-  
+  const [signInLoaded, setSignInLoaded] = useState(false)
+  const [signUpLoaded, setSignUpLoaded] = useState(false)
+
+  const showLoader = (activeTab === "signin" && !signInLoaded) || (activeTab === "signup" && !signUpLoaded)
 
   return (
     <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center p-4">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 bg-gradient-to-br from-light-green/30 via-white to-light-green/20 dark:from-gray-900/50 dark:via-black dark:to-gray-800/30"></div>
+
+      {showLoader && <AuthLoader message={activeTab === "signin" ? "Loading sign in..." : "Loading sign up..."} />}
 
       <div className="w-full max-w-md mx-auto relative z-10">
         {/* Logo and Title */}
@@ -60,7 +76,7 @@ export default function IslamicLibraryAuth() {
                   Welcome back to your digital Islamic library
                 </CardDescription>
               </CardHeader>
-              <SignInForm onSwitchToSignUp={() => setActiveTab("signup")} />
+              <SignInForm onSwitchToSignUp={() => setActiveTab("signup")} onLoaded={() => setSignInLoaded(true)} />
             </TabsContent>
 
             {/* Sign Up Tab */}
@@ -73,7 +89,7 @@ export default function IslamicLibraryAuth() {
                   Join our community of knowledge seekers
                 </CardDescription>
               </CardHeader>
-              <SignUpForm onSwitchToSignIn={() => setActiveTab("signin")} />
+              <SignUpForm onSwitchToSignIn={() => setActiveTab("signin")} onLoaded={() => setSignUpLoaded(true)} />
             </TabsContent>
           </Tabs>
         </Card>

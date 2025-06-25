@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,23 +9,30 @@ import { useRouter } from "next/router"
 
 interface SignUpFormProps {
   onSwitchToSignIn: () => void;
+  setLoading?: (state: boolean) => void;
+  onLoaded?: () => void;
 }
 
-const SignUpForm: React.FC<SignUpFormProps> = ({ onSwitchToSignIn }) => {
+const SignUpForm: React.FC<SignUpFormProps> = ({ onSwitchToSignIn, setLoading, onLoaded }) => {
   const { isLoaded, signUp, setActive } = useSignUp();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLocalLoading] = useState(false);
 
-  if (!isLoaded) return <div>Loading...</div>;
+  useEffect(() => {
+    if (isLoaded) onLoaded?.();
+  }, [isLoaded, onLoaded]);
+
+  if (!isLoaded) return null;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError('');
-    setLoading(true);
+    setLoading?.(true);
+    setLocalLoading(true);
     try {
       if (!signUp) throw new Error('Sign up not initialized');
       const result = await signUp.create({
@@ -42,11 +49,14 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSwitchToSignIn }) => {
     } catch (err: any) {
       setError(err.errors?.[0]?.message || 'Sign up failed');
     } finally {
-      setLoading(false);
+      setLoading?.(false);
+      setLocalLoading(false);
     }
   }
 
   async function handleOAuth(provider: 'google') {
+    setLoading?.(true);
+    setLocalLoading(true);
     try {
       if (!signUp) throw new Error('Sign up not initialized');
       await signUp.authenticateWithRedirect({
@@ -56,6 +66,8 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSwitchToSignIn }) => {
       });
     } catch (err: any) {
       setError(err.errors?.[0]?.message || 'OAuth failed');
+      setLoading?.(false);
+      setLocalLoading(false);
     }
   }
 
