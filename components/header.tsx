@@ -305,7 +305,7 @@ export default function Header() {
             ) : (
               <Button 
                 className="hidden md:flex bg-emerald-700 hover:bg-emerald-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black"
-                onClick={() => router.push('/auth')}
+                onClick={() => router.push('/sign-in')}
               >
                 Sign In
               </Button>
@@ -485,14 +485,14 @@ export default function Header() {
                           <>
                             <Button 
                               className="w-full bg-emerald-700 hover:bg-emerald-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-black"
-                              onClick={() => router.push('/auth')}
+                              onClick={() => router.push('/sign-in')}
                             >
                               Sign In
                             </Button>
                             <Button 
                               variant="outline" 
                               className="w-full"
-                              onClick={() => router.push('/auth')}
+                              onClick={() => router.push('/sign-up')}
                             >
                               Create Account
                             </Button>

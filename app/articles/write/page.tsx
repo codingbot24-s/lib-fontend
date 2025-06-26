@@ -19,7 +19,7 @@ export default function WriteArticleComingSoon() {
       </p>
       <span className="inline-block bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-200 px-4 py-2 rounded-full font-medium text-sm animate-pulse">
         Redirecting...
-      </span>
+                        </span>
     </div>
   );
 } 
