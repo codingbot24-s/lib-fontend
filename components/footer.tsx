@@ -68,33 +68,18 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/quran" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
-                  Quran
-                </Link>
-              </li>
-              <li>
-                <Link href="/hadith" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
-                  Hadith
-                </Link>
-              </li>
-              <li>
                 <Link href="/books" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
                   Books
                 </Link>
               </li>
               <li>
-                <Link href="/scholars" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
-                  Scholars
+                <Link href="/darse-nizami" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
+                  Darse Nizami
                 </Link>
               </li>
-              {/* <li>
-                <Link href="/articles" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
-                  Articles
-                </Link>
-              </li> */}
               <li>
                 <Link href="/donate" className="text-emerald-200 dark:text-gray-300 hover:text-gold dark:hover:text-white transition-colors">
-                  Support Us
+                  Donate
                 </Link>
               </li>
               <li>
@@ -115,11 +100,11 @@ export default function Footer() {
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 text-gold dark:text-gray-400 mr-2 flex-shrink-0" />
-                <span className="text-emerald-200 dark:text-gray-300">+1 (555) 123-4567</span>
+                <span className="text-emerald-200 dark:text-gray-300"></span>
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 text-gold dark:text-gray-400 mr-2 flex-shrink-0" />
-                <span className="text-emerald-200 dark:text-gray-300">info@baytkutub.org</span>
+                <span className="text-emerald-200 dark:text-gray-300">primecoder8@gmail.com</span>
               </li>
               <li className="flex items-start">
                 <Clock className="h-5 w-5 text-gold dark:text-gray-400 mr-2 mt-0.5 flex-shrink-0" />
@@ -135,8 +120,8 @@ export default function Footer() {
           </div>
 
           {/* Newsletter */}
-          <div>
-            <h3 className="text-lg font-bold text-white mb-4 font-display">Newsletter</h3>
+          {/* <div>
+            {/* <h3 className="text-lg font-bold text-white mb-4 font-display">Newsletter</h3>
             <p className="text-sm mb-4 text-emerald-200 dark:text-gray-300">
               Subscribe to our newsletter to receive updates on new books and events.
             </p>
@@ -147,8 +132,8 @@ export default function Footer() {
                 className="bg-emerald-800/50 dark:bg-gray-800 border-emerald-700 dark:border-gray-600 text-white dark:text-white placeholder:text-emerald-300/70 dark:placeholder:text-gray-400"
               />
               <Button className="w-full bg-gold hover:bg-gold/90 dark:bg-white dark:hover:bg-gray-100 text-emerald-900 dark:text-black">Subscribe</Button>
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */} 
         </div>
 
         {/* Inspirational Quote */}
