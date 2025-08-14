@@ -7,6 +7,7 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { Toaster } from 'sonner'
 import { ClerkProvider } from '@clerk/nextjs'
+import DevelopmentBanner from "@/components/development-banner"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${notoSerif.variable} bg-islamic-pattern min-h-screen flex flex-col`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Header />
+          <DevelopmentBanner />
           <main className="flex-grow">
             {children}
           </main>
