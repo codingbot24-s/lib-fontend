@@ -116,7 +116,7 @@ export default function LearningPathPage({ params }: { params: { id: string } })
           <div className="text-center">
             <h1 className="text-2xl font-bold text-emerald-900 dark:text-white mb-4">Learning Path Not Found</h1>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              The learning path you're looking for doesn't exist or has been moved.
+              The learning path you&apos;re looking for doesn&apos;t exist or has been moved.
             </p>
             <Button asChild>
               <Link href="/">Return to Home</Link>
@@ -199,7 +199,7 @@ export default function LearningPathPage({ params }: { params: { id: string } })
             <div>
               <h2 className="text-xl font-bold text-emerald-900 dark:text-white mb-4">Modules</h2>
               <div className="space-y-4">
-                {path.learningModules.map((module: any) => (
+                {path.learningModules.map((module: { id: string; title: string; description: string; duration: string; status: string }) => (
                     <Card
                       key={module.id}
                     className={`border ${

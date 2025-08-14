@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Download } from "lucide-react";
@@ -180,10 +181,11 @@ export default function BookVolumesPage() {
             <CardContent>
               {volume.cover_image ? (
                 <div className="relative aspect-[3/4] overflow-hidden rounded-lg">
-                  <img
+                  <Image
                     src={volume.cover_image}
                     alt={`Volume ${volume.volume_number} cover`}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    fill
+                    className="object-cover transition-transform duration-300 hover:scale-105"
                   />
                 </div>
               ) : (

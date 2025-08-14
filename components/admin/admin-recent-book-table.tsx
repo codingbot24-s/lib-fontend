@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Loader2 } from "lucide-react"
 import { Book } from "@/types/book"
-import { cn } from "@/lib/utils"
+
 import { toast } from "sonner"
 import axios from "axios"
 
@@ -40,14 +40,7 @@ export function AdminRecentBooksTable({
   const booksPerPage = 5
   const totalPages = Math.ceil(books.length / booksPerPage)
   
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    }).format(date)
-  }
+
 
 
   const deleteBook = async (bookId: number) => {

@@ -6,7 +6,7 @@ export default function FeaturedQuote() {
       <CardContent className="p-8 text-center">
         <p className="font-arabic text-2xl md:text-3xl text-white mb-4">طلب العلم فريضة على كل مسلم</p>
         <p className="text-lg md:text-xl text-white/90 italic mb-2">
-          "Seeking knowledge is an obligation upon every Muslim."
+          &quot;Seeking knowledge is an obligation upon every Muslim.&quot;
         </p>
         <p className="text-sm text-white/70">- Prophet Muhammad ﷺ</p>
       </CardContent>

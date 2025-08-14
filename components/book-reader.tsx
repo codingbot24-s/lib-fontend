@@ -227,4 +227,27 @@ export default function BookReader() {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-\
+          </div>
+        </div>
+      </div>
+
+      {/* Reader content */}
+      <div className={`flex-1 p-4 ${nightMode ? "bg-gray-900 text-gray-100" : "bg-white text-gray-900"}`}>
+        <div 
+          className="max-w-4xl mx-auto leading-relaxed"
+          style={{ fontSize: `${fontSize}px` }}
+        >
+          <p className="mb-4">
+            This is a sample book content. The actual book content would be loaded here.
+            You can adjust the font size and toggle night mode using the controls above.
+          </p>
+          <p className="mb-4">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
+            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}

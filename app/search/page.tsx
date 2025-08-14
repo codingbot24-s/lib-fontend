@@ -38,7 +38,7 @@ export default function SearchPage({ searchParams }: { searchParams: { q?: strin
               <div className="flex items-center justify-between mb-6">
                 <p className="text-gray-600 dark:text-gray-300">
                   Showing results for{" "}
-                  <span className="font-medium text-emerald-700 dark:text-emerald-400">"{query}"</span>
+                  <span className="font-medium text-emerald-700 dark:text-emerald-400">&quot;{query}&quot;</span>
                 </p>
 
                 {/* Mobile filter button */}

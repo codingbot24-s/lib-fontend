@@ -1,4 +1,4 @@
-import { BookOpen, Scroll, Book, Scale, Landmark, User, Heart, Brain, Calendar } from "lucide-react"
+
 import Link from "next/link"
 
 interface CategoryChipProps {

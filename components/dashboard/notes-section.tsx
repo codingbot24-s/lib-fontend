@@ -107,7 +107,7 @@ export default function NotesSection({ notes: initialNotes, books }: NotesProps)
     try {
       const date = new Date(dateString)
       return format(date, "MMM d, yyyy 'at' h:mm a")
-    } catch (error) {
+    } catch {
       return dateString
     }
   }

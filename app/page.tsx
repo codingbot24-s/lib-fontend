@@ -1,17 +1,10 @@
 "use client";
 import HeroSection from "@/components/hero-section";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  ChevronRight,
-  BookMarked,
-  Calendar,
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import RecentBooks from "@/components/recent-books";
 
 import CategoryChip from "@/components/category-chip";
-
-import GuidedLearningPaths from "@/components/guided-learning/guided-learning-paths";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -19,59 +12,9 @@ import { useRouter } from "next/navigation";
 export default function HomePage() {
   // Sample data for categories
 
-  // Sample data for featured books
-  const featuredBooks = [
-    {
-      id: 1,
-      title: "The Sealed Nectar",
-      author: "Safiur-Rahman Al-Mubarakpuri",
-      coverUrl: "/placeholder.svg?height=300&width=200",
-    },
-    {
-      id: 2,
-      title: "Riyadh as-Saliheen",
-      author: "Imam An-Nawawi",
-      coverUrl: "/placeholder.svg?height=300&width=200",
-    },
-    {
-      id: 3,
-      title: "The Quran: English Translation",
-      author: "Abdullah Yusuf Ali",
-      coverUrl: "/placeholder.svg?height=300&width=200",
-    },
-    {
-      id: 4,
-      title: "Ihya Ulum al-Din",
-      author: "Imam Al-Ghazali",
-      coverUrl: "/placeholder.svg?height=300&width=200",
-    },
-  ];
 
-  // Sample data for popular books
-  const popularBooks = [
-    {
-      id: 1,
-      title: "Purification of the Heart",
-      author: "Hamza Yusuf",
-      coverUrl: "/placeholder.svg?height=400&width=300",
-      description:
-        "Signs, Symptoms and Cures of the Spiritual Diseases of the Heart",
-    },
-    {
-      id: 2,
-      title: "The Divine Reality",
-      author: "Hamza Andreas Tzortzis",
-      coverUrl: "/placeholder.svg?height=400&width=300",
-      description: "God, Islam and the Mirage of Atheism",
-    },
-    {
-      id: 3,
-      title: "Muhammad: His Life Based on the Earliest Sources",
-      author: "Martin Lings",
-      coverUrl: "/placeholder.svg?height=400&width=300",
-      description: "Acclaimed biography based on early sources",
-    },
-  ];
+
+
 
   // Sample data for audio content
   // const audioContent = [
@@ -109,39 +52,7 @@ export default function HomePage() {
   //   },
   // ];
 
-  // Sample data for articles
-  const articles = [
-    {
-      id: 1,
-      title: "The Importance of Seeking Knowledge in Islam",
-      author: "Dr. Bilal Philips",
-      date: "May 10, 2025",
-      description:
-        "Islam places a high value on education and the pursuit of knowledge...",
-      imageUrl: "/placeholder.svg?height=200&width=350",
-      category: "Education",
-    },
-    {
-      id: 2,
-      title: "Understanding the Concept of Tawheed",
-      author: "Shaykh Hamza Yusuf",
-      date: "May 5, 2025",
-      description:
-        "Tawheed, the oneness of Allah, is the most fundamental concept in Islam...",
-      imageUrl: "/placeholder.svg?height=200&width=350",
-      category: "Aqeedah",
-    },
-    {
-      id: 3,
-      title: "The Ethics of Disagreement in Islam",
-      author: "Dr. Umar F. Abd-Allah",
-      date: "April 28, 2025",
-      description:
-        "Differences of opinion have existed among Muslims since the earliest days...",
-      imageUrl: "/placeholder.svg?height=200&width=350",
-      category: "Ethics",
-    },
-  ];
+
 
   interface TopicResponse {
     topics: Topic[];
@@ -163,7 +74,7 @@ export default function HomePage() {
     fetchTopics();
   }, []);
 
-  const router = useRouter();
+
 
   return (
     <div className="min-h-screen bg-[#f8f5f0] dark:bg-black font-noto-serif">
@@ -229,7 +140,7 @@ export default function HomePage() {
               </svg>
               <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 dark:text-white mb-4">Guided Learning Paths Coming Soon!</h2>
               <p className="text-lg text-emerald-800 dark:text-gray-300 max-w-2xl mb-6">
-                We're working on a curated set of learning journeys to help you explore Islamic knowledge step by step. Stay tuned for a beautiful, interactive experience designed to guide you through essential topics and books!
+                We&apos;re working on a curated set of learning journeys to help you explore Islamic knowledge step by step. Stay tuned for a beautiful, interactive experience designed to guide you through essential topics and books!
               </p>
               <span className="inline-block bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-200 px-4 py-2 rounded-full font-medium text-sm animate-pulse">
                 Launching Soon InshaAllah
@@ -271,7 +182,7 @@ export default function HomePage() {
               </svg>
               <h2 className="text-3xl md:text-4xl font-bold text-emerald-900 dark:text-white mb-4">Articles Coming Soon!</h2>
               <p className="text-lg text-emerald-800 dark:text-gray-300 max-w-2xl mb-6">
-                We're preparing a collection of insightful articles to deepen your understanding and inspire your journey. Stay tuned for thought-provoking reads on a variety of Islamic topics!
+                We&apos;re preparing a collection of insightful articles to deepen your understanding and inspire your journey. Stay tuned for thought-provoking reads on a variety of Islamic topics!
               </p>
               <span className="inline-block bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-200 px-4 py-2 rounded-full font-medium text-sm animate-pulse">
                 Launching Soon InshaAllah

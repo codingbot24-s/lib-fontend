@@ -63,7 +63,7 @@ interface AdminQuickUploadModalProps {
 
 export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQuickUploadModalProps) {
   const [topics, setTopics] = useState<Topic[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+
   const [volumeCount, setVolumeCount] = useState(0)
   const [selectedTopics, setSelectedTopics] = useState<number[]>([])
 
@@ -99,7 +99,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
   }, [])
 
   // Update the volumes section in the form
-  const additionalFields = (
+
     <>
       {/* Volumes Section */}
       <div className="space-y-4">
@@ -195,7 +195,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
           }))
         })
       }
-     console.log("formated data",formattedData);
+     console.log(&quot;formated data&quot;,formattedData);
       const response = await axios.post('http://localhost:8000/api/books', formattedData)
 
       if (response.status === 201) {
@@ -247,7 +247,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {/* Archive ID Field */}
               <div className="space-y-2 col-span-1">
-                <Label htmlFor="archiveid" className="text-sm font-medium">
+                                  <Label htmlFor=&quot;archiveid&quot; className="text-sm font-medium">
                   Archive ID
                 </Label>
                 <Input

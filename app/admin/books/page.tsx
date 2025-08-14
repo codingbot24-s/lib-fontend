@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Search, MoreVertical, BookOpen, Users, Globe, Building2, Trash2, Eye, Edit, Filter, Grid, List, Plus } from 'lucide-react';
+import Image from 'next/image';
+import { Search, BookOpen, Users, Globe, Building2, Trash2, Eye, Edit, Filter, Grid, List } from 'lucide-react';
 import { Book } from '@/types/book';
 import { Topic } from '@/types/topics';
 import { QuickUploadButton } from "@/components/admin/quick-upload-button";
@@ -13,12 +14,10 @@ export default function BooksManagement() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('all');
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
-  const [isLoading, setIsLoading] = useState(false);
 
   // Fetch books and topics from backend
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
       try {
         const [booksRes, topicsRes] = await Promise.all([
           axios.get('http://localhost:8000/api/books'),
@@ -30,8 +29,6 @@ export default function BooksManagement() {
       } catch (error) {
         // You can use toast here if you want
         console.error('Error fetching data:', error);
-      } finally {
-        setIsLoading(false);
       }
     };
     fetchData();
@@ -62,15 +59,12 @@ export default function BooksManagement() {
 
   // Delete book using backend
   const deleteBook = async (bookId: number) => {
-    setIsLoading(true);
     try {
       await axios.delete(`http://localhost:8000/api/books/${bookId}`);
       setBooks(prevBooks => prevBooks.filter(book => book.id !== bookId));
     } catch (error) {
       // You can use toast here if you want
       console.error('Error deleting book:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -78,10 +72,11 @@ export default function BooksManagement() {
   const BookCard = ({ book }: { book: Book }) => (
     <div className="group bg-white dark:bg-black rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-300 overflow-hidden">
       <div className="aspect-[3/4] relative overflow-hidden bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-gray-700 dark:to-gray-600">
-        <img
+        <Image
           src={book.coverimage}
           alt={book.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -133,10 +128,11 @@ export default function BooksManagement() {
       <td className="px-4 py-4">
         <div className="flex items-center space-x-3">
           <div className="relative w-10 h-12 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-gray-700 dark:to-gray-600 rounded-md overflow-hidden">
-            <img
+            <Image
               src={book.coverimage}
               alt={book.title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
             />
           </div>
           <div className="min-w-0 flex-1">

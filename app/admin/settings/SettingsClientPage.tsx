@@ -14,25 +14,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useState } from "react"
 
 export default function SettingsClientPage() {
-  // General settings state
-  const [generalSettings, setGeneralSettings] = useState({
-    siteName: "Bayt al-Kutub | Islamic Digital Library",
-    siteDescription: "A comprehensive Islamic library with thousands of books, articles, and resources.",
-    contactEmail: "admin@baytkutub.org",
-    supportEmail: "support@baytkutub.org",
-    maxUploadSize: "10",
-    defaultLanguage: "en",
-  })
 
-  // Appearance settings state
-  const [appearanceSettings, setAppearanceSettings] = useState({
-    primaryColor: "#059669", // emerald-600
-    secondaryColor: "#d4af37", // gold
-    defaultTheme: "light",
-    enableDarkMode: true,
-    showArabicTitles: true,
-    fontSizeBase: "16",
-  })
+
+
 
   // Notification settings state
   const [notificationSettings, setNotificationSettings] = useState({
@@ -54,19 +38,9 @@ export default function SettingsClientPage() {
     sessionTimeout: "60",
   })
 
-  // Handle general settings change
-  const handleGeneralChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target
-    setGeneralSettings((prev) => ({ ...prev, [name]: value }))
-  }
 
-  // Handle appearance settings change
-  const handleAppearanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setAppearanceSettings((prev) => ({ ...prev, [name]: value }))
-  }
+
+
 
   // Handle toggle change
   const handleToggleChange = (setting: string, section: string) => {

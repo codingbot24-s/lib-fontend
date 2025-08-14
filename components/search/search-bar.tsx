@@ -23,9 +23,13 @@ export default function SearchBar({ className }: { className?: string }) {
   const router = useRouter()
 
   // Close dropdown when clicking outside
-  useClickAway(searchRef, () => {
-    setIsOpen(false)
-  })
+  useClickAway(
+    
+    searchRef as React.RefObject<HTMLElement>,
+    () => {
+      setIsOpen(false)
+    }
+  )
 
   // Handle search query changes
   useEffect(() => {

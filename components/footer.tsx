@@ -1,6 +1,5 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+
 import { Separator } from "@/components/ui/separator"
 import { BookOpen, Mail, Phone, MapPin, Clock } from "lucide-react"
 
@@ -126,7 +125,7 @@ export default function Footer() {
         <div className="mt-12 text-center">
           <blockquote className="italic text-emerald-200 dark:text-gray-300 max-w-2xl mx-auto">
             <p className="text-lg font-arabic mb-2">طلب العلم فريضة على كل مسلم</p>
-            <p>"Seeking knowledge is an obligation upon every Muslim."</p>
+            <p>&quot;Seeking knowledge is an obligation upon every Muslim.&quot;</p>
             <cite className="text-sm text-gold dark:text-gray-400 block mt-2">— Prophet Muhammad ﷺ</cite>
           </blockquote>
         </div>

@@ -27,7 +27,7 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
             <AvatarFallback className="bg-emerald-100 text-emerald-800 text-xl">{user.name.charAt(0)}</AvatarFallback>
           </Avatar>
           <div>
-            <h1 className="text-2xl font-bold text-emerald-900 dark:text-emerald-100">{user.name}'s Dashboard</h1>
+            <h1 className="text-2xl font-bold text-emerald-900 dark:text-emerald-100">{user.name}&apos;s Dashboard</h1>
             <p className="text-gray-600 dark:text-gray-400">Member since {user.joinDate}</p>
           </div>
         </div>
