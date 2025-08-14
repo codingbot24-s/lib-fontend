@@ -119,21 +119,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter */}
-          {/* <div>
-            {/* <h3 className="text-lg font-bold text-white mb-4 font-display">Newsletter</h3>
-            <p className="text-sm mb-4 text-emerald-200 dark:text-gray-300">
-              Subscribe to our newsletter to receive updates on new books and events.
-            </p>
-            <div className="space-y-2">
-              <Input
-                type="email"
-                placeholder="Your email address"
-                className="bg-emerald-800/50 dark:bg-gray-800 border-emerald-700 dark:border-gray-600 text-white dark:text-white placeholder:text-emerald-300/70 dark:placeholder:text-gray-400"
-              />
-              <Button className="w-full bg-gold hover:bg-gold/90 dark:bg-white dark:hover:bg-gray-100 text-emerald-900 dark:text-black">Subscribe</Button>
-            </div> */}
-          {/* </div> */} 
+          
         </div>
 
         {/* Inspirational Quote */}

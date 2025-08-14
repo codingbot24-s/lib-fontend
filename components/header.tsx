@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { BookOpen, Menu, Search, ChevronDown, User, BookText, FileText, Globe, LogOut, Settings, UserCircle } from "lucide-react"
+import { BookOpen, Menu, Search, ChevronDown, User, BookText, FileText, LogOut, Settings, UserCircle } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -245,19 +245,7 @@ export default function Header() {
               <Search className="h-5 w-5" />
             </Button>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="hidden md:flex">
-                  <Globe className="h-5 w-5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>English</DropdownMenuItem>
-                <DropdownMenuItem>العربية</DropdownMenuItem>
-                <DropdownMenuItem>اردو</DropdownMenuItem>
-                <DropdownMenuItem>Bahasa Indonesia</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+
 
             {/* Clerk User Authentication */}
             {user ? (
@@ -425,22 +413,7 @@ export default function Header() {
                         <ThemeToggle />
                       </div>
 
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">Language</span>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="outline" size="sm" className="flex items-center gap-1">
-                              <Globe className="h-4 w-4" /> English
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem>English</DropdownMenuItem>
-                            <DropdownMenuItem>العربية</DropdownMenuItem>
-                            <DropdownMenuItem>اردو</DropdownMenuItem>
-                            <DropdownMenuItem>Bahasa Indonesia</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
+
 
                       <div className="flex flex-col space-y-2">
                         {user ? (
