@@ -77,7 +77,7 @@ export default function Header() {
       }
     }
     fetchTopics()
-  })  
+  },[])  
 
   // Get Fiqh madhabs from topics
   const fiqhMadhabs = topics.filter(topic => 
