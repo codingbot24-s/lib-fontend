@@ -70,8 +70,8 @@ export default function Header() {
   useEffect(() => {
     const fetchTopics = async () => {
       try {
-        const response = await axios.get('/api/topics')
-        setTopics(response.data)
+        const response = await axios.get('http://localhost:8000/api/topics')
+        setTopics(response.data.topics)
       } catch (error) {
         console.error("Error fetching topics:", error)
       }
@@ -134,7 +134,7 @@ export default function Header() {
             {tafsirId && (
               <Link
                 href={`/library/topic/${tafsirId}`}
-                className="px-3 py-2 text-sm font-medium text-emerald-900 dark:text-white hover:text-emerald-700 dark:hover:text-gray-300 rounded-md"
+                className="px-3 py-2 text-smfont-medium text-emerald-900 dark:text-white hover:text-emerald-700 dark:hover:text-gray-300 rounded-md"
               >
                 Tafsir
               </Link>
