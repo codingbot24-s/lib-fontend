@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
@@ -66,18 +66,18 @@ export default function Header() {
     }
   }, [])
 
+  // Fetch topics on mount
   useEffect(() => {
     const fetchTopics = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/topics')
-        
-        setTopics(response.data.topics)
+        const response = await axios.get('/api/topics')
+        setTopics(response.data)
       } catch (error) {
-        console.error('Error fetching topics:', error)
+        console.error("Error fetching topics:", error)
       }
-
+    }
     fetchTopics()
-  }, [])
+  })  
 
   // Get Fiqh madhabs from topics
   const fiqhMadhabs = topics.filter(topic => 
