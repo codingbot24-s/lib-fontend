@@ -1,18 +1,23 @@
 "use client"
 
 import { Book, User, Tag } from "lucide-react"
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 import HighlightedText from "@/components/search/highlighted-text"
 
+type ResultBook = { id: number; title: string; author: string; arabicTitle?: string; coverUrl?: string }
+type ResultScholar = { id: number; name: string; arabicName?: string; era?: string; imageUrl?: string }
+type ResultTopic = { id: number; name: string; description?: string; count?: number }
+
 interface SearchResultsProps {
   results: {
-    books: any[]
-    scholars: any[]
-    topics: any[]
+    books: ResultBook[]
+    scholars: ResultScholar[]
+    topics: ResultTopic[]
   }
   query: string
   selectedIndex: number
-  onSelect: (result: any) => void
+  onSelect: (result: { type: "book" | "scholar" | "topic"; item: { id: number } }) => void
 }
 
 export default function SearchResults({ results, query, selectedIndex, onSelect }: SearchResultsProps) {
@@ -40,9 +45,9 @@ export default function SearchResults({ results, query, selectedIndex, onSelect 
             </h3>
           </div>
           <ul>
-            {results.books.map((book, index) => {
+            {results.books.map((book) => {
               const isSelected = currentIndex === selectedIndex
-              const itemIndex = currentIndex++
+              currentIndex++
 
               return (
                 <li key={book.id}>
@@ -58,11 +63,7 @@ export default function SearchResults({ results, query, selectedIndex, onSelect 
                   >
                     <div className="flex-shrink-0 w-10 h-14 bg-gray-100 dark:bg-gray-800 rounded overflow-hidden mr-3 border border-gray-200 dark:border-gray-700">
                       {book.coverUrl ? (
-                        <img
-                          src={book.coverUrl || "/placeholder.svg"}
-                          alt={book.title}
-                          className="w-full h-full object-cover"
-                        />
+                        <Image src={book.coverUrl} alt={book.title} fill className="object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <Book className="h-5 w-5 text-gray-400" />
@@ -96,9 +97,9 @@ export default function SearchResults({ results, query, selectedIndex, onSelect 
             </h3>
           </div>
           <ul>
-            {results.scholars.map((scholar, index) => {
+            {results.scholars.map((scholar) => {
               const isSelected = currentIndex === selectedIndex
-              const itemIndex = currentIndex++
+              currentIndex++
 
               return (
                 <li key={scholar.id}>
@@ -114,11 +115,7 @@ export default function SearchResults({ results, query, selectedIndex, onSelect 
                   >
                     <div className="flex-shrink-0 w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden mr-3 border border-gray-200 dark:border-gray-700">
                       {scholar.imageUrl ? (
-                        <img
-                          src={scholar.imageUrl || "/placeholder.svg"}
-                          alt={scholar.name}
-                          className="w-full h-full object-cover"
-                        />
+                        <Image src={scholar.imageUrl} alt={scholar.name} fill className="object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <User className="h-5 w-5 text-gray-400" />
@@ -150,9 +147,9 @@ export default function SearchResults({ results, query, selectedIndex, onSelect 
             </h3>
           </div>
           <ul>
-            {results.topics.map((topic, index) => {
+            {results.topics.map((topic) => {
               const isSelected = currentIndex === selectedIndex
-              const itemIndex = currentIndex++
+              currentIndex++
 
               return (
                 <li key={topic.id}>

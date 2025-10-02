@@ -6,11 +6,6 @@ import {
   BookOpen,
   Scroll,
   Scale,
-  User,
-  Heart,
-  Clock,
-  Volume2,
-  Sparkles,
   Star,
   Library,
   BookMarked,
@@ -81,10 +76,10 @@ export default function IslamicLibraryGrid() {
       {/* Featured Quote */}
       <div className="text-center bg-white/80 dark:bg-black/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-200 dark:border-gray-700 shadow-lg">
         <blockquote className="text-xl sm:text-2xl font-serif italic text-gray-700 dark:text-white mb-4">
-          "اطلبوا العلم من المهد إلى اللحد"
+          &quot;اطلبوا العلم من المهد إلى اللحد&quot;
         </blockquote>
         <p className="text-lg font-serif text-gray-600 dark:text-gray-300">
-          "Seek knowledge from the cradle to the grave"
+          &quot;Seek knowledge from the cradle to the grave&quot;
         </p>
         <div className="mt-4 flex items-center justify-center gap-2">
           <Star className="h-4 w-4 text-amber-500 fill-current" />

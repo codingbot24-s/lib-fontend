@@ -62,8 +62,8 @@ interface AdminQuickUploadModalProps {
 }
 
 export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQuickUploadModalProps) {
+  const [, setIsLoading] = useState(false)
   const [topics, setTopics] = useState<Topic[]>([])
-
   const [volumeCount, setVolumeCount] = useState(0)
   const [selectedTopics, setSelectedTopics] = useState<number[]>([])
 
@@ -90,6 +90,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
         setTopics(response.data.topics)
       } catch (error) {
         console.error('Error fetching topics:', error)
+        toast.error('Failed to load topics')
       } finally {
         setIsLoading(false)
       }
@@ -97,81 +98,6 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
 
     fetchTopics()
   }, [])
-
-  // Update the volumes section in the form
-
-    <>
-      {/* Volumes Section */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="space-y-1">
-            <Label className="text-sm sm:text-base">Volumes (Optional)</Label>
-            <p className="text-xs text-muted-foreground">
-              Add volumes if the book has multiple parts
-            </p>
-          </div>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => setVolumeCount(prev => prev + 1)}
-            className="text-xs"
-          >
-            <PlusCircle className="h-4 w-4 mr-1" />
-            Add Volume
-          </Button>
-        </div>
-
-        <div className="space-y-4">
-          {volumeCount > 0 ? (
-            Array.from({ length: volumeCount }).map((_, index) => (
-              <div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 border rounded-lg">
-                <div className="space-y-2">
-                  <Label htmlFor={`volumes.${index}.volume_number`} className="text-sm">
-                    Volume Number
-                  </Label>
-                  <Input
-                    type="number"
-                    {...form.register(`volumes.${index}.volume_number` as const, {
-                      valueAsNumber: true,
-                    })}
-                    placeholder="Enter volume number"
-                    className="h-9 text-sm border-emerald-100 dark:border-emerald-900/50"
-                  />
-                  {form.formState.errors.volumes?.[index]?.volume_number && (
-                    <p className="text-xs text-red-500">
-                      {form.formState.errors.volumes[index]?.volume_number?.message}
-                    </p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor={`volumes.${index}.archive_id`} className="text-sm">
-                    Volume Archive ID
-                  </Label>
-                  <Input
-                    {...form.register(`volumes.${index}.archive_id` as const)}
-                    placeholder="Enter volume archive ID"
-                    className="h-9 text-sm border-emerald-100 dark:border-emerald-900/50"
-                  />
-                  {form.formState.errors.volumes?.[index]?.archive_id && (
-                    <p className="text-xs text-red-500">
-                      {form.formState.errors.volumes[index]?.archive_id?.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="text-center py-8 text-muted-foreground">
-              <p className="text-sm">No volumes added yet.</p>
-              <p className="text-xs">Click "Add Volume" to add volumes to this book.</p>
-            </div>
-          )}
-        </div>
-      </div>
-    </>
-  )
 
   // Update the onSubmit function
   const onSubmit = async (data: BookFormValues) => {
@@ -195,14 +121,15 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
           }))
         })
       }
-     console.log(&quot;formated data&quot;,formattedData);
+      console.log("formatted data", formattedData)
       const response = await axios.post('http://localhost:8000/api/books', formattedData)
 
       if (response.status === 201) {
         toast.success('Book created successfully')
         onOpenChange(false)
         form.reset()
-        setVolumeCount(1)
+        setVolumeCount(0)
+        setSelectedTopics([])
         onSuccess?.()
       }
     } catch (error) {
@@ -247,7 +174,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {/* Archive ID Field */}
               <div className="space-y-2 col-span-1">
-                                  <Label htmlFor=&quot;archiveid&quot; className="text-sm font-medium">
+                <Label htmlFor="archiveid" className="text-sm font-medium">
                   Archive ID
                 </Label>
                 <Input
@@ -348,6 +275,9 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                   placeholder="Enter author name"
                   className="h-10 text-sm border-emerald-100 dark:border-emerald-900/50 w-full"
                 />
+                {form.formState.errors.author && (
+                  <p className="text-xs text-red-500">{form.formState.errors.author.message}</p>
+                )}
               </div>
 
               {/* Publisher Field */}
@@ -358,6 +288,9 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                   placeholder="Enter publisher name"
                   className="h-10 text-sm border-emerald-100 dark:border-emerald-900/50 w-full"
                 />
+                {form.formState.errors.publisher && (
+                  <p className="text-xs text-red-500">{form.formState.errors.publisher.message}</p>
+                )}
               </div>
 
               {/* Edition Field */}
@@ -368,6 +301,9 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                   placeholder="Enter edition"
                   className="h-10 text-sm border-emerald-100 dark:border-emerald-900/50 w-full"
                 />
+                {form.formState.errors.Edition && (
+                  <p className="text-xs text-red-500">{form.formState.errors.Edition.message}</p>
+                )}
               </div>
 
               {/* Description Field */}
@@ -379,6 +315,9 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                   className="min-h-[80px] text-sm border-emerald-100 dark:border-emerald-900/50 w-full"
                   rows={3}
                 />
+                {form.formState.errors.description && (
+                  <p className="text-xs text-red-500">{form.formState.errors.description.message}</p>
+                )}
               </div>
             </div>
 
@@ -423,6 +362,11 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                                 placeholder="Enter volume number"
                                 className="h-9 text-xs sm:text-sm w-full"
                               />
+                              {form.formState.errors.volumes?.[index]?.volume_number && (
+                                <p className="text-xs text-red-500">
+                                  {form.formState.errors.volumes[index]?.volume_number?.message}
+                                </p>
+                              )}
                             </div>
                             <div className="space-y-2">
                               <Label htmlFor={`volumes.${index}.archive_id`} className="text-xs sm:text-sm">
@@ -433,6 +377,11 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                                 placeholder="Enter volume archive ID"
                                 className="h-9 text-xs sm:text-sm w-full"
                               />
+                              {form.formState.errors.volumes?.[index]?.archive_id && (
+                                <p className="text-xs text-red-500">
+                                  {form.formState.errors.volumes[index]?.archive_id?.message}
+                                </p>
+                              )}
                             </div>
                           </div>
                         ))}
@@ -441,7 +390,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
                       <div className="text-center py-6 sm:py-8">
                         <p className="text-sm">No volumes added yet.</p>
                         <p className="text-xs text-muted-foreground mt-1">
-                          Click "Add Volume" to add volumes to this book.
+                          Click &quot;Add Volume&quot; to add volumes to this book.
                         </p>
                       </div>
                     )}

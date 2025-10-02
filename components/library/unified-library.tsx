@@ -3,10 +3,9 @@
 import { useState, useMemo, useEffect } from "react"
 import axios from "axios"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Search, Filter, SlidersHorizontal, ChevronLeft, ChevronRight } from "lucide-react"
+import { Search, Filter } from "lucide-react"
 import { Book, ApiResponse } from "@/types/book"
 import LibrarySidebar from "./library-sidebar"
 import LibraryBookCard from "./library-book-card"
@@ -60,7 +59,6 @@ export default function UnifiedLibrary() {
   }, [searchQuery, selectedLanguages, selectedTopics, selectedScholars, books])
 
   // Pagination logic
-  const totalPages = Math.ceil(filteredBooks.length / BOOKS_PER_PAGE)
   const startIndex = (currentPage - 1) * BOOKS_PER_PAGE
   const paginatedBooks = filteredBooks.slice(startIndex, startIndex + BOOKS_PER_PAGE)
 

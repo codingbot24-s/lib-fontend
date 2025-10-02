@@ -16,7 +16,7 @@ interface TopicBookFiltersProps {
     scholars: string[]
     languages: string[]
   }
-  setActiveFilters: (filters: any) => void
+  setActiveFilters: (filters: { scholars: string[], languages: string[] }) => void
 }
 
 export function TopicBookFilters({

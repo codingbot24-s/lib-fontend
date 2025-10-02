@@ -17,7 +17,7 @@ export default function LanguageSwitcher() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setLanguage("English")}>English</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLanguage("English")}>{language}</DropdownMenuItem>
         <DropdownMenuItem onClick={() => setLanguage("Arabic")}>العربية</DropdownMenuItem>
         <DropdownMenuItem onClick={() => setLanguage("Urdu")}>اردو</DropdownMenuItem>
         <DropdownMenuItem onClick={() => setLanguage("Bahasa")}>Bahasa Indonesia</DropdownMenuItem>

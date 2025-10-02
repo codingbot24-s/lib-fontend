@@ -29,7 +29,7 @@ export default function QuranSection() {
                       <SelectItem value="2">2. Al-Baqarah</SelectItem>
                       <SelectItem value="3">3. Aali Imran</SelectItem>
                       <SelectItem value="4">4. An-Nisa</SelectItem>
-                      <SelectItem value="5">5. Al-Ma'idah</SelectItem>
+                      <SelectItem value="5">5. Al-Ma&apos;idah</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -142,7 +142,7 @@ export default function QuranSection() {
                       <SelectItem value="2">2. Al-Baqarah</SelectItem>
                       <SelectItem value="3">3. Aali Imran</SelectItem>
                       <SelectItem value="4">4. An-Nisa</SelectItem>
-                      <SelectItem value="5">5. Al-Ma'idah</SelectItem>
+                      <SelectItem value="5">5. Al-Ma&apos;idah</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

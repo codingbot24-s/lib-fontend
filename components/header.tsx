@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, use } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
@@ -24,8 +24,6 @@ import {
 import SearchBar from "@/components/search/search-bar"
 import { useTopics } from "@/hooks/use-topics"
 import axios from "axios"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
 import { useUser, useClerk } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
 

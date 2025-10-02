@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button"
 import { ArrowLeft, Bell, BellOff } from "lucide-react"
 import Link from "next/link"
 
-export default function ThreadPage({ params }: { params: { id: string } }) {
+export default async function ThreadPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   // This would normally be fetched from a database based on the ID
   const thread = {
-    id: Number.parseInt(params.id),
+    id: Number.parseInt(id),
     title: "Understanding the concept of Tawheed in modern context",
     content: `
       <p>Assalamu alaikum wa rahmatullahi wa barakatuh,</p>

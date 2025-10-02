@@ -6,7 +6,7 @@ export default function QuranVerse({
   return (
     <div className="max-w-3xl mx-auto">
       <p className="text-3xl md:text-4xl font-arabic leading-relaxed mb-4 text-gold-300 dark:text-white">{arabic}</p>
-      <p className="text-xl md:text-2xl mb-2 text-white">"{translation}"</p>
+      <p className="text-xl md:text-2xl mb-2 text-white">&quot;{translation}&quot;</p>
       <p className="text-sm text-emerald-200 dark:text-gray-300">{reference}</p>
     </div>
   )

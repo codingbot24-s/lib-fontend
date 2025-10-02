@@ -15,7 +15,12 @@ import { cn } from "@/lib/utils"
 export default function SearchBar({ className }: { className?: string }) {
   const [query, setQuery] = useState("")
   const [isOpen, setIsOpen] = useState(false)
-  const [results, setResults] = useState<any>(null)
+  type SearchResultsShape = {
+    books: Array<{ id: number; title: string; author: string; arabicTitle?: string; coverUrl?: string }>
+    scholars: Array<{ id: number; name: string; arabicName?: string; era?: string; imageUrl?: string }>
+    topics: Array<{ id: number; name: string; description?: string; count?: number }>
+  } | null
+  const [results, setResults] = useState<SearchResultsShape>(null)
   const [loading, setLoading] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const searchRef = useRef<HTMLDivElement>(null)
@@ -90,7 +95,9 @@ export default function SearchBar({ className }: { className?: string }) {
   }
 
   // Get the item at the current selected index
-  const getItemAtIndex = (index: number) => {
+  type SelectResult = { type: "book" | "scholar" | "topic"; item: { id: number } }
+  const getItemAtIndex = (index: number): SelectResult | null => {
+    if (!results) return null
     let currentIndex = 0
 
     // Check in books
@@ -129,7 +136,7 @@ export default function SearchBar({ className }: { className?: string }) {
   }
 
   // Handle selecting a result
-  const handleSelectResult = (result: any) => {
+  const handleSelectResult = (result: { type: "book" | "scholar" | "topic"; item: { id: number } } | null) => {
     if (!result) return
 
     let url = ""

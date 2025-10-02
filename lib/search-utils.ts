@@ -130,12 +130,12 @@ const topics = [
 ]
 
 // Function to filter items based on search query
-function filterItems(items: any[], query: string, fields: string[]) {
+function filterItems<T extends Record<string, unknown>>(items: T[], query: string, fields: Array<keyof T>) {
   const lowerQuery = query.toLowerCase()
   return items.filter((item) => {
     return fields.some((field) => {
       const value = item[field]
-      return value && value.toLowerCase().includes(lowerQuery)
+      return typeof value === "string" && value.toLowerCase().includes(lowerQuery)
     })
   })
 }

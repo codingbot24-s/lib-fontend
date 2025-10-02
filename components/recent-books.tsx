@@ -127,7 +127,7 @@ export default function RecentBooks() {
         </div>
         <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Books Available</h3>
         <p className="text-gray-600 dark:text-gray-400 max-w-md">
-          We couldn't find any recent books at the moment. Please check back later for new additions to our library.
+          We couldn&apos;t find any recent books at the moment. Please check back later for new additions to our library.
         </p>
       </div>
     );

@@ -4,11 +4,8 @@ import { CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Star,
   BookOpen,
   Globe,
-  Calendar,
-  Volume2,
   Download,
 } from "lucide-react";
 import Image from "next/image";

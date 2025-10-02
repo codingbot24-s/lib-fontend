@@ -7,7 +7,6 @@ import RecentBooks from "@/components/recent-books";
 import CategoryChip from "@/components/category-chip";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   // Sample data for categories

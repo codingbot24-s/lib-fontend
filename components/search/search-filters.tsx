@@ -34,7 +34,13 @@ interface SearchFiltersProps {
     timePeriod: string
     categories: string[]
   }
-  setActiveFilters: (filters: any) => void
+  setActiveFilters: (filters: {
+    scholars: string[]
+    topics: string[]
+    languages: string[]
+    timePeriod: string
+    categories: string[]
+  }) => void
 }
 
 export default function SearchFilters({

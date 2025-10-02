@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { BookOpen, BookMarked, Search, Users } from "lucide-react"
+import { BookMarked, Search } from "lucide-react"
 import QuranVerse from "@/components/quran-verse"
 import HeroPattern from "@/components/hero-pattern"
 import { useRouter } from "next/navigation"
