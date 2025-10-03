@@ -1,5 +1,6 @@
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 "use client";
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
