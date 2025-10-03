@@ -14,6 +14,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/utils";
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 
 interface Topic {
   id: number;
@@ -64,7 +65,7 @@ export default function ResponsiveBookCard({ book, compact = false }: Responsive
     try {
       setIsDownloading(true);
       const response = await axios.get(
-        `http://localhost:8000/api/download/${book.id}`,
+        `${BACKEND_URL}/api/download/${book.id}`,
         {
           responseType: "blob",
         }

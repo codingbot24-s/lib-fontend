@@ -20,6 +20,7 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 
 type Topic = {
   id: number
@@ -60,7 +61,7 @@ export default function IslamicLibraryGrid() {
     const fetchTopics = async () => {
       try {
         const response = await axios.get<AllApiTopicResponse>(
-          "http://localhost:8000/api/topics"
+          `${BACKEND_URL}/api/topics`
         );
         setTopics(response.data.topics);
       }

@@ -1,3 +1,4 @@
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 "use client"
 
 import { use } from "react"
@@ -35,7 +36,7 @@ export default function TopicPage({ params }: TopicPageProps) {
       try {
         setIsLoading(true)
         
-        const response = await axios.get(`http://localhost:8000/api/topics/${resolvedParams.id}/books`)
+        const response = await axios.get(`${BACKEND_URL}/api/topics/${resolvedParams.id}/books`)
         setBooks(response.data.books)
         setFilteredBooks(response.data.books)
       } catch (err) {

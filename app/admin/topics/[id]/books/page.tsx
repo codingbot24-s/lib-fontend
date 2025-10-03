@@ -1,3 +1,4 @@
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 "use client"
 
 
@@ -35,7 +36,7 @@ export default function BooksManagementPage() {
       
       try {
         setIsLoading(true)
-        const response = await axios.get(`http://localhost:8000/api/topics/${topicId}/books`)
+        const response = await axios.get(`${BACKEND_URL}/api/topics/${topicId}/books`)
         setBooks(response.data.books)
       } catch (error) {
         console.error('Error fetching books:', error)
@@ -50,7 +51,7 @@ export default function BooksManagementPage() {
   const deleteBook = async (bookId: number) => {
     try {
       setIsLoading(true)
-      const response = await axios.delete(`http://localhost:8000/api/books/${bookId}`)
+      const response = await axios.delete(`${BACKEND_URL}/api/books/${bookId}`)
       if (response.status === 200) {
         toast.success('Book deleted successfully')
         // Optionally, remove the book from the state

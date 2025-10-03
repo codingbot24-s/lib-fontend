@@ -35,7 +35,8 @@ export function TopicsManagement() {
                 setIsLoading(true)
                 setError(null)
 
-                const response = await axios.get('http://localhost:8000/api/topics')
+                const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+                const response = await axios.get(`${BACKEND_URL}/api/topics`)
                 if (response.status !== 200) {
                     throw new Error('Failed to fetch topics')
                 }
@@ -78,7 +79,8 @@ export function TopicsManagement() {
     const handleCreateTopic = async (newTopic: { name: string; description?: string }) => {
         try {
             setIsLoading(true);
-            const response = await axios.post('http://localhost:8000/api/topics', {
+            const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+            const response = await axios.post(`${BACKEND_URL}/api/topics`, {
                 name: newTopic.name,
                 description: newTopic.description || ""
             }, {
@@ -106,7 +108,8 @@ export function TopicsManagement() {
     // Handle edit topic
     const handleEditTopic = async (updatedTopic: Topic) => {
         try {
-            const response = await axios.put(`http://localhost:8000/api/topics/${updatedTopic.id}`, updatedTopic, {
+            const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+            const response = await axios.put(`${BACKEND_URL}/api/topics/${updatedTopic.id}`, updatedTopic, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -138,7 +141,8 @@ export function TopicsManagement() {
     const handleDeleteTopic = async (id: number) => {
         try {
             setIsLoading(true);
-            const response = await axios.delete(`http://localhost:8000/api/topics/${id}`);
+            const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+            const response = await axios.delete(`${BACKEND_URL}/api/topics/${id}`);
 
             if (response.status === 200 || response.status === 204) {
                 setTopics(prevTopics => prevTopics.filter(topic => topic.id !== id));

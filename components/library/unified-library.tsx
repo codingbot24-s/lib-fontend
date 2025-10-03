@@ -12,6 +12,7 @@ import LibraryBookCard from "./library-book-card"
 
 
 const BOOKS_PER_PAGE = 12
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 
 export default function UnifiedLibrary() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -28,7 +29,7 @@ export default function UnifiedLibrary() {
     const fetchBooks = async () => {
       try {
         setIsLoading(true)
-        const response = await axios.get<ApiResponse>('http://localhost:8000/api/books')
+        const response = await axios.get<ApiResponse>(`${BACKEND_URL}/api/books`)
         setBooks(response.data.books)
       } catch (error) {
         console.error('Error fetching books:', error)

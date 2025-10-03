@@ -1,3 +1,4 @@
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 "use client"
 
 import { useState, useEffect } from "react"
@@ -68,7 +69,7 @@ export default function Header() {
   useEffect(() => {
     const fetchTopics = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/topics')
+        const response = await axios.get(`${BACKEND_URL}/api/topics`)
         setTopics(response.data.topics)
       } catch (error) {
         console.error("Error fetching topics:", error)

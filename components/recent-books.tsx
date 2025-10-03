@@ -1,3 +1,4 @@
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 "use client";
 
 import { useEffect, useState } from "react";
@@ -60,7 +61,7 @@ export default function RecentBooks() {
   useEffect(() => {
     const fetchRecentBooks = async () => {
       try {
-        const response = await axios.get<ApiResponse>("http://localhost:8000/api/books/recent");
+        const response = await axios.get<ApiResponse>(`${BACKEND_URL}/api/books/recent`);
         setBooks(response.data.books);
       } catch (error) {
         console.error("Error fetching recent books:", error);
@@ -85,7 +86,7 @@ export default function RecentBooks() {
     try {
       setDownloading(itemId);
       const response = await axios.get(
-        `http://localhost:8000/api/download/${itemId}`,
+        `${BACKEND_URL}/api/download/${itemId}`,
         {
           responseType: "blob",
         }

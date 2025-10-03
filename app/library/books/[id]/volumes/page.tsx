@@ -9,6 +9,8 @@ import { BookOpen, Download } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import axios from "axios";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+
 interface Topic {
   id: number;
   name: string;
@@ -61,7 +63,7 @@ export default function BookVolumesPage() {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await axios.get<ApiResponse>(`http://localhost:8000/api/books/${params.id}`);
+        const response = await axios.get<ApiResponse>(`${BACKEND_URL}/api/books/${params.id}`);
         
         setBook(response.data.book);
       } catch (error) {
@@ -83,7 +85,7 @@ export default function BookVolumesPage() {
     try {
       setDownloading(volume.id);
       const response = await axios.get(
-        `http://localhost:8000/api/download/${volume.id}`,
+        `${BACKEND_URL}/api/download/${volume.id}`,
         {
           responseType: "blob",
         }

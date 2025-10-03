@@ -1,3 +1,4 @@
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 "use client"
 
 import { useState, useEffect } from "react"
@@ -86,7 +87,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
   useEffect(() => {
     const fetchTopics = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/topics')
+        const response = await axios.get(`${BACKEND_URL}/api/topics`)
         setTopics(response.data.topics)
       } catch (error) {
         console.error('Error fetching topics:', error)
@@ -122,7 +123,7 @@ export function AdminQuickUploadModal({ open, onOpenChange, onSuccess }: AdminQu
         })
       }
       console.log("formatted data", formattedData)
-      const response = await axios.post('http://localhost:8000/api/books', formattedData)
+      const response = await axios.post(`${BACKEND_URL}/api/books`, formattedData)
 
       if (response.status === 201) {
         toast.success('Book created successfully')

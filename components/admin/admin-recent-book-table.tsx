@@ -1,3 +1,4 @@
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 "use client"
 
 import { useState } from "react"
@@ -45,7 +46,7 @@ export function AdminRecentBooksTable({
 
   const deleteBook = async (bookId: number) => {
     try {
-      const resposne = await axios.delete(`http://localhost:8000/api/books/${bookId}`)
+      const resposne = await axios.delete(`${BACKEND_URL}/api/books/${bookId}`)
       if (resposne.status === 200) {
         toast.success('Book deleted successfully')
         

@@ -1,3 +1,4 @@
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 "use client";
 import HeroSection from "@/components/hero-section";
 import { Button } from "@/components/ui/button";
@@ -67,7 +68,7 @@ export default function HomePage() {
   const [topics, setTopics] = useState<TopicResponse>({ topics: [] });
   useEffect(() => {
     const fetchTopics = async () => {
-      const response = await axios.get(`http://localhost:8000/api/topics`);
+      const response = await axios.get(`${BACKEND_URL}/api/topics`);
       setTopics(response.data);
     };
     fetchTopics();

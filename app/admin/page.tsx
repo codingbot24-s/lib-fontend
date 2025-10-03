@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { Book } from "@/types/book";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 
 
 
@@ -37,7 +38,7 @@ export default function AdminDashboardPage() {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/books/recent"
+          `${BACKEND_URL}/api/books/recent`
         );
         setRecentBooks(response.data.books);
       } catch (error) {

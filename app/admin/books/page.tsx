@@ -1,3 +1,4 @@
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 "use client"
 
 import React, { useState, useEffect } from 'react';
@@ -20,8 +21,8 @@ export default function BooksManagement() {
     const fetchData = async () => {
       try {
         const [booksRes, topicsRes] = await Promise.all([
-          axios.get('http://localhost:8000/api/books'),
-          axios.get('http://localhost:8000/api/topics'),
+          axios.get(`${BACKEND_URL}/api/books`),
+          axios.get(`${BACKEND_URL}/api/topics`),
         ]);
         setBooks(booksRes.data.books);
         setTopics(topicsRes.data.topics);
@@ -60,7 +61,7 @@ export default function BooksManagement() {
   // Delete book using backend
   const deleteBook = async (bookId: number) => {
     try {
-      await axios.delete(`http://localhost:8000/api/books/${bookId}`);
+      await axios.delete(`${BACKEND_URL}/api/books/${bookId}`);
       setBooks(prevBooks => prevBooks.filter(book => book.id !== bookId));
     } catch (error) {
       // You can use toast here if you want

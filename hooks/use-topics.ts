@@ -1,3 +1,4 @@
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Topic } from '@/types/topics';
@@ -11,7 +12,7 @@ export function useTopics() {
     const fetchTopics = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get('http://localhost:8000/api/topics');
+        const response = await axios.get(`${BACKEND_URL}/api/topics`);
         setTopics(response.data.topics);
       } catch (err) {
         setError('Failed to fetch topics');
