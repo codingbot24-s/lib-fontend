@@ -21,6 +21,7 @@ export interface Book {
   created_at: string
   updated_at: string
   status? : string
+  volume?: number | null
 }
 
 export interface ApiResponse {

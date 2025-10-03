@@ -4,7 +4,8 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Clock, BookOpen, CheckCircle2, LockKeyhole } from "lucide-react"
 import Link from "next/link"
 
-export default function LearningPathPage({ params }: { params: { id: string } }) {
+export default async function LearningPathPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   // This would normally be fetched from a database based on the ID
   // For now, we'll use sample data
   const learningPaths = {
@@ -106,7 +107,7 @@ export default function LearningPathPage({ params }: { params: { id: string } })
     },
   }
 
-  const path = learningPaths[params.id as keyof typeof learningPaths]
+  const path = learningPaths[id as keyof typeof learningPaths]
 
   if (!path) {
     return (
@@ -199,7 +200,7 @@ export default function LearningPathPage({ params }: { params: { id: string } })
             <div>
               <h2 className="text-xl font-bold text-emerald-900 dark:text-white mb-4">Modules</h2>
               <div className="space-y-4">
-                {path.learningModules.map((module: { id: string; title: string; description: string; duration: string; status: string }) => (
+                {path.learningModules.map((module: { id: number; title: string; description: string; duration: string; status: string }) => (
                     <Card
                       key={module.id}
                     className={`border ${

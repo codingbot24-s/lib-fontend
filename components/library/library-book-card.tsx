@@ -3,7 +3,7 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Star, BookOpen, Globe, Calendar } from "lucide-react"
+import {  BookOpen, Globe, Calendar } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Book } from "@/types/book"
@@ -13,7 +13,8 @@ interface LibraryBookCardProps {
 }
 
 export default function LibraryBookCard({ book }: LibraryBookCardProps) {
-  const hasMultipleVolumes = book.volumes && book.volumes > 1
+  const hasMultipleVolumes = book.volume && book.volume > 1
+  const publishedYear = new Date(book.created_at).getFullYear()
 
   return (
     <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
@@ -29,7 +30,6 @@ export default function LibraryBookCard({ book }: LibraryBookCardProps) {
         {/* Overlay with quick info */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="absolute bottom-4 left-4 right-4 text-white">
-            <p className="text-sm font-medium mb-1">{book.pages} pages</p>
             <p className="text-xs text-gray-200">{book.edition}</p>
           </div>
         </div>
@@ -46,7 +46,7 @@ export default function LibraryBookCard({ book }: LibraryBookCardProps) {
         {hasMultipleVolumes && (
           <div className="absolute top-3 left-3">
             <Badge variant="secondary" className="bg-emerald-600 text-white">
-              {book.volumes} Vol{book.volumes !== 1 ? "s" : ""}
+              {book.volume} Vol{book.volume !== 1 ? "s" : ""}
             </Badge>
           </div>
         )}
@@ -56,8 +56,8 @@ export default function LibraryBookCard({ book }: LibraryBookCardProps) {
         {/* Title and Arabic Title */}
         <div className="space-y-1">
           <h3 className="font-bold text-emerald-900 dark:text-white line-clamp-2 leading-tight">{book.title}</h3>
-          {book.arabicTitle && (
-            <p className="text-sm text-amber-700 dark:text-gray-300 font-arabic leading-relaxed">{book.arabicTitle}</p>
+          {book.arabictitle && (
+            <p className="text-sm text-amber-700 dark:text-gray-300 font-arabic leading-relaxed">{book.arabictitle}</p>
           )}
         </div>
 
@@ -70,19 +70,14 @@ export default function LibraryBookCard({ book }: LibraryBookCardProps) {
             variant="outline"
             className="border-emerald-200 text-emerald-700 dark:border-gray-600 dark:text-white"
           >
-            {book.topic}
+            {book.topic.name}
           </Badge>
-
-          <div className="flex items-center gap-1">
-            <Star className="h-3 w-3 text-amber-500 fill-amber-500" />
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{book.rating}</span>
-          </div>
         </div>
 
         {/* Publication Year */}
         <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
           <Calendar className="h-3 w-3" />
-          <span>Published {book.publishYear}</span>
+          <span>Published {publishedYear}</span>
         </div>
       </CardContent>
 

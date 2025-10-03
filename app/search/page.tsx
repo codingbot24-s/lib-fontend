@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useSearchParams } from "next/navigation"
 import Header from "@/components/header"
 import SearchBar from "@/components/search/search-bar"
 import SearchFilters from "@/components/search/search-filters"
@@ -8,12 +9,20 @@ import MobileFilterDrawer from "@/components/search/mobile-filter-drawer"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Book, User, Tag, Search } from "lucide-react"
-
-export default function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
-  const query = searchParams.q || ""
+export default function SearchPage() {
+  const searchParams = useSearchParams()
+  const query = searchParams.get("q") || ""
 
   // State for active filters
-  const [activeFilters, setActiveFilters] = useState({
+  type ActiveFilters = {
+    scholars: string[]
+    topics: string[]
+    languages: string[]
+    timePeriod: string
+    categories: string[]
+  }
+
+  const [activeFilters, setActiveFilters] = useState<ActiveFilters>({
     scholars: [],
     topics: [],
     languages: [],

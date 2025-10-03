@@ -34,13 +34,15 @@ interface SearchFiltersProps {
     timePeriod: string
     categories: string[]
   }
-  setActiveFilters: (filters: {
-    scholars: string[]
-    topics: string[]
-    languages: string[]
-    timePeriod: string
-    categories: string[]
-  }) => void
+  setActiveFilters: React.Dispatch<
+    React.SetStateAction<{
+      scholars: string[]
+      topics: string[]
+      languages: string[]
+      timePeriod: string
+      categories: string[]
+    }>
+  >
 }
 
 export default function SearchFilters({
