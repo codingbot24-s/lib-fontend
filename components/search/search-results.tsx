@@ -62,7 +62,7 @@ export default function SearchResults({ results, query, selectedIndex, onSelect 
                     }}
                   >
                     <div className="flex-shrink-0 w-10 h-14 bg-gray-100 dark:bg-gray-800 rounded overflow-hidden mr-3 border border-gray-200 dark:border-gray-700">
-                      {book.coverUrl ? (
+                      {book.coverUrl && book.coverUrl.trim() !== "" ? (
                         <Image src={book.coverUrl} alt={book.title} fill className="object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
@@ -114,7 +114,7 @@ export default function SearchResults({ results, query, selectedIndex, onSelect 
                     }}
                   >
                     <div className="flex-shrink-0 w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden mr-3 border border-gray-200 dark:border-gray-700">
-                      {scholar.imageUrl ? (
+                      {scholar.imageUrl && scholar.imageUrl.trim() !== "" ? (
                         <Image src={scholar.imageUrl} alt={scholar.name} fill className="object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">

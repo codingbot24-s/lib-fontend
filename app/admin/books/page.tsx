@@ -75,7 +75,7 @@ export default function BooksManagement() {
     <div className="group bg-white dark:bg-black rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-all duration-300 overflow-hidden">
       <div className="aspect-[3/4] relative overflow-hidden bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-gray-700 dark:to-gray-600">
         <Image
-          src={book.coverimage}
+          src={book.coverimage || "/placeholder.svg"}
           alt={book.title}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -131,7 +131,7 @@ export default function BooksManagement() {
         <div className="flex items-center space-x-3">
           <div className="relative w-10 h-12 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-gray-700 dark:to-gray-600 rounded-md overflow-hidden">
             <Image
-              src={book.coverimage}
+              src={book.coverimage || "/placeholder.svg"}
               alt={book.title}
               fill
               className="object-cover"

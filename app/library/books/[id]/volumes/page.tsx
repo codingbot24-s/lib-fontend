@@ -181,7 +181,7 @@ export default function BookVolumesPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {volume.cover_image ? (
+              {volume.cover_image && volume.cover_image.trim() !== "" ? (
                 <div className="relative aspect-[3/4] overflow-hidden rounded-lg">
                   <Image
                     src={volume.cover_image}

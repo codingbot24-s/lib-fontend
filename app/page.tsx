@@ -1,6 +1,6 @@
 "use client";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 import HeroSection from "@/components/hero-section";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";

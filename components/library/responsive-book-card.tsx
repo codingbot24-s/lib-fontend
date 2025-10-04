@@ -101,7 +101,7 @@ export default function ResponsiveBookCard({ book, compact = false }: Responsive
         compact ? "aspect-[2/3]" : "aspect-[2/3]"
       )}>
         <div className="absolute inset-0">
-          {!book.coverimage || imageError ? (
+          {!book.coverimage || book.coverimage.trim() === "" || imageError ? (
             <div className="flex items-center justify-center w-full h-full bg-gray-100 dark:bg-gray-700">
               <BookOpen className="w-12 h-12 text-gray-400" />
             </div>
@@ -113,6 +113,7 @@ export default function ResponsiveBookCard({ book, compact = false }: Responsive
               priority
               className="object-contain hover:object-cover transition-all duration-500"
               onError={() => setImageError(true)}
+              onLoad={() => setImageError(false)}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           )}
