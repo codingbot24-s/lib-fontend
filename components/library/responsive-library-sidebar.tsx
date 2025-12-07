@@ -14,6 +14,8 @@ interface SidebarProps {
   hideTopicFilter?: boolean
 }
 
+
+// TODO: (saad) -> this will be fethced from db
 const languages = ["Arabic", "English", "Urdu", "Persian", "Turkish"]
 const scholars = [
   "Ibn Kathir",

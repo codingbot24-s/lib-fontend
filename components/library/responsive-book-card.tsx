@@ -1,5 +1,6 @@
 "use client";
 
+
 import { CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -200,7 +201,7 @@ export default function ResponsiveBookCard({ book, compact = false }: Responsive
             >
               <a href={book.viewpdfurl} target="_blank" rel="noopener noreferrer">
                 <BookOpen className={cn("mr-2", compact ? "h-2 w-2" : "h-3 w-3 sm:h-4 sm:w-4")} />
-                Read Now
+                Read Now 
               </a>
             </Button>
             <Button
